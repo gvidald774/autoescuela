@@ -154,7 +154,7 @@ class BD {
 
     public static function getRol($correo)
     {
-        $consulta = self::$con->prepare("SELECT roles.descripcion FROM roles, usuario WHERE roles.id=usuario.rol AND usuario.email= :correo");
+        $consulta = self::$con->prepare("SELECT roles.descripcion FROM roles, usuario WHERE roles.id=usuario.rol AND usuario.email='$correo'");
 
         $consulta->bindParam(':email',$correo);
         $consulta->execute();
@@ -255,5 +255,42 @@ class BD {
         {
             return self::$con->errorInfo();
         }
+    }
+
+    public static function obtenCuantasPaginasExamen(int $filas, string $idUsuario = "")
+    {
+        $registros = array();
+        $res = self::$con->query("SELECT e_r.fecha, u.nombre, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario);
+        $registros = $res->fetchAll();
+        $total = count($registros);
+        $paginas = ceil($total/$filas);
+
+        return $paginas;
+    }
+
+    public static function obtenExamenesPaginados(int $pagina, int $filas, string $idUsuario = "")
+    {
+        $registros = array();
+        $res = self::$con->query("SELECT e_r.fecha, u.nombre, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario);
+        $registros = $res->fetchAll();
+        $total = count($registros);
+        $paginas = ceil($total/$filas);
+        $registros = array();
+        if($pagina<=$paginas)
+        {
+            $inicio = ($pagina-1)*$filas;
+            $consulta = self::$con->query("SELECT e_r.fecha, u.nombre, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario."  ORDER BY e_r.fecha ASC LIMIT $inicio, $filas");
+            $consulta_registros = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return $consulta_registros;
+    }
+
+    public static function getIdAlumno(string $correo)
+    {
+        $consulta = self::$con->prepare("SELECT id FROM usuario WHERE email=:email");
+        $consulta->bindParam(':email',$correo);
+        $consulta->execute();
+        $id = $consulta->fetch(PDO::FETCH_NUM)[0];
+        return $id;
     }
 }
