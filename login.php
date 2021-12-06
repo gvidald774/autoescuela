@@ -11,7 +11,6 @@
     {
         $resultado = "";
         $validador = new Validator();
-        var_dump($_POST);
 
         if($validador->email("usuario"))
         {
@@ -60,7 +59,6 @@
     {
         echo $resultado;
     }
-
 
 ?>
 <!DOCTYPE html>

@@ -1,6 +1,6 @@
 <?php
-    require_once("../cargadores/carga_entities.php");
-    require_once("../cargadores/carga_helpers.php");
+    require_once($_SERVER['DOCUMENT_ROOT']."/proyectos/autoescuela/include/cargadores/carga_entities.php");
+    require_once($_SERVER['DOCUMENT_ROOT']."/proyectos/autoescuela/include/cargadores/carga_helpers.php");
 
 BD::conectar();
 
@@ -25,6 +25,6 @@ class Login {
 
     public static function getRol($usuario)
     {
-        return BD::getRol();
+        return BD::getRol($usuario);
     }
 }

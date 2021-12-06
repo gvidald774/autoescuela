@@ -104,7 +104,7 @@ class BD {
         $consulta->execute();
         while($registro = $consulta->fetch(PDO::FETCH_OBJ))
         {
-            $u = new Usuario($registro->id, $registro->email, $registro->nombre, $registro->apellidos, $registro->pass, $registro->fechaNacimiento, $registro->rol, $registro->foto, $registro->activo);
+            $u = new Usuario($registro->id, $registro->email, $registro->nombre, $registro->apellidos, $registro->pass, $registro->fechaNacimiento, $registro->rol, $registro->foto);
             $arr[] = $u;
         }
 

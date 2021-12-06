@@ -1,6 +1,14 @@
 <?php
+    require_once($_SERVER['DOCUMENT_ROOT']."/proyectos/autoescuela/include/helpers/BD.php");
     $usuario = "Guillermo";
     $enlace = "https://www.lmgtfy.es/?q=MD5+encryption+php";
+
+    echo "RÁBANOS MORENOS";
+    echo "<br />";
+    
+    $pass = "A.k.a.D3mia";
+
+    echo md5($pass);
 ?>
 
 <!DOCTYPE html>
