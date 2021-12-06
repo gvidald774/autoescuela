@@ -1,0 +1,16 @@
+{
+    "codigoExamen":null,
+    "enunciado":null,
+    "numPreguntas":null,
+    "duracion":null,
+    "bancoPreguntas":
+    [
+        {
+            "id":27,
+            "tematica":"asgrn",
+            "enunciado":"asdfasdf",
+            "recurso":"imagen/motor"
+        }
+    ],
+    "preguntasIncluidas":[25,7,45,56]
+}

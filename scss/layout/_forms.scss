@@ -1,0 +1,35 @@
+form {
+    display: table;
+    margin: auto;
+    border: 1px solid gray;
+    padding: 5%;
+    input[type="text"], input[type="password"] {
+        border: 1p dotted #999;
+        border-radius: 0;
+        transition: background-color 0.2s ease-in-out;
+        &:hover {
+            background-color: lightgreen;
+        }
+        &:active {
+            border-radius: 0;
+        }
+    }
+    
+    input[type="checkbox"] {
+        clear: both;
+    }
+
+    button, input, select, textarea {
+        font-family: monospace;
+        font-size: 100%;
+        margin: 10px;
+        box-sizing: border-box;
+        display: table-cell;
+    }
+
+    label {
+        font-family: 'Montserrat';
+        display: table-cell;
+        text-align: right;
+    }
+}

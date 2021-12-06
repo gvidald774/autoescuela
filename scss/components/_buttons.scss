@@ -1,0 +1,14 @@
+$button-height: 5%;
+$button-width: 10%;
+
+button, input[type="button"], input[type="submit"] {
+    padding: $button-height $button-width;
+    padding: 2% 5%;
+    background-color: #008000;
+    color: #111;
+    transition: opacity 0.1s ease-in-out;
+    &:hover {
+        opacity: 0.8;
+    }
+    font-size: small;
+}

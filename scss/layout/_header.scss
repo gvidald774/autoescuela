@@ -1,0 +1,30 @@
+header {
+    font-family: cursive;
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    //background-color: $color_header;
+    color: white;
+    text-align: center;
+    display: block;
+    padding: 20px;
+    img {
+        float: left;
+    }
+    div.login-button{
+        display: block;
+        float: right;
+        width: 120px;
+        height: 120px;
+        margin-right: 5%;
+        padding: 0;
+        a {
+            display: block;
+            height: 100%;
+            width: 100%;
+            background-image: url('../../media/img/descarga.jpg');
+        }
+    }
+    overflow: auto;
+}

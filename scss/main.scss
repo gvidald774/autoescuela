@@ -1,0 +1,34 @@
+@import "base/reset";
+@import "base/typo";
+@import "utilities/functions";
+@import "utilities/mixins";
+@import "utilities/variables";
+@import "components/buttons";
+@import "layout/footer";
+@import "layout/forms";
+@import "layout/header";
+@import "layout/navigation";
+@import "layout/table";
+@import "views/admin/questions";
+@import "views/admin/tests";
+@import "views/admin/topics";
+@import "views/admin/users";
+@import "views/user/custom_exam";
+@import "views/user/history";
+@import "views/user/profile";
+@import "views/user/random_exam";
+@import "views/home";
+
+// Esto no es así.
+
+p {
+    font-family: 'Montserrat';
+}
+
+body {
+    margin-bottom: 200px;
+}
+
+.oculto {
+    display: none;
+}

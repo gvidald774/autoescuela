@@ -1,0 +1,32 @@
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: $color_footer;
+    color: white;
+    text-align: center;
+    a {
+        text-decoration: none;
+        color: white;
+    }
+    overflow: none;
+    padding: 20px;
+
+    section.footer-left {
+        float: left;
+        text-align: left;
+        div {
+            padding: 5px;
+        }
+    }
+    section.footer-right {
+        float: right;
+        text-align: right;
+        margin-right: 25px;
+    }
+    section.footer-center {
+        text-align: center;
+    }
+
+}
