@@ -293,4 +293,6 @@ class BD {
         $id = $consulta->fetch(PDO::FETCH_NUM)[0];
         return $id;
     }
+
+    // Hay que añadir los borrados específicos para las preguntas: hay que borrar las respuestas primero. Y bueno, todo eso.
 }

@@ -68,7 +68,6 @@ window.addEventListener("load",function()
                     {
                         if (confirm("¿Está seguro de querer borrar este dato?"))
                         {
-                            alert("Pues no se ha borrado, chincha rabiña");
                             let idBorra = contenido.parentElement.firstElementChild.innerHTML;
                             borraDato(idBorra);
                         }

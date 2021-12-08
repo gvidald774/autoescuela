@@ -17,7 +17,7 @@ if(!Sesion::existe("usuario"))
 else
 {
     // Cambiar por tablaExamenes
-    header("Location: tablaPreguntas.php");
+    header("Location: historicoExamenes.php");
 }
 
 ?>

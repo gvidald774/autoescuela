@@ -11,7 +11,7 @@ window.addEventListener("load",function()
 
     // Esto tengo que mirármelo.
     var p = 1;
-    var urlAEnviar = "traeExamenesPaginados.php?p="+p+"&t=10&r='"+permisos+"'";
+    var urlAEnviar = "trae_hExamenesPaginados.php?p="+p+"&t=10&r='"+permisos+"'";
     fetch(urlAEnviar)
     .then(function(response)
     {
@@ -64,7 +64,7 @@ window.addEventListener("load",function()
             enlacePagina.onclick = function()
             {
                 removeAllChildNodes(corpus);
-                urlAEnviar = "traeExamenesPaginados.php?p="+i+"&t=10&r='"+permisos+"'";
+                urlAEnviar = "trae_hExamenesPaginados.php?p="+i+"&t=10&r='"+permisos+"'";
                 fetch(urlAEnviar)
                 .then(function(response)
                 {

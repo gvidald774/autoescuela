@@ -80,13 +80,9 @@ class Validator {
         }
         return $respuesta;
     }
-
-    /**
-     * Imprime los errores.
-     */
     public function imprimeError($campo)
     {
-        Pintor::imprimeError($this->errores[$campo], $campo);
+        return (isset($this->errores[$campo]))?$this->errores[$campo]:"";
     }
 
 }

@@ -17,12 +17,13 @@
             $usuario = $_POST["usuario"];
         }
 
-        $pass = md5($_POST["password"]); // Esto hay que encriptarlo.
+        $pass = $_POST["password"];
+        $pass_encrypt = md5($pass); // Esto hay que encriptarlo.
 
         if($validador->correcto())
         {
 
-            if(Login::identificar($usuario, $pass)) // Aquí habría que mirarlo del rol para ver lo que carga de una manera u otra.
+            if(Login::identificar($usuario, $pass_encrypt)) // Aquí habría que mirarlo del rol para ver lo que carga de una manera u otra.
             {
                 $rol = Login::getRol($usuario);
                 Sesion::escribir("usuario",$usuario);
@@ -33,7 +34,7 @@
                     setcookie("pass-cookie", $pass, time()+60*60*24);
                 }
     
-                header("Location: tablaExamenes.php");
+                header("Location: historicoExamenes.php");
             }
             else
             {

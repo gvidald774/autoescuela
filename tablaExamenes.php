@@ -9,58 +9,30 @@
     {
         header("Location: login.php");
     }
-    else if(Sesion::leer("rol") == "Admin") // Cambiar a "Profesor".
+    else if(Sesion::leer("rol") != "Admin") // Cambiar a "Profesor".
     {
-        echo "<!DOCTYPE html>
-        <html lang=\"en\">
-        <head>
-            <meta charset=\"UTF-8\">
-            <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
-            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-            <title>Tabla de exámenes</title>
-            <link rel=\"stylesheet\" href=\"css/main.css\" />
-            <script src=\"js/paginacion_examenes.js\"></script>
-        </head>
-        <body>
-            <header>
-                <div class=\"oculto\">Admin</div>
-            </header>
-            <!-- Aquí cosas varias, header, footer... ya sabe usté -->
-            <a href=\"creaExamen.php\"><button>Crear examen</button></a>
-            <table id=\"tabla\">
-            </table>
-            <div id=\"paginas\"></div>
-        </body>
-        </html>
-        ";
-    }
-    else if(Sesion::leer("rol") == "Alumno")
-    {
-        echo "<!DOCTYPE html>
-        <html lang=\"en\">
-        <head>
-            <meta charset=\"UTF-8\">
-            <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
-            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-            <title>Tabla de exámenes</title>
-            <link rel=\"stylesheet\" href=\"css/main.css\" />
-            <script src=\"js/paginacion_examenes.js\"></script>
-        </head>
-        <body>
-            <header>
-                <div class=\"oculto\" id=\"permisos\">Alumno</div>
-            </header>
-            <!-- Aquí cosas varias, header, footer... ya sabe usté -->
-            <a href=\"creaExamen.php\"><button>Crear examen</button></a>
-            <table id=\"tabla\">
-            </table>
-            <div id=\"paginas\"></div>
-        </body>
-        </html>
-        ";
+        echo "No tiene permiso para acceder a estos contenidos.";
+        header("Refresh: 5, URL=login.php"); // Cambiar porque te lleve a otra página.
     }
     else
     {
-        echo "what the fuck";
-        Sesion::verContenido();
+        echo "<!DOCTYPE html>
+        <html lang=\"en\">
+        <head>
+            <meta charset=\"UTF-8\">
+            <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
+            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+            <title>Tabla de Exámenes</title>
+            <link rel=\"stylesheet\" href=\"css/main.css\" />
+            <script src=\"js/paginacion_examenes.js\"></script>
+        </head>
+        <body>
+            <!-- Aquí cosas varias, header, footer... ya sabe usté -->
+            <a href=\"creaExamen.php\"><button>Crear examen</button></a>
+            <table id=\"tabla\">
+            </table>
+            <div id=\"paginas\"></div>
+        </body>
+        </html>
+        ";
     }
