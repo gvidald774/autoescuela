@@ -260,7 +260,7 @@ class BD {
     public static function obtenCuantasPaginasExamen(int $filas, string $idUsuario = "")
     {
         $registros = array();
-        $res = self::$con->query("SELECT e_r.fecha, u.nombre, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario);
+        $res = self::$con->query("SELECT e_r.fecha, u.nombre, u.apellidos, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario);
         $registros = $res->fetchAll();
         $total = count($registros);
         $paginas = ceil($total/$filas);
@@ -271,7 +271,7 @@ class BD {
     public static function obtenExamenesPaginados(int $pagina, int $filas, string $idUsuario = "")
     {
         $registros = array();
-        $res = self::$con->query("SELECT e_r.fecha, u.nombre, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario);
+        $res = self::$con->query("SELECT e_r.fecha, u.nombre, u.apellidos, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario);
         $registros = $res->fetchAll();
         $total = count($registros);
         $paginas = ceil($total/$filas);
@@ -279,7 +279,7 @@ class BD {
         if($pagina<=$paginas)
         {
             $inicio = ($pagina-1)*$filas;
-            $consulta = self::$con->query("SELECT e_r.fecha, u.nombre, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario."  ORDER BY e_r.fecha ASC LIMIT $inicio, $filas");
+            $consulta = self::$con->query("SELECT e_r.fecha, u.nombre, u.apellidos, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario."  ORDER BY e_r.fecha ASC LIMIT $inicio, $filas");
             $consulta_registros = $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
         return $consulta_registros;

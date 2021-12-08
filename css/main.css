@@ -107,6 +107,8 @@ header img {
 }
 header div {
   float: right;
+  background-image: url("../../media/img/big_logo.webp");
+  height: 100%;
 }
 
 nav {

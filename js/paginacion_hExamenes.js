@@ -47,6 +47,10 @@ window.addEventListener("load",function()
             {
                 let contenido = document.createElement("td");
                 contenido.innerHTML = json[i][arrayoMcQueen[j]];
+                if(arrayoMcQueen[j]=="nombre")
+                {
+                    contenido.innerHTML += " "+json[i]["apellidos"];
+                }
                 fila.appendChild(contenido);
             }
             corpus.appendChild(fila);

@@ -19,7 +19,7 @@
             <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
             <title>Tabla de exámenes</title>
             <link rel=\"stylesheet\" href=\"css/main.css\" />
-            <script src=\"js/paginacion_examenes.js\"></script>
+            <script src=\"js/paginacion_hExamenes.js\"></script>
         </head>
         <body>
             <header>
