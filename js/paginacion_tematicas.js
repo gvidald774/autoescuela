@@ -1,6 +1,5 @@
 window.addEventListener("load",function()
 {
-    // TODO Hay que añadir la cuarta columna de acciones
     var tabla = document.getElementById("tabla");
 
     var cabesa = document.createElement("thead");
@@ -94,17 +93,7 @@ window.addEventListener("load",function()
             enlacePagina.style = "margin: 10px; ";
             enlacePagina.onclick = function()
             {
-                removeAllChildNodes(corpus);
-                urlAEnviar = "traeTemasPaginados.php?p="+i+"&t=10";
-                fetch(urlAEnviar)
-                .then(function(response)
-                {
-                    return response.json();
-                })
-                .then(function(json)
-                {
-                    escribePreguntas(json);
-                });
+                refresh(i);
             }
             paginas.appendChild(enlacePagina);
         }
@@ -131,13 +120,13 @@ window.addEventListener("load",function()
         })
         .then(response => response.text())
         .then(response => alert(response));
-        refresh();
+        refresh(1);
     }
 
-    function refresh()
+    function refresh(p)
     {
         removeAllChildNodes(corpus);
-        urlAEnviar = "traeTemasPaginados.php?p=1&t=10";
+        urlAEnviar = "traeTemasPaginados.php?p="+p+"&t=10";
         fetch(urlAEnviar)
         .then(function(response)
         {
