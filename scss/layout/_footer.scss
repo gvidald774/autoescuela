@@ -1,5 +1,6 @@
 footer {
-    position: fixed;
+    overflow-x: hidden;
+    box-sizing: border-box;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -23,7 +24,6 @@ footer {
     section.footer-right {
         float: right;
         text-align: right;
-        margin-right: 25px;
     }
     section.footer-center {
         text-align: center;

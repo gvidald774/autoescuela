@@ -8,7 +8,13 @@
     {
         header("Location: login.php");
     }
-
+    else if(Sesion::leer("rol") != "Admin") // Cambiar a "Profesor".
+    {
+        echo "No tiene permiso para acceder a estos contenidos.";
+        header("Refresh: 5, URL=login.php"); // Cambiar porque te lleve a otra página.
+    }
+    else
+    {
     // Aquí definitivamente hace falta el botón.
 ?>
 <!--
@@ -63,30 +69,7 @@
             display: none;
         }
     </style>
-    <script src="js/select_lib.js"></script>
-    <script src="js/crea_examen.js"></script>
-</head>
-<body>
-    <header>
-    <h1>Formulario de examen</h1>
-    </header>
-    <main>
-    <form>
-        <input type="text" style="display:none" id="codigoExamen" name="codigoExamen" />
-        <label for="enunciado">Enunciado: </label><input type="text" id="enunciado" name="enunciado" />
-        <label for="n_preg">Nº preguntas: </label><input type="number" id="n_preg" name="n_preg" />
-        <label for="duracion">Duración: </label><input type="number" id="duracion" name="duracion" />
-        <section>
-            <input type="text" name="filtro" id="filtro" />
-        </section>
-        <section>
-            <label for="bancoPreguntas">Preguntas: </label><div id="bancoPreguntas" name="bancoPreguntas" multiple="multiple" size="10"></div>
-            <label for="preguntasSeleccionadas">Seleccionadas: </label><div id="preguntasSeleccionadas" name="preguntasSeleccionadas" multiple="multiple" size="10"></div>
-        </section>
-    </form>
-    </main>
-</body>
-</html>-->
+-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -126,7 +109,7 @@
             position: relative;
             height: 50px;
             border: 1px solid;
-            background-color: beige;
+            background-color: maroon;
             overflow: auto;
         }
         div.pregunta-enunciado {
@@ -173,3 +156,6 @@
     <footer></footer>
 </body>
 </html>
+<?php
+    }
+?>

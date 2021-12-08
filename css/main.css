@@ -25,7 +25,8 @@ button:hover, input[type=button]:hover, input[type=submit]:hover {
 }
 
 footer {
-  position: fixed;
+  overflow-x: hidden;
+  box-sizing: border-box;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -49,7 +50,6 @@ footer section.footer-left div {
 footer section.footer-right {
   float: right;
   text-align: right;
-  margin-right: 25px;
 }
 footer section.footer-center {
   text-align: center;
@@ -94,28 +94,67 @@ header {
   left: 0;
   top: 0;
   width: 100%;
+  background-color: #9B2705;
   color: white;
   text-align: center;
   display: block;
-  padding: 20px;
   overflow: auto;
 }
 header img {
+  margin: 0;
+  padding: 0;
   float: left;
 }
-header div.login-button {
-  display: block;
+header div {
   float: right;
-  width: 120px;
-  height: 120px;
-  margin-right: 5%;
-  padding: 0;
 }
-header div.login-button a {
+
+nav {
+  font-family: "Fjalla One";
+}
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+nav li {
+  float: left;
+}
+nav li a, nav .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+nav li a:hover, nav .dropdown:hover .dropbtn {
+  background-color: red;
+}
+nav li.dropdown {
+  display: inline-block;
+}
+nav .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+nav .dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
   display: block;
-  height: 100%;
-  width: 100%;
-  background-image: url("../../media/img/descarga.jpg");
+  text-align: left;
+}
+nav .dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+nav .dropdown:hover .dropdown-content {
+  display: block;
 }
 
 table {
@@ -166,10 +205,6 @@ input[type=checkbox] {
 
 p {
   font-family: "Montserrat";
-}
-
-body {
-  margin-bottom: 200px;
 }
 
 .oculto {
