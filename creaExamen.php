@@ -15,61 +15,11 @@
     }
     else
     {
-    // Aquí definitivamente hace falta el botón.
+        if(isset($_POST["botonEnviar"]))
+        {
+            var_dump($_POST);
+        }
 ?>
-<!--
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creación y modificación de exámenes
-    </title>
-    <style>
-        select {
-            width: 150px;
-            height: 250px;
-        }
-        .pregunta {
-            margin: 10px;
-            overflow: auto;
-            background-color: maroon;
-            box-shadow: 5px 5px 5px black;
-        }
-        div#bancoPreguntas, div#preguntasSeleccionadas {
-            margin: 10px;
-            overflow: auto;
-            background-color: palegoldenrod;
-            box-shadow: 5px 5px 5px black;
-            display: block;
-            position: relative;
-            width: 40%;
-            min-height: 200px;
-        }
-        div#bancoPreguntas {
-            float: left;
-        }
-        div#preguntasSeleccionadas {
-            float: right;
-        }
-        .pregunta-tema {
-            color: gray;
-            font-size: small;
-            text-align: right;
-            display: block;
-        }
-        .pregunta-enunciado {
-            color: black;
-            font-size: large;
-            font-family: sans-serif;
-            display: block;
-        }
-        .oculto {
-            display: none;
-        }
-    </style>
--->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -77,23 +27,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fuck</title>
+    <title>Crea examen</title>
     <script src="js/crea_examen.js"></script>
     <link rel="stylesheet" href="css/main.css" />
     <style>
+        input[type="text"] {
+            font-size: 100%;
+        }
         #bancoPreguntas {
-            position: relative;
-            width: 40%;
             float: left;
-            min-height: 200px;
-            background-color: aqua;
         }
         #preguntasSeleccionadas {
-            position: relative;
-            width: 40%;
             float: right;
-            min-height: 200px;
-            background-color: aqua;
         }
         #preguntasSeleccionadas, #bancoPreguntas {
             margin: 10px;
@@ -103,7 +48,8 @@
             display: block;
             position: relative;
             width: 40%;
-            min-height: 200px;
+            min-height: 600px;
+            max-height: 600px;
         }
         div.pregunta {
             position: relative;
@@ -111,6 +57,8 @@
             border: 1px solid;
             background-color: maroon;
             overflow: auto;
+            margin: 10px;
+            box-shadow: 5px 5px 5px black;
         }
         div.pregunta-enunciado {
             color: black;
@@ -137,21 +85,27 @@
     <header></header>
     <h1>Formulario de examen</h1>
     <main>
-        <section>
-            <input type="text" style="display:none" id="codigoExamen" name="codigoExamen" />
-            <label for="enunciado">Enunciado: </label><input type="text" id="enunciado" name="enunciado" />
-            <label for="n_preg">Nº preguntas: </label><input type="number" id="n_preg" name="n_preg" />
-            <label for="duracion">Duración: </label><input type="number" id="duracion" name="duracion" />
-        </section>
-        <section>
-            <article>
-                <input type="text" id="filtro" /><input type="button" value="Filtrar" id="botonFiltro" />
-            </article>
-            <article>
-                <div id="bancoPreguntas"></div>
-                <div id="preguntasSeleccionadas"></div>
-            </article>
-        </section>
+        <form action="" method="POST">
+            <section>
+                <input type="text" style="display:none" id="codigoExamen" name="codigoExamen" />
+                <label for="enunciado">Enunciado: </label><input type="text" id="enunciado" name="enunciado" />
+                <label for="n_preg">Nº preguntas: </label><input type="number" id="n_preg" name="n_preg" />
+                <label for="duracion">Duración: </label><input type="number" id="duracion" name="duracion" />
+            </section>
+            <section>
+                <article>
+                    <input type="text" id="filtroBancoPreguntas" /><input type="button" value="filtrar" id="botonFiltroBancoPreguntas" />
+                    <input type="text" id="filtroPreguntasSeleccionadas" /><input type="button" value="Filtrar" id="botonFiltroPreguntasSeleccionadas" />
+                </article>
+                <article>
+                    <div id="bancoPreguntas"></div>
+                    <div id="preguntasSeleccionadas"></div>
+                </article>
+                <article style="clear:both">
+                    <input style="clear:both" type="submit" id="botonEnviar" name="botonEnviar" value="Enviar" />
+                </article>
+            </section>
+        </form>
     </main>
     <footer></footer>
 </body>

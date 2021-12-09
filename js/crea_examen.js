@@ -2,6 +2,7 @@ window.addEventListener("load",function()
 {
     var preguntas = document.getElementById("bancoPreguntas");
     var seleccionadas = document.getElementById("preguntasSeleccionadas");
+    var boton = document.getElementById("botonEnviar");
     
     fetch("traePreguntas.php")
     .then(function(response)
@@ -35,14 +36,14 @@ window.addEventListener("load",function()
         }
     }
 
-    const filtro = document.getElementById("filtro");
-    filtro.onkeyup = function()
+    const filtroBancoPreguntas = document.getElementById("filtroBancoPreguntas");
+    filtroBancoPreguntas.onkeyup = function()
     {
-        const divs = preguntas.getElementsByTagName("div");
+        const divs = preguntas.getElementsByClassName("pregunta");
         for(let i = 0; i < divs.length; i++)
         {
             divs[i].classList.remove("marcado");
-            if(divs[i].innerHTML.indexOf(filtro.value)<0)
+            if(divs[i].innerHTML.indexOf(filtroBancoPreguntas.value)<0)
             {
                 divs[i].classList.add("oculto");
             }
@@ -53,14 +54,50 @@ window.addEventListener("load",function()
         }
     }
 
-    const boton = document.getElementById("botonFiltro");
-    boton.onclick = function()
+    const botonBancoPreguntas = document.getElementById("botonFiltroBancoPreguntas");
+    botonBancoPreguntas.onclick = function()
     {
-        const divs = preguntas.getElementsByTagName("div");
+        const divs = preguntas.getElementsByClassName("pregunta");
         for(let i = 0; i < divs.length; i++)
         {
             divs[i].classList.remove("marcado");
-            if(divs[i].innerHTML.indexOf(filtro.value)<0)
+            if(divs[i].innerHTML.indexOf(filtroBancoPreguntas.value)<0)
+            {
+                divs[i].classList.add("oculto");
+            }
+            else
+            {
+                divs[i].classList.remove("oculto");
+            }
+        }
+    }
+
+    const filtroPreguntasSeleccionadas = document.getElementById("filtroPreguntasSeleccionadas");
+    filtroPreguntasSeleccionadas.onkeyup = function()
+    {
+        const divs = seleccionadas.getElementsByClassName("pregunta");
+        for(let i = 0; i < divs.length; i++)
+        {
+            divs[i].classList.remove("marcado");
+            if(divs[i].innerHTML.indexOf(filtroPreguntasSeleccionadas.value)<0)
+            {
+                divs[i].classList.add("oculto");
+            }
+            else
+            {
+                divs[i].classList.remove("oculto");
+            }
+        }
+    }
+
+    const botonFiltroPreguntasSeleccionadas = document.getElementById("botonFiltroPreguntasSeleccionadas");
+    botonFiltroPreguntasSeleccionadas.onclick = function()
+    {
+        const divs = seleccionadas.getElementsByClassName("pregunta");
+        for(let i = 0; i < divs.length; i++)
+        {
+            divs[i].classList.remove("marcado");
+            if(divs[i].innerHTML.indexOf(filtroPreguntasSeleccionadas.value)<0)
             {
                 divs[i].classList.add("oculto");
             }
@@ -122,5 +159,12 @@ window.addEventListener("load",function()
             preguntas.appendChild(marcados[j]);
         }
         ev.stopPropagation();
+    }
+
+    boton.onclick = function(ev)
+    {
+        ev.preventDefault();
+        // Y aquí es donde empezamos a jugar. Tenemos que hacer los arrays teniendo en cuenta el modelo de examen y tal y pascual.
+        // Ah y también la capacidad de leer lo que se viene si es un JSON o algo.
     }
 });

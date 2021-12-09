@@ -309,5 +309,17 @@ class BD {
         }
     }
 
+    public static function existeAltaPendiente($token)
+    {
+        $consulta = self::$con->prepare("SELECT token FROM altas_pendientes WHERE token=$token");
+        $consulta->execute();
+        $result = false;
+        if ($consulta->fetch(PDO::FETCH_NUM)[0])
+        {
+            $result = true;
+        }
+        return $result;
+    }
+
     // Hay que añadir los borrados específicos para las preguntas: hay que borrar las respuestas primero. Y bueno, todo eso.
 }
