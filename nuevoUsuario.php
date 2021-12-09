@@ -46,5 +46,4 @@
         </div>
         <div><input type="submit" name="Enviar" value="Sign up" /></div>
     </form>
-</body>
-</html>
+<?php Pintor::footer(); ?>

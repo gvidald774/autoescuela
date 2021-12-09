@@ -83,5 +83,4 @@
         </form>
         <div><a href="olvido.php">¿Olvidaste tu contraseña?</a></div>
     </main>
-</body>
-</html>
+<?php Pintor::footer(); ?>

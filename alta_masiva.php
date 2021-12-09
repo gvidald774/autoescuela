@@ -39,7 +39,7 @@
 
     function pintaPagina($correoEnvio = "")
     {
-        Pintor::header("js/alta_masiva.js");
+        Pintor::header("Alta masiva de usuarios","js/alta_masiva.js");
         Pintor::nav_admin();
         echo "<main>
                   <h1>Alta masiva de usuarios</h1>

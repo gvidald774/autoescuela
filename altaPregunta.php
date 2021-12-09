@@ -31,7 +31,14 @@
             var_dump($_FILES);
         }
     };
-    Pintor::header("js/altaPregunta.js");
+    if(isset($_GET["id"]))
+    {
+        Pintor::header("Editar pregunta","js/altaPregunta.js");
+    }
+    else
+    {
+        Pintor::header("Crear pregunta","js/altaPregunta.js");
+    }
     Pintor::nav_admin();
 ?>
     <main>

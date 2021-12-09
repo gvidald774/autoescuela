@@ -71,7 +71,7 @@
         }
     }
 
-    Pintor::header();
+    Pintor::header("Alta de usuario individual");
     Pintor::nav_admin();
 ?>
     <form action="" method="POST">

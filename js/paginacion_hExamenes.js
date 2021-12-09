@@ -27,7 +27,15 @@ window.addEventListener("load",function()
     function escribeCabeceras(json)
     {
         let cabecera = document.createElement("tr");
-        let arrayoMcQueen = ["fecha", "nombre del alumno", "calificación"];
+        let arrayoMcQueen = [];
+        if(permisos == "Admin")
+        {
+            arrayoMcQueen = ["fecha", "nombre del alumno", "calificación", "opciones"];
+        }
+        else if(permisos == "Alumno")
+        {
+            arrayoMcQueen = ["fecha", "calificación", "opciones"];
+        }
         for (let i = 0; i < arrayoMcQueen.length; i++)
         {
             let columna = document.createElement("th");
@@ -39,19 +47,42 @@ window.addEventListener("load",function()
 
     function escribeExamenes(json)
     {
-        let arrayoMcQueen = ["fecha","nombre", "calificacion"];
+        let arrayoMcQueen = [];
+        if(permisos == "Admin")
+        {
+            arrayoMcQueen = ["id","fecha", "nombre", "calificación", "opciones"];
+        }
+        else if(permisos == "Alumno")
+        {
+            arrayoMcQueen = ["fecha", "calificacion", "opciones"];
+        }
         for (let i = 0; i < Object.keys(json).length-1; i++)
         {
             let fila = document.createElement("tr");
+            fila.idExamen = json[i]["id"];
             for (let j = 0; j < arrayoMcQueen.length; j++)
             {
-                let contenido = document.createElement("td");
-                contenido.innerHTML = json[i][arrayoMcQueen[j]];
-                if(arrayoMcQueen[j]=="nombre")
+                if(arrayoMcQueen[j]=="opciones")
                 {
-                    contenido.innerHTML += " "+json[i]["apellidos"];
+                    let contenido = document.createElement("td");
+                    contenido.style = "font-size: small";
+                    let enlaceRevisar = document.createElement("a");
+                    let id = json[i]["id"];
+                    enlaceRevisar.href = "altaExamen.php?id="+fila.idExamen;
+                    enlaceRevisar.innerHTML = "Revisar";
+                    contenido.appendChild(enlaceRevisar);
+                    fila.appendChild(contenido);
                 }
-                fila.appendChild(contenido);
+                else
+                {
+                    let contenido = document.createElement("td");
+                    contenido.innerHTML = json[i][arrayoMcQueen[j]];
+                    if(arrayoMcQueen[j]=="nombre")
+                    {
+                        contenido.innerHTML += " "+json[i]["apellidos"];
+                    }
+                    fila.appendChild(contenido);
+                }
             }
             corpus.appendChild(fila);
         }   

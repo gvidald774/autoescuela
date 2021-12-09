@@ -1,7 +1,7 @@
 <?php
 
 class Pintor {
-    public static function header($ruta_js = "")
+    public static function header($title, $ruta_js = "", $css = "css/main.css")
     {
         echo "<!DOCTYPE html>
         <html lang=\"en\">
@@ -9,8 +9,8 @@ class Pintor {
             <meta charset=\"UTF-8\">
             <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
             <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-            <title>Document</title>
-            <link rel=\"stylesheet\" href=\"css/main.css\" />
+            <title>".$title."</title>
+            <link rel=\"stylesheet\" href=\"".$css."\" />
             <script src=\"".$ruta_js."\"></script>
         </head>
         <body>
@@ -54,7 +54,13 @@ class Pintor {
 
     public static function nav_alumno()
     {
-
+        echo "<nav>
+        <ul>
+            <li><a href=\"historicoExamenes.php\">Histórico de exámenes</a></li>
+            <li><a href=\"tablaExamenes.php\">Examen predefinido</a></li>
+            <li><a href=\"examenAleatorio.php\">Examen aleatorio</a></li>
+        </ul>
+    </nav>";
     }
 
     public static function footer()

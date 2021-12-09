@@ -97,5 +97,4 @@
         <div id="mensaje-error"><?php echo $resultado; ?></div>
     </form>
     <p><a href="login.php">Volver</a></p>
-</body>
-</html>
+<?php Pintor::footer(); ?>
