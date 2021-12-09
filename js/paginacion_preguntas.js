@@ -26,7 +26,7 @@ window.addEventListener("load",function()
     function escribeCabeceras(json)
     {
         let cabecera = document.createElement("tr");
-        let arrayoMcQueen = ["id","enunciado","temática"];
+        let arrayoMcQueen = ["id","enunciado","temática","opciones"];
         for (let i = 0; i < arrayoMcQueen.length; i++)
         {
             let columna = document.createElement("th");
@@ -38,15 +38,47 @@ window.addEventListener("load",function()
 
     function escribePreguntas(json)
     {
-        let arrayoMcQueen = ["id","enunciado","tematica"];
+        let arrayoMcQueen = ["id","enunciado","tematica","opciones"];
         for (let i = 0; i < Object.keys(json).length-1; i++)
         {
             let fila = document.createElement("tr");
             for (let j = 0; j < arrayoMcQueen.length; j++)
             {
-                let contenido = document.createElement("td");
-                contenido.innerHTML = json[i][arrayoMcQueen[j]];
-                fila.appendChild(contenido);
+                if(arrayoMcQueen[j] == "opciones")
+                {
+                    let contenido = document.createElement("td");
+                    contenido.style = "font-size: small";
+                    let enlaceEditar = document.createElement("a");
+                    let id = json[i]["id"];
+                    enlaceEditar.href = "altaPregunta.php?id="+id;
+                    enlaceEditar.innerHTML = "Editar";
+                    let enlaceDesactivar = document.createElement("a");
+                    enlaceDesactivar.innerHTML = " Desactivar";
+                    enlaceDesactivar.href = "#";
+                    let enlaceBorrar = document.createElement("a");
+                    enlaceBorrar.innerHTML = " Borrar";
+                    enlaceBorrar.href = "#";
+                    contenido.appendChild(enlaceEditar);
+                    contenido.appendChild(enlaceDesactivar);
+                    contenido.appendChild(enlaceBorrar);
+                    fila.appendChild(contenido);
+
+                    enlaceBorrar.onclick = function()
+                    {
+                        if(confirm("¿Está seguro de querer borrar esta pregunta? (Se borrarán también las respuestas y recurso asociados a la pregunta)"))
+                        {
+                            let idBorra = contenido.parentElement.firstElementChild.innerHTML;
+                            // borraDato("pregunta",idBorra); // No señor, ahora hay que hacer una cosa espectacular y atómica para el borrado de la pregunta.
+                            alert("NO SE HA BORRADO "+idBorra+" PORQUE ES MU COMPLICAO Y YO NO SE TOY CHIQUITO");
+                        }
+                    }
+                }
+                else
+                {
+                    let contenido = document.createElement("td");
+                    contenido.innerHTML = json[i][arrayoMcQueen[j]];
+                    fila.appendChild(contenido);
+                }
             }
             corpus.appendChild(fila);
         }   

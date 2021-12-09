@@ -65,10 +65,10 @@ window.addEventListener("load",function()
                     
                     enlaceBorrar.onclick = function()
                     {
-                        if (confirm("¿Está seguro de querer borrar este dato?"))
+                        if (confirm("¿Está seguro de querer borrar esta temática?"))
                         {
                             let idBorra = contenido.parentElement.firstElementChild.innerHTML;
-                            borraDato(idBorra);
+                            borraDato("tematica",idBorra);
                         }
                     }
                 }

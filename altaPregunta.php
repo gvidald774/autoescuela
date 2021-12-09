@@ -19,12 +19,19 @@
         $options = array();
         $options = BD::cogeTematicas();
 
+        if(isset($_GET["id"]))
+        {
+            // Aquí ahora tendríamos que coger la pregunta de la Base de Datos.
+            // Quizá aquí se podría usar el JSON?
+        }
+
         if(isset($_POST["botonEnviar"]))
         {
             var_dump($_POST);
+            var_dump($_FILES);
         }
     };
-    Pintor::header();
+    Pintor::header("js/altaPregunta.js");
     Pintor::nav_admin();
 ?>
     <main>
@@ -35,7 +42,7 @@
             }
         </style>
         <h1>Pregunta</h1>
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
             <section>
                 <select id="opciones_tematica">Temática:
                     <?php
@@ -48,6 +55,7 @@
                     ?>
                 </select>
                 <label for="enunciado">Enunciado</label><input type="text" id="enunciado" name="enunciado" />
+                <label for="recurso">Imagen/Vídeo:</label><img src="media/img/small-logo.jpg" id="imagen" /><input type="file" id="recurso" alt="Recurso de imagen o vídeo" name="recurso" />
             </section>
             <section>
                 <table class="invisible">

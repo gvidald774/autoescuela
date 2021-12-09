@@ -46,12 +46,13 @@
         }
         div.pregunta {
             position: relative;
-            height: 50px;
             border: 1px solid;
             background-color: maroon;
             overflow: auto;
             margin: 10px;
             box-shadow: 5px 5px 5px black;
+            min-height: 50px;
+            max-height: 500px;
         }
         div.pregunta-enunciado {
             color: black;

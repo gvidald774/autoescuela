@@ -174,7 +174,7 @@ class BD {
     public static function cogeTematicas()
     {
         $registros = array();
-        $res = self::$con->query("SELECT * FROM tematica");
+        $res = self::$con->query("SELECT * FROM tematica ORDER BY id ASC");
         $registros = $res->fetchAll(PDO::FETCH_OBJ);
         return $registros;
     }
