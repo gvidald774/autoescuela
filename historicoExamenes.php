@@ -25,7 +25,37 @@
             <header>
                 <div class=\"oculto\" id=\"permisos\">Admin</div>
             </header>
-            <!-- Aquí cosas varias, header, footer... ya sabe usté -->
+            <nav>
+                <ul>
+                    <li class=\"dropdown\">
+                        <a href=\"tablaUsuarios.php\" class=\"dropbtn\">Usuarios</a>
+                        <div class=\"dropdown-content\">
+                            <a href=\"alta_usuario.php\">Alta de usuario</a>
+                            <a href=\"alta_masiva.php\">Alta masiva</a>
+                        </div>
+                    </li>
+                    <li class=\"dropdown\">
+                        <a href=\"tablaTematicas.php\" class=\"dropbtn\">Temáticas</a>
+                        <div class=\"dropdown-content\">
+                            <a href=\"altaTematica.php\">Alta temática</a>
+                        </div>
+                    </li>
+                    <li class=\"dropdown\">
+                        <a href=\"tablaPreguntas.php\" class=\"dropbtn\">Preguntas</a>
+                        <div class=\"dropdown-content\">
+                            <a href=\"altaPregunta.php\">Alta pregunta</a>
+                            <a href=\"alta_masiva.php\">Alta masiva</a>
+                        </div>
+                    </li>
+                    <li class=\"dropdown\">
+                        <a href=\"tablaExamenes\" class=\"dropbtn\">Exámenes</a>
+                        <div class=\"dropdown-content\">
+                            <a href=\"alta_examen\">Alta examen</a>
+                            <a href=\"historicoExamenes\">Histórico</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
             <table id=\"tabla\">
             </table>
             <div id=\"paginas\"></div>
@@ -49,6 +79,13 @@
             <header>
                 <div class=\"oculto\" id=\"permisos\">Alumno</div>
             </header>
+            <nav>
+                <ul>
+                    <li><a href=\"historicoExamenes.php\">Histórico de exámenes</a></li>
+                    <li><a href=\"examenPredefinido.php\">Examen predefinido</a></li>
+                    <li><a href=\"examenAleatorio.php\">Examen aleatorio</a></li>
+                </ul>
+            </nav>
             <!-- Aquí cosas varias, header, footer... ya sabe usté -->
             <a href=\"creaExamen.php\"><button>Crear examen</button></a>
             <table id=\"tabla\">

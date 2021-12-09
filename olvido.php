@@ -42,7 +42,14 @@
                 $mail->SetFrom('administrador@autoescuela.es', 'Autoescuela Las Fuentezuelas');
                 // asunto
                 $mail->Subject    = "Recuperar contraseña";
-                $enlace = "https://www.lmgtfy.es/?q=MD5+encryption+php"; // Aquí hay que hacer unas gestiones de encriptación.
+                // Generación del enlace olvidado
+                $valor = rand(0,500000);
+                $fecha = date(DATE_RFC2822);
+                $token = md5($valor.$fecha);
+                $enlace = $_SERVER['DOCUMENT_ROOT'].'/proyectos/autoescuela/nuevoUsuario.php?token='.$token;
+
+                // Esto no es, pero bueno
+                BD::nuevaPendienteActivacion($token);
                 // cuerpo
                 // datos del cuerpo
                 $mail->AddEmbeddedImage("media/img/small-logo.jpg", "mifoto", "descarga.jpg");

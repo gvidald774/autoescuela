@@ -294,5 +294,20 @@ class BD {
         return $id;
     }
 
+    public static function nuevaPendienteActivacion($correo, $token)
+    {
+        $consulta = self::$con->prepare("INSERT INTO altas_pendientes VALUES (':correo', ':token', ':fecha'");
+
+        $consulta->bindParam(':correo',$correo);
+        $consulta->bindParam(':token',$token);
+        $fecha = date("Y-m-d H:m:s", strtotime('+24 hours'));
+        $consulta->bindParam(':fecha',$fecha);
+
+        if(!BD::existeCorreo($correo))
+        {
+            $consulta->execute();
+        }
+    }
+
     // Hay que añadir los borrados específicos para las preguntas: hay que borrar las respuestas primero. Y bueno, todo eso.
 }
