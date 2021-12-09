@@ -39,61 +39,18 @@
 
     function pintaPagina($correoEnvio = "")
     {
-        echo "<!DOCTYPE html>
-            <html lang=\"en\">
-            <head>
-                <meta charset=\"UTF-8\">
-                <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
-                <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-                <title>Document</title>
-                <link rel=\"stylesheet\" href=\"css/main.css\" />
-                <script src=\"js/alta_masiva.js\"></script>
-            </head>
-            <body>
-                <header></header>
-                    <nav>
-                        <ul>
-                            <li class=\"dropdown\">
-                                <a href=\"tablaUsuarios.php\" class=\"dropbtn\">Usuarios</a>
-                                <div class=\"dropdown-content\">
-                                    <a href=\"alta_usuario.php\">Alta de usuario</a>
-                                    <a href=\"alta_masiva.php\">Alta masiva</a>
-                                </div>
-                            </li>
-                            <li class=\"dropdown\">
-                                <a href=\"tablaTematicas.php\" class=\"dropbtn\">Temáticas</a>
-                                <div class=\"dropdown-content\">
-                                    <a href=\"altaTematica.php\">Alta temática</a>
-                                </div>
-                            </li>
-                            <li class=\"dropdown\">
-                                <a href=\"tablaPreguntas.php\" class=\"dropbtn\">Preguntas</a>
-                                <div class=\"dropdown-content\">
-                                    <a href=\"altaPregunta.php\">Alta pregunta</a>
-                                    <a href=\"alta_masiva_preguntas.php\">Alta masiva</a>
-                                </div>
-                            </li>
-                            <li class=\"dropdown\">
-                                <a href=\"tablaExamenes.php\" class=\"dropbtn\">Exámenes</a>
-                                <div class=\"dropdown-content\">
-                                    <a href=\"creaExamen.php\">Alta examen</a>
-                                    <a href=\"historicoExamenes.php\">Histórico</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </nav>
-                <main>
-                    <h1>Alta masiva de usuarios</h1>
-                    <p>Por favor, introduzca los correos que desea dar de alta, uno por línea.</p>
-                    <form action=\"\" method=\"POST\">
-                        <textarea id=\"csv\" name=\"csv\"></textarea>
-                        <div id=\"error\">$correoEnvio</div>
-                        <input type=\"submit\" id=\"botonAltaMasiva\" name=\"botonAltaMasiva\" value=\"Enviar\" />
+        Pintor::header("js/alta_masiva.js");
+        Pintor::nav_admin();
+        echo "<main>
+                  <h1>Alta masiva de usuarios</h1>
+                   <p>Por favor, introduzca los correos que desea dar de alta, uno por línea.</p>
+                   <form action=\"\" method=\"POST\">
+                       <textarea id=\"csv\" name=\"csv\"></textarea>
+                       <div id=\"error\">$correoEnvio</div>
+                       <input type=\"submit\" id=\"botonAltaMasiva\" name=\"botonAltaMasiva\" value=\"Enviar\" />
                     </form>
-                </main>
-                <footer></footer>
-            </body>
-            </html>";
+                </main>";
+        Pintor::footer();
     }
 
     Sesion::iniciar();

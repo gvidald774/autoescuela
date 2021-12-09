@@ -1,61 +1,76 @@
 <?php
- // Señor que no tiene usted acceso
+    require_once("include/cargadores/carga_entities.php");
+    require_once("include/cargadores/carga_helpers.php");
+
+    BD::conectar();
+    Sesion::iniciar();
+
+    if(!Sesion::existe("usuario"))
+    {
+        header("Location: login.php");
+    }
+    else if(Sesion::leer("rol") != "Admin") // Cambiar a "Profesor".
+    {
+        echo "No tiene permiso para acceder a estos contenidos.";
+        header("Refresh: 5, URL=login.php"); // Cambiar porque te lleve a otra página.
+    }
+    else
+    { 
+        $options = array();
+        $options = BD::cogeTematicas();
+
+        if(isset($_POST["botonEnviar"]))
+        {
+            var_dump($_POST);
+        }
+    };
+    Pintor::header();
+    Pintor::nav_admin();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alta pregunta</title>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-<body>
-    <header>placeholder</header>
-    <nav>
-        <ul>
-            <li class="dropdown">
-                <a href="tablaUsuarios.php" class="dropbtn">Usuarios</a>
-                <div class="dropdown-content">
-                    <a href="alta_usuario.php">Alta de usuario</a>
-                    <a href="alta_masiva.php">Alta masiva</a>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a href="tablaTematicas.php" class="dropbtn">Temáticas</a>
-                <div class="dropdown-content">
-                    <a href="altaTematica.php">Alta temática</a>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a href="tablaPreguntas.php" class="dropbtn">Preguntas</a>
-                <div class="dropdown-content">
-                    <a href="altaPregunta.php">Alta pregunta</a>
-                    <a href="alta_masiva_preguntas.php">Alta masiva</a>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a href="tablaExamenes.php" class="dropbtn">Exámenes</a>
-                <div class="dropdown-content">
-                    <a href="creaExamen.php">Alta examen</a>
-                    <a href="historicoExamenes.php">Histórico</a>
-                </div>
-            </li>
-        </ul>
-    </nav>
     <main>
+        <style>
+            table { width: 100%; }
+            .invisible {
+                border-color: green;
+            }
+        </style>
         <h1>Pregunta</h1>
-        <form>
-            <select></select>
-            <textarea></textarea>
-            <table class="invisible">
-                <tr>
-                    <td><label for="respuesta1">Opción 1</label><input type="text" value="A" name="respuesta1" /></td>
-                    <td><input type="radio" value="Correcta" name="radio1" /></td>
-                </tr>
-            </table>
+        <form action="" method="POST">
+            <section>
+                <select id="opciones_tematica">Temática:
+                    <?php
+                        for($i = 0; $i < count($options); $i++)
+                        {
+                            $id = $options[$i]->id;
+                            $descripcion = $options[$i]->Nombre;
+                            echo "<option value=\"$id\">$descripcion</option>";
+                        }
+                    ?>
+                </select>
+                <label for="enunciado">Enunciado</label><input type="text" id="enunciado" name="enunciado" />
+            </section>
+            <section>
+                <table class="invisible">
+                    <tr>
+                        <td><label for="respuesta1">Opción 1</label><input type="text" value="A" name="respuesta1" /></td>
+                        <td><input type="radio" value="radio1" id="radio1" name="radioCorrecta" />Respuesta correcta</td>
+                    </tr>
+                    <tr>
+                        <td><label for="respuesta2">Opción 2</label><input type="text" value="B" name="respuesta2" /></td>
+                        <td><input type="radio" value="radio2" id="radio2" name="radioCorrecta" />Respuesta correcta</td>
+                    </tr>
+                    <tr>
+                        <td><label for="respuesta3">Opción 2</label><input type="text" value="B" name="respuesta3" /></td>
+                        <td><input type="radio" value="radio3" id="radio3" name="radioCorrecta" />Respuesta correcta</td>
+                    </tr>
+                    <tr>
+                        <td><label for="respuesta4">Opción 2</label><input type="text" value="B" name="respuesta4" /></td>
+                        <td><input type="radio" value="radio4" id="radio4" name="radioCorrecta" />Respuesta correcta</td>
+                    </tr>
+                </table>
+                <input type="submit" id="botonEnviar" name="botonEnviar" value="Enviar" />
+            </section>
         </form>
     </main>
-    <footer>placeholder</footer>
-</body>
-</html>
+
+<?php Pintor::footer(); ?>

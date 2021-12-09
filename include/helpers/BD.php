@@ -171,6 +171,14 @@ class BD {
         return $registros;
     }
 
+    public static function cogeTematicas()
+    {
+        $registros = array();
+        $res = self::$con->query("SELECT * FROM tematica");
+        $registros = $res->fetchAll(PDO::FETCH_OBJ);
+        return $registros;
+    }
+
     public static function existeCorreo($correo): bool
     {
         $consulta = self::$con->prepare("SELECT email FROM usuario WHERE email=:email");
