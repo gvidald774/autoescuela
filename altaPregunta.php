@@ -47,11 +47,15 @@
             .invisible {
                 border-color: green;
             }
+            img {
+                max-height: 400px;
+            }
         </style>
         <h1>Pregunta</h1>
         <form action="" method="POST" enctype="multipart/form-data">
             <section>
-                <select id="opciones_tematica">Temática:
+                <label for="opciones_tematica">Temática</label>
+                <select id="opciones_tematica" name="opciones_tematica">Temática:
                     <?php
                         for($i = 0; $i < count($options); $i++)
                         {

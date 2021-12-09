@@ -50,7 +50,7 @@ window.addEventListener("load",function()
         let arrayoMcQueen = [];
         if(permisos == "Admin")
         {
-            arrayoMcQueen = ["id","fecha", "nombre", "calificación", "opciones"];
+            arrayoMcQueen = ["fecha", "nombre", "calificacion", "opciones"];
         }
         else if(permisos == "Alumno")
         {

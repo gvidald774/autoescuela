@@ -25,6 +25,9 @@ button:hover, input[type=button]:hover, input[type=submit]:hover {
 }
 
 footer {
+  font-family: "Fjalla One";
+  font-size: small;
+  line-height: 1.5rem;
   overflow-x: hidden;
   box-sizing: border-box;
   left: 0;
@@ -85,7 +88,7 @@ form button, form input, form select, form textarea {
 form label {
   font-family: "Montserrat";
   display: table-cell;
-  text-align: right;
+  margin-top: 10px;
 }
 
 header {
