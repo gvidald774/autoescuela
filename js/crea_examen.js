@@ -166,5 +166,6 @@ window.addEventListener("load",function()
         ev.preventDefault();
         // Y aquí es donde empezamos a jugar. Tenemos que hacer los arrays teniendo en cuenta el modelo de examen y tal y pascual.
         // Ah y también la capacidad de leer lo que se viene si es un JSON o algo.
+        
     }
 });
