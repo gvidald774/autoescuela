@@ -53,11 +53,21 @@
                         echo ' - Error desconocido';
                     break;
                 }
+                $imgrecurso = "";
             }
             else
             {
                 $placeholder = json_decode($json_data);
                 $modifiquino = true;
+                if($placeholder->pregunta->recurso != null)
+                {
+                    $imgrecurso = "data:image/jpeg;base64,".$placeholder->pregunta->recurso;
+                }
+                else
+                {
+                    $imgrecurso = "";
+                }
+                
             }
             // El botón es para modificar.
         }
@@ -66,6 +76,7 @@
             $json_data = file_get_contents("modelos/pregunta.json");
             $placeholder = json_decode($json_data);
             // El botón es para insertar.
+            $imgrecurso = "";
         }
         $rc = $placeholder->pregunta->respuestaCorrecta;
 
@@ -119,22 +130,33 @@
 
                 $tematica = $_POST["opciones_tematica"];
 
-                $id = BD::cogeUltimoId("pregunta");
+                if($placeholder->pregunta->id != null)
+                {
+                    $id = $_GET["id"];
+                    $idr = array();
+                    for ($i = 0; $i < count($placeholder->respuestas); $i++)
+                    {
+                        $idr[$i] = $placeholder->respuestas[$i]->id;
+                    }
+                }
+                else
+                {
+                    $id = BD::cogeUltimoId("pregunta")+1;
+                    $idr = array();
+                    $idr[0] = BD::cogeUltimoId("respuesta")+1;
+                    for ($i = 1; $i <= 3; $i++)
+                    {
+                        $idr[$i] = $idr[0]+$i;
+                    }
+                }
+
                 $pregunta = new Pregunta($id, $enunciado, $tematica, $recurso);
 
-                $idr = BD::cogeUltimoId("respuesta");
-
-                $respuesta1 = new Respuesta($idr+1, $respuestas[0], $pregunta);
-                $respuesta2 = new Respuesta($idr+2, $respuestas[1], $pregunta);
-                $respuesta3 = new Respuesta($idr+3, $respuestas[2], $pregunta);
-                $respuesta4 = new Respuesta($idr+4, $respuestas[3], $pregunta);
-
-                $arrayRespuestas = array(
-                    0 => $respuesta1,
-                    1 => $respuesta2,
-                    2 => $respuesta3,
-                    3 => $respuesta4
-                );
+                $arrayRespuestas = array();
+                for ($i = 0; $i < $nRespuestas; $i++)
+                {
+                    $arrayRespuestas[$i] = new Respuesta(intval($idr[$i]), $respuestas[$i], $pregunta);
+                }
 
                 if($modifiquino == true)
                 {
@@ -179,7 +201,6 @@
         </style>
         <h1>Pregunta</h1>
         <form action="" method="POST" enctype="multipart/form-data">
-            <input type="text" id="idPregunta" name="idPregunta" class="oculto" value="<?php echo $idPregunta; ?>" />
             <section>
                 <label for="opciones_tematica">Temática</label>
                 <select id="opciones_tematica" name="opciones_tematica">Temática:
@@ -200,7 +221,7 @@
                     ?>
                 </select>
                 <label for="enunciado">Enunciado</label><input type="text" id="enunciado" name="enunciado" value="<?php echo $placeholder->pregunta->enunciado; ?>" /><?php echo $errorcillos["enunciado"]; ?>
-                <label for="recurso">Imagen/Vídeo:</label><img src="<?php echo "data:image/jpeg;base64,".$placeholder->pregunta->recurso; ?>" id="imagen" /><input type="file" id="recurso" alt="Recurso de imagen o vídeo" name="recurso" />
+                <label for="recurso">Imagen/Vídeo:</label><img src="<?php echo $imgrecurso; ?>" id="imagen" /><input type="file" id="recurso" alt="Recurso de imagen o vídeo" name="recurso" />
             </section>
             <section>
                 <table class="invisible">

@@ -377,26 +377,27 @@ class BD {
         try {
             self::$con->beginTransaction();
 
-            $insertaPregunta = self::$con->prepare("INSERT INTO pregunta (enunciado, recurso, tematica) VALUES (:enunciado, :recurso, :tematica);");
+            $insertaPregunta = self::$con->prepare("INSERT INTO pregunta (id, enunciado, recurso, tematica) VALUES (:id, :enunciado, :recurso, :tematica);");
             
+            $idPregunta = $pregunta->getId();
             $enunciado = $pregunta->getEnunciado();
             $recurso = $pregunta->getRecurso();
             $tematica = intval($pregunta->getTematica());
 
+            $insertaPregunta->bindParam(':id',$idPregunta);
             $insertaPregunta->bindParam(':enunciado',$enunciado);
             $insertaPregunta->bindParam(':recurso',$recurso);
             $insertaPregunta->bindParam(':tematica',$tematica);
 
             $insertaPregunta->execute();
 
-            $cogeUltimoId = self::$con->query("SELECT id FROM pregunta WHERE enunciado LIKE \"".$enunciado."\";");
-            $idPregunta = $cogeUltimoId->fetch(PDO::FETCH_NUM)[0];
-
-            $insertaRespuesta = self::$con->prepare("INSERT INTO respuesta (enunciado, idPregunta) VALUES (:enunciado, :idPregunta);");
+            $insertaRespuesta = self::$con->prepare("INSERT INTO respuesta (id, enunciado, idPregunta) VALUES (:id, :enunciado, :idPregunta);");
 
             for ($i = 0; $i < count($respuestas); $i++)
             {
+                $idR = $respuestas[$i]->getId();
                 $enunciado = $respuestas[$i]->getEnunciado();
+                $insertaRespuesta->bindParam(':id',$idR);
                 $insertaRespuesta->bindParam(':enunciado',$enunciado);
                 $insertaRespuesta->bindParam(':idPregunta',$idPregunta);
                 
@@ -426,17 +427,43 @@ class BD {
 
             // Solo podemos cambiar temática, enunciado, respuestaCorrecta y respuestas.
             // 1. Cambiar los enunciados de las respuestas
-            $modifRespuesta = self::$con->prepare("UPDATE respuesta SET ");
+            $modifRespuesta = self::$con->prepare("UPDATE respuesta SET enunciado=:enunciado WHERE id=:id;");
             for ($i = 0; $i < count($respuestas); $i++)
             {
+                $id = $respuestas[$i]->getId();
                 $enunciado = $respuestas[$i]->getEnunciado();
+                $modifRespuesta->bindParam(':enunciado',$enunciado);
+                $modifRespuesta->bindParam(':id',$id);
 
+                $modifRespuesta->execute();
             }
             // 2. Cambiar la respuesta correcta
-            
+            $enunciadoRespuestaCorrecta = $respuestas[$respuestaCorrecta-1]->getEnunciado();
+            $cogeIdRespuestaCorrecta = self::$con->query("SELECT id FROM respuesta WHERE enunciado LIKE \"".$enunciadoRespuestaCorrecta."\" AND idPregunta=".$pregunta->getId().";");
+            $idRespuestaCorrecta = $cogeIdRespuestaCorrecta->fetch(PDO::FETCH_NUM)[0];
+
+            $meteRespuestaCorrecta = self::$con->prepare("UPDATE pregunta SET respuestaCorrecta = ".$idRespuestaCorrecta." WHERE id=".$pregunta->getId().";");
+            $meteRespuestaCorrecta->execute();
             
             // 3. Cambiar el enunciado de la pregunta
+            $cambiaEnunciadoPregunta = self::$con->prepare("UPDATE pregunta SET enunciado = :enunciado WHERE id=:id");
+            $enunciadoP = $pregunta->getEnunciado();
+            $idP = $pregunta->getId();
+            $cambiaEnunciadoPregunta->bindParam(':enunciado',$enunciadoP);
+            $cambiaEnunciadoPregunta->bindParam(':id',$idP);
+            $cambiaEnunciadoPregunta->execute();
+
             // 4. Cambiar la temática de la pregunta
+            $cambiaTematicaPregunta = self::$con->prepare("UPDATE pregunta SET tematica = ".intval($pregunta->getTematica())." WHERE id=".$idP.";");
+            $cambiaTematicaPregunta->execute();
+
+            // 5. Cambiar el recurso, supongo
+            $cambiaRecursoPregunta = self::$con->prepare("UPDATE pregunta SET recurso=:recurso WHERE id=:id;");
+            $recurso = $pregunta->getRecurso();
+            
+            $cambiaRecursoPregunta->bindParam(':recurso',$recurso);
+            $cambiaRecursoPregunta->bindParam('id',$idP);
+            $cambiaRecursoPregunta->execute();
 
             self::$con->commit();
         }
