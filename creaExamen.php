@@ -15,9 +15,15 @@
     }
     else
     {
-        if(isset($_POST["botonEnviar"]))
+        if(isset($_GET["id"]))
         {
-            var_dump($_POST);
+            $idExamen = $_GET["id"];
+            // Y el resto de datos también se introducen
+        }
+        else
+        {
+            $idExamen = 0;
+            // Y el resto de datos se vienen del modelo JSON (?)
         }
     }
 
@@ -86,7 +92,7 @@
     <main>
         <form action="" method="POST">
             <section>
-                <input type="text" style="display:none" id="codigoExamen" name="codigoExamen" />
+                <input type="text" style="display:none" id="codigoExamen" name="codigoExamen" <?php echo "value=\"".$idExamen."\"" ?> />
                 <label for="enunciado">Enunciado: </label><input type="text" id="enunciado" name="enunciado" />
                 <label for="n_preg">Nº preguntas: </label><input type="number" id="n_preg" name="n_preg" />
                 <label for="duracion">Duración: </label><input type="number" id="duracion" name="duracion" />

@@ -166,6 +166,62 @@ window.addEventListener("load",function()
         ev.preventDefault();
         // Y aquí es donde empezamos a jugar. Tenemos que hacer los arrays teniendo en cuenta el modelo de examen y tal y pascual.
         // Ah y también la capacidad de leer lo que se viene si es un JSON o algo.
+
+        var formularino = document.getElementsByTagName("form")[0];
+
+        var standardJSON_Object = new Object();
+        standardJSON_Object.codigoExamen = formularino["id"].value;
+        standardJSON_Object.enunciado = formularino["enunciado"].value;
+        standardJSON_Object.numPreguntas = formularino["n_preg"].value;
+        standardJSON_Object.duracion = formularino["duracion"].value;
+
+        var preguntas_sin_incluir = [];
+        for(let i = 0; i < bancoPreguntas.children.length; i++)
+        {
+            var objetoPregunta = new Object();
+            var idPregunta = bancoPreguntas.children[i].id;
+            objetoPregunta.id = idPregunta.split("_")[1];
+            objetoPregunta.tematica = bancoPreguntas.children[i].firstElementChild.innerHTML;
+            objetoPregunta.enunciado = bancoPreguntas.children[i].lastElementChild.innerHTML;
+            // objetoPregunta.recurso que lo dejamos para luego
+
+            preguntas_sin_incluir.push(objetoPregunta);
+        }
+
+        standardJSON_Object.bancoPreguntas = preguntas_sin_incluir;
         
+        var preguntasIncluidas = [];
+        for(let i = 0; i < seleccionadas.children.length; i++)
+        {
+            let stringID = seleccionadas.children[i].id;
+            preguntasIncluidas.push(stringID.split("_")[1]);
+        }
+
+        standardJSON_Object.preguntasIncluidas = preguntasIncluidas;
+
+        var cadena_json = JSON.stringify(standardJSON_Object);
+
+        console.log(cadena_json);
+
+        // Y ahora hacemos un fetch para crear el examen propiamente dicho (?)
+        fetch("enviaExamen.php",
+        {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+
+            body: cadena_json
+
+        })
+        .then((response) =>
+        {
+            return response.text();
+        })
+        .then(response => 
+        {
+            console.log(response);
+        });
     }
 });

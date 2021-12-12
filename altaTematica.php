@@ -12,14 +12,36 @@
     // HAY QUE PREGUNTAR POR EL BOTÓN
     if(isset($_POST["Enviar"]))
     {
-        // Hacé cosas de que se tienen que hacer después.
-        // Como sigue ocurriendo puedo trampear si eso.
+        $validador = new Validator();
+        $validador->existe("nombre");
+        if($validador->correcto())
+        {
+            $descNueva = $_POST["nombre"];
+            if(isset($_GET["id"]))
+            {
+                $id = $_GET["id"];
+                $result = BD::cambiaTematica($id, $descNueva);
+                if($result == "true")
+                {
+                    $result = "Valor cambiado con éxito.";
+                    header("Location: ".$_SERVER['REQUEST_URI']);
+                }
+            }
+            else
+            {
+                if(BD::existeTematica($descNueva))
+                {
+                    $result = "Valor ya existente.";
+                }
+                else
+                {
+                    BD::insertaTematica($descNueva);
+                    $result = "Valor insertado con éxito.";
+                    header("Location: ".$_SERVER['REQUEST_URI']);
+                }
+            }
+        }
     }
-    else
-    {
-        // Acabamos de llegar a la página, así que tenemos que pintar las cosas y tal y pascual.
-    }
-
     // Esto es si no venimos de nuevas
     if(isset($_GET["id"]))
     {
@@ -58,11 +80,11 @@
 
     if(isset($_GET["id"]))
     {
-        Pintor::header("Editar pregunta");
+        Pintor::header("Editar temática");
     }
     else
     {
-        Pintor::header("Crear pregunta");
+        Pintor::header("Crear temática");
     }
     Pintor::nav_admin();
 ?>
@@ -76,6 +98,4 @@
         </form>
         <a href="tablaTematicas.php">Volver</a>
     </main>
-    <footer></footer>
-</body>
-</html>
+<?php Pintor::footer(); ?>

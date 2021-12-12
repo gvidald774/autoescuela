@@ -115,7 +115,7 @@ class BD {
 
     public static function cogeUltimoID($tabla) // Check for errors because sheesh
     {
-        $consulta = self::$con->prepare("SELECT max(id) FROM $tabla");
+        $consulta = self::$con->prepare("SELECT max(id) FROM ".$tabla.";");
 
         $consulta->execute();
 
@@ -199,6 +199,17 @@ class BD {
         $consulta->execute();
         $nombre = $consulta->fetch(PDO::FETCH_NUM)[0];
         return $nombre;
+    }
+
+    public static function getPreguntaSola($idPregunta)
+    {
+        $id = intval($idPregunta);
+        $getPregunta = self::$con->prepare("SELECT * FROM pregunta WHERE id=:id");
+        $getPregunta->bindParam(':id',$id);
+        $getPregunta->execute();
+        $pregunta = $getPregunta->fetch(PDO::FETCH_OBJ);
+
+        return $pregunta;
     }
 
     public static function getPregunta_y_Respuestas($idPregunta)
@@ -472,5 +483,44 @@ class BD {
             echo self::$con->errorInfo();
             self::$con->rollBack();
         }
+    }
+
+    public static function insertaExamen(Examen $examen)
+    {
+        try {
+            self::$con->beginTransaction();
+
+            $insertaExamenDatosGenerales = self::$con->prepare("INSERT INTO examen (id, descripcion, duracion, nPreguntas, activo) VALUES (:id, :descripcion, :duracion, :nPreguntas, 1)");
+
+            $id = $examen->getID();
+            $descripcion = $examen->getDescripcion();
+            $duracion = $examen->getDuracion();
+            $nPreguntas = $examen->getNPreguntas();
+
+            $insertaExamenDatosGenerales->bindParam(':id',$id);
+            $insertaExamenDatosGenerales->bindParam(':descripcion',$descripcion);
+            $insertaExamenDatosGenerales->bindParam(':duracion',$duracion);
+            $insertaExamenDatosGenerales->bindParam(':nPreguntas',$nPreguntas);
+
+            $insertaExamenDatosGenerales->execute();
+
+            $insertaPreguntasExamen = self::$con->prepare("INSERT INTO examen_pregunta VALUES (:idExamen, :idPregunta)");
+
+            $insertaPreguntasExamen->bindParam(':idExamen',$id);
+            for($i = 0; $i < count($examen->getPreguntas()); $i++)
+            {
+                $idPregunta = $examen->getPreguntas()[$i]->getID();
+                $insertaPreguntasExamen->bindParam(':idPregunta',$idPregunta);
+                $insertaPreguntasExamen->execute();
+            }
+
+            self::$con->commit();
+        }
+        catch(PDOException $e)
+        {
+            echo self::$con->errorInfo();
+            self::$con->rollBack();
+        }
+
     }
 }
