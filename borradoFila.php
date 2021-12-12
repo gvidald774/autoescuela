@@ -13,6 +13,10 @@
     {
         $respuesta = BD::borraPregunta($id);
     }
+    else if($tabla == "examen")
+    {
+        $respuesta = BD::borraExamen($id);
+    }
     else
     {
         $respuesta = BD::borraDato($tabla, $id);

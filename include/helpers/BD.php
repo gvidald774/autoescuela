@@ -317,6 +317,30 @@ class BD {
         }
     }
 
+    public static function borraExamen($id)
+    {
+        try {
+            self::$con->beginTransaction();
+
+            // Eliminar todas las preguntas asociadas al examen
+            $quitaPreguntas = self::$con->prepare("DELETE FROM examen_pregunta WHERE idExamen = ".$id.";");
+            $quitaPreguntas->execute();
+
+            // Eliminar el examen propiamente dicho
+            $quitaExamen = self::$con->prepare("DELETE FROM examen WHERE id = ".$id.";");
+            $quitaExamen->execute();
+
+            self::$con->commit();
+            return "true";
+        }
+        catch (PDOException $e)
+        {
+            echo self::$con->errorInfo();
+            self::$con->rollBack();
+            return $e;
+        }
+    }
+
     public static function obtenCuantasPaginasExamen(int $filas, string $idUsuario = "")
     {
         $registros = array();
@@ -522,5 +546,48 @@ class BD {
             self::$con->rollBack();
         }
 
+    }
+
+    public static function modificaExamen(Examen $examen)
+    {
+        try {
+            self::$con->beginTransaction();
+
+            // Para quitarnos de problemas, lo primero que hacemos es eliminar todas las preguntas asociadas y volverlas a insertar.
+            $quitaPreguntas = self::$con->prepare("DELETE FROM examen_pregunta WHERE idExamen = ".$id.";");
+            $quitaPreguntas->execute();
+
+            $insertaPreguntas = self::$con->prepare("INSERT INTO examen_pregunta VALUES (:idExamen, :idPregunta)");
+
+            $id = $examen->getID();
+            $insertaPreguntas->bindParam(':id',$id);
+            for($i = 0; $i < count($examen->getPreguntas()); $i++)
+            {
+                $idPregunta = $examen->getPreguntas()[$i]->getID();
+                $insertaPreguntasExamen->bindParam(':idPregunta',$idPregunta);
+                $insertaPreguntasExamen->execute();
+            }
+
+            // Ahora se modifica el examen propiamente dicho.
+            $modificaExamenDatosGenerales = self::$con->prepare("UPDATE examen SET enunciado=:enunciado, duracion=:duracion, nPreguntas=:nPreguntas WHERE id=:id");
+
+            $modificaExamenDatosGenerales->bindParam(':id',$id);
+            $enunciado = $examen->getEnunciado();
+            $duracion = $examen->getDuracion();
+            $nPreguntas = $examen->getNPreguntas();
+
+            $modificaExamenDatosGenerales->bindParam(':enunciado',$enunciado);
+            $modificaExamenDatosGenerales->bindParam(':duracion',$duracion);
+            $modificaExamenDatosGenerales->bindParam(':nPreguntas',$nPreguntas);
+
+            $modificaExamenDatosGenerales->execute();
+            
+            self::$con->commit();
+        }
+        catch(PDOException $e)
+        {
+            echo self::$con->errorInfo();
+            self::$con->rollBack();
+        }
     }
 }

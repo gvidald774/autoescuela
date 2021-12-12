@@ -24,7 +24,7 @@ window.addEventListener("load",function()
     function escribeCabeceras(json)
     {
         let cabecera = document.createElement("tr");
-        let arrayoMcQueen = ["id","Enunciado","Nº de preguntas","Duración"];
+        let arrayoMcQueen = ["id","Enunciado","Nº de preguntas","Duración", "Opciones"];
         for (let i = 0; i < arrayoMcQueen.length; i++)
         {
             let columna = document.createElement("th");
@@ -36,15 +36,46 @@ window.addEventListener("load",function()
 
     function escribeExamenes(json)
     {
-        let arrayoMcQueen = ["id","descripcion","nPreguntas","duracion"];
+        let arrayoMcQueen = ["id","descripcion","nPreguntas","duracion","opciones"];
         for (let i = 0; i < Object.keys(json).length-1; i++)
         {
             let fila = document.createElement("tr");
             for (let j = 0; j < arrayoMcQueen.length; j++)
             {
-                let contenido = document.createElement("td");
-                contenido.innerHTML = json[i][arrayoMcQueen[j]];
-                fila.appendChild(contenido);
+                if(arrayoMcQueen[j] == "opciones")
+                {
+                    let contenido = document.createElement("td");
+                    contenido.style = "font-size: small";
+                    let enlaceEditar = document.createElement("a");
+                    let id = json[i]["id"];
+                    enlaceEditar.href = "creaExamen.php?id="+id;
+                    enlaceEditar.innerHTML = "Editar";
+                    let enlaceDesactivar = document.createElement("a");
+                    enlaceDesactivar.innerHTML = " Desactivar";
+                    enlaceDesactivar.href = "#";
+                    let enlaceBorrar = document.createElement("a");
+                    enlaceBorrar.innerHTML = " Borrar";
+                    enlaceBorrar.href = "#";
+                    contenido.appendChild(enlaceEditar);
+                    contenido.appendChild(enlaceDesactivar);
+                    contenido.appendChild(enlaceBorrar);
+                    fila.appendChild(contenido);
+
+                    enlaceBorrar.onclick = function()
+                    {
+                        if(confirm("¿Está seguro de querer borrar este examen?"))
+                        {
+                            let idBorra = contenido.parentElement.firstElementChild.innerHTML;
+                            borraDato(idBorra);
+                        }
+                    }
+                }
+                else
+                {
+                    let contenido = document.createElement("td");
+                    contenido.innerHTML = json[i][arrayoMcQueen[j]];
+                    fila.appendChild(contenido);
+                }
             }
             corpus.appendChild(fila);
         }
@@ -87,6 +118,21 @@ window.addEventListener("load",function()
         {
             escribePreguntas(json);
         });
+    }
+
+    function borraDato(idBorra)
+    {
+        var formData = new FormData();
+        formData.append('tabla','examen');
+        formData.append('id',idBorra);
+        fetch("borradoFila.php",
+        {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(response => alert(response));
+        refresh(1);
     }
 
     tabla.appendChild(cabesa);

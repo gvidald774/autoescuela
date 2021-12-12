@@ -2,6 +2,7 @@
     require_once("include/cargadores/carga_entities.php");
     require_once("include/cargadores/carga_helpers.php");
 
+    BD::conectar();
     Sesion::iniciar();
 
     if(!Sesion::existe("usuario"))
@@ -15,17 +16,64 @@
     }
     else
     {
+        $modifiquino = false;
+        $placeholder = "";
+
         if(isset($_GET["id"]))
         {
-            $idExamen = $_GET["id"];
-            // Y el resto de datos también se introducen
+            $json_data = BD::getExamen($_GET["id"]);
+            if($json_data == true/* Algo que sea vacío */)
+            {
+                $modifiquino = false; // Inserción, venimos de nuevas
+                $json_data = file_get_contents("modelos/jsonConfExamen.json"); // Hay que cambiar el modelo de alguna manera
+                // Aquí se insertarían las preguntas buenas, quitando las del modelo
+                // Y se vaciaría las preguntas seleccionadas, quitando las del modelo
+                $placeholder = json_decode($json_data);
+                switch(json_last_error())
+                {
+                    case JSON_ERROR_NONE:
+                        echo ' - Sin errores';
+                    break;
+                    case JSON_ERROR_DEPTH:
+                        echo ' - Excedido tamaño máximo de la pila';
+                    break;
+                    case JSON_ERROR_STATE_MISMATCH:
+                        echo ' - Desbordamiento de buffer o los modos no coinciden';
+                    break;
+                    case JSON_ERROR_CTRL_CHAR:
+                        echo ' - Encontrado carácter de control no esperado';
+                    break;
+                    case JSON_ERROR_SYNTAX:
+                        echo ' - Error de sintaxis, JSON mal formado';
+                    break;
+                    case JSON_ERROR_UTF8:
+                        echo ' - Caracteres UTF-8 malformados, posiblemente codificados de forma incorrecta';
+                    break;
+                    default:
+                        echo ' - Error desconocido';
+                    break;
+                }
+            }
+            else
+            {
+                $placeholder = json_decode($json_data);
+                $modifiquino = true;
+            }
+
         }
         else
         {
-            $idExamen = 0;
+            $json_data = file_get_contents("modelos/examen.json"); // Va a ser lo mejor creo yo.
+            // Hay que meterle las preguntas todas, o algo así.
             // Y el resto de datos se vienen del modelo JSON (?)
         }
     }
+
+    $errorcillos = array();
+    $errorcillos["enunciado"] = "";
+    $errorcillos["duracion"] = "";
+    $errorcillos["nPreguntas"] = "";
+    // Quizá comprobar de alguna manera que nPreguntas coincide con el número de preguntas que hay en la lista y tal y pascual
 
     if(isset($_GET["id"])) // A ver no lo sé
     {

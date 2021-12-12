@@ -1,0 +1,10 @@
+{
+    "codigoExamen":null,
+    "enunciado":null,
+    "numPreguntas":null,
+    "duracion":null,
+    "bancoPreguntas":
+    [
+    ],
+    "preguntasIncluidas":[]
+}
