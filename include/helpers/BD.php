@@ -203,7 +203,23 @@ class BD {
 
     public static function getPregunta_y_Respuestas($idPregunta)
     {
+        $id = intval($idPregunta);
         // Y lo que tengo que hacer aquí es cuidadosamente construir un JSON que se pueda mandar y parsear luego donde la pregunta y tal.
+        $getPregunta = self::$con->prepare("SELECT * FROM pregunta WHERE id=:id");
+        $getPregunta->bindParam(':id',$id);
+        $getPregunta->execute();
+        $pregunta = $getPregunta->fetch(PDO::FETCH_OBJ);
+
+        $arrayRespuestas = array();
+        $getRespuestas = self::$con->prepare("SELECT * FROM respuesta WHERE idPregunta=:id");
+        $getRespuestas->bindParam(':id',$id);
+        $getRespuestas->execute();
+        $arrayRespuestas = $getRespuestas->fetchAll(PDO::FETCH_OBJ);
+
+        $QandA = array();
+        $QandA["pregunta"] = $pregunta;
+        $QandA["respuestas"] = $arrayRespuestas;
+        return json_encode($QandA);
     }
 
     public static function existeTematica($desc):bool
@@ -252,16 +268,41 @@ class BD {
 
     public static function borraDato($tabla, $id)
     {
-        $consulta = self::$con->prepare("DELETE FROM $tabla WHERE id=:id");
-        $consulta->bindParam(':id',$id);
-        $consulta->execute();
-        if(self::$con->errorInfo() == "")
-        {
-            return true;
+        try {
+            $consulta = self::$con->prepare("DELETE FROM $tabla WHERE id=:id");
+            $consulta->bindParam(':id',$id);
+            $consulta->execute();
+            return "true";
         }
-        else
+        catch(PDOException $e)
         {
-            return self::$con->errorInfo();
+            return $consulta->errorInfo();
+        }
+    }
+
+    public static function borraPregunta($id)
+    {
+        // Hay que revertir los pasos que hemos hecho al insertar
+        try {
+            self::$con->beginTransaction();
+            // 3. Eliminar la respuesta correcta de la pregunta
+            $quitaRespuestaCorrecta = self::$con->prepare("UPDATE pregunta SET respuestaCorrecta = NULL WHERE id=".$id.";");
+            $quitaRespuestaCorrecta->execute();
+            // 2. Borrar las respuestas asociadas a la pregunta
+            $borraRespuesta = self::$con->prepare("DELETE FROM respuesta WHERE idPregunta = ".$id.";");
+            $borraRespuesta->execute();
+            // 1. Borrar la pregunta
+            $borraPregunta = self::$con->prepare("DELETE FROM pregunta WHERE id = ".$id.";");
+            $borraPregunta->execute();
+
+            self::$con->commit();
+            return "true";
+        }
+        catch (PDOException $e)
+        {
+            echo self::$con->errorInfo();
+            self::$con->rollBack();
+            return $e;
         }
     }
 
@@ -330,4 +371,79 @@ class BD {
     }
 
     // Hay que añadir los borrados específicos para las preguntas: hay que borrar las respuestas primero. Y bueno, todo eso.
+
+    public static function insertaPregunta(Pregunta $pregunta, int $respuestaCorrecta, $respuestas)
+    {
+        try {
+            self::$con->beginTransaction();
+
+            $insertaPregunta = self::$con->prepare("INSERT INTO pregunta (enunciado, recurso, tematica) VALUES (:enunciado, :recurso, :tematica);");
+            
+            $enunciado = $pregunta->getEnunciado();
+            $recurso = $pregunta->getRecurso();
+            $tematica = intval($pregunta->getTematica());
+
+            $insertaPregunta->bindParam(':enunciado',$enunciado);
+            $insertaPregunta->bindParam(':recurso',$recurso);
+            $insertaPregunta->bindParam(':tematica',$tematica);
+
+            $insertaPregunta->execute();
+
+            $cogeUltimoId = self::$con->query("SELECT id FROM pregunta WHERE enunciado LIKE \"".$enunciado."\";");
+            $idPregunta = $cogeUltimoId->fetch(PDO::FETCH_NUM)[0];
+
+            $insertaRespuesta = self::$con->prepare("INSERT INTO respuesta (enunciado, idPregunta) VALUES (:enunciado, :idPregunta);");
+
+            for ($i = 0; $i < count($respuestas); $i++)
+            {
+                $enunciado = $respuestas[$i]->getEnunciado();
+                $insertaRespuesta->bindParam(':enunciado',$enunciado);
+                $insertaRespuesta->bindParam(':idPregunta',$idPregunta);
+                
+                $insertaRespuesta->execute();
+            }
+
+            $enunciadoRespuestaCorrecta = $respuestas[$respuestaCorrecta-1]->getEnunciado();
+            $cogeIdRespuestaCorrecta = self::$con->query("SELECT max(id) FROM respuesta WHERE enunciado LIKE \"".$enunciadoRespuestaCorrecta."\";");
+            $idRespuestaCorrecta = $cogeIdRespuestaCorrecta->fetch(PDO::FETCH_NUM)[0];
+
+            $meteRespuestaCorrecta = self::$con->prepare("UPDATE pregunta SET respuestaCorrecta = ".$idRespuestaCorrecta." WHERE id=".$idPregunta.";");
+            $meteRespuestaCorrecta->execute();
+
+            self::$con->commit();
+        }
+        catch(PDOException $e)
+        {
+            echo self::$con->errorInfo();
+            self::$con->rollBack();
+        }
+    }
+
+    public static function modificaPregunta(Pregunta $pregunta, int $respuestaCorrecta, $respuestas)
+    {
+        try {
+            self::$con->beginTransaction();
+
+            // Solo podemos cambiar temática, enunciado, respuestaCorrecta y respuestas.
+            // 1. Cambiar los enunciados de las respuestas
+            $modifRespuesta = self::$con->prepare("UPDATE respuesta SET ");
+            for ($i = 0; $i < count($respuestas); $i++)
+            {
+                $enunciado = $respuestas[$i]->getEnunciado();
+
+            }
+            // 2. Cambiar la respuesta correcta
+            
+            
+            // 3. Cambiar el enunciado de la pregunta
+            // 4. Cambiar la temática de la pregunta
+
+            self::$con->commit();
+        }
+        catch(PDOException $e)
+        {
+            echo self::$con->errorInfo();
+            self::$con->rollBack();
+        }
+    }
 }

@@ -1,0 +1,31 @@
+{
+    "pregunta":{
+        "id":null,
+        "enunciado":null,
+        "respuestaCorrecta":null,
+        "recurso":null,
+        "tematica":null
+        },
+    "respuestas":
+    [
+        {
+            "id":null,
+            "enunciado":null,
+            "idPregunta":null
+        },
+        {
+            "id":null,
+            "enunciado":null,
+            "idPregunta":null
+        },
+        {
+            "id":null,
+            "enunciado":null,
+            "idPregunta":null},
+        {
+            "id":null,
+            "enunciado":null,
+            "idPregunta":null
+        }
+    ]
+}

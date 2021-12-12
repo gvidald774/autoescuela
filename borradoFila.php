@@ -9,13 +9,28 @@
     $tabla = $_POST["tabla"];
     $id = $_POST["id"];
 
-    $respuesta = BD::borraDato($tabla, $id);
+    if($tabla == "pregunta")
+    {
+        $respuesta = BD::borraPregunta($id);
+    }
+    else
+    {
+        $respuesta = BD::borraDato($tabla, $id);
+    }
 
-    if($respuesta == true)
+    if($respuesta == "true")
     {
         echo "Borrado realizado con éxito.";
     }
     else
     {
-        echo $respuesta;
+        switch($respuesta[0])
+        {
+            case "23000":
+                echo "Error: Hay preguntas con esta temática aún existentes en la base de datos. Por favor, bórrelas antes de borrar esta temática.";
+                break;
+            default:
+                echo "Error desconocido, el borrado no se ha realizado con éxito.";
+                break;
+        }
     }

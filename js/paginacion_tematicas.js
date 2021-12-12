@@ -68,7 +68,7 @@ window.addEventListener("load",function()
                         if (confirm("¿Está seguro de querer borrar esta temática?"))
                         {
                             let idBorra = contenido.parentElement.firstElementChild.innerHTML;
-                            borraDato("tematica",idBorra);
+                            borraDato(idBorra);
                         }
                     }
                 }
@@ -109,7 +109,6 @@ window.addEventListener("load",function()
 
     function borraDato(idBorra)
     {
-        // Este fetch me lo tengo que mirar también repasar el paso de parámetros y mierdas. Tengo mucho sueño y estoy muy disperso.
         var formData = new FormData();
         formData.append('tabla','tematica');
         formData.append('id',idBorra);

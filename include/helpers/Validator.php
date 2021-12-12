@@ -35,6 +35,19 @@ class Validator {
         return $respuesta;
     }
 
+    public function marcado($campo)
+    {
+        $respuesta = false;
+        if(isset($_POST[$campo]) && $_POST[$campo] != "")
+        {
+            $respuesta = true;
+        }
+        else
+        {
+            $this->errores[$campo] = "Debe marcar una de las respuestas como correcta";
+        }
+    }
+
     /**
      * Comprueba si el contenido de dos campos es igual.
      * Útil para campos cuyo contenido debe coincidir.

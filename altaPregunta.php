@@ -19,19 +19,144 @@
         $options = array();
         $options = BD::cogeTematicas();
 
+        $modifiquino = false;
+        $placeholder = "";
+
         if(isset($_GET["id"]))
         {
-            // Aquí ahora tendríamos que coger la pregunta de la Base de Datos.
-            // Quizá aquí se podría usar el JSON?
+            $json_data = BD::getPregunta_y_Respuestas($_GET["id"]);
+            if($json_data == '{"pregunta":false,"respuestas":[]}')
+            {
+                $modifiquino = false; // Se insertará porque venimos sin datos
+                $json_data = file_get_contents("modelos/pregunta.json");
+                $placeholder = json_decode($json_data);
+                switch(json_last_error()) {
+                    case JSON_ERROR_NONE:
+                        echo ' - Sin errores';
+                    break;
+                    case JSON_ERROR_DEPTH:
+                        echo ' - Excedido tamaño máximo de la pila';
+                    break;
+                    case JSON_ERROR_STATE_MISMATCH:
+                        echo ' - Desbordamiento de buffer o los modos no coinciden';
+                    break;
+                    case JSON_ERROR_CTRL_CHAR:
+                        echo ' - Encontrado carácter de control no esperado';
+                    break;
+                    case JSON_ERROR_SYNTAX:
+                        echo ' - Error de sintaxis, JSON mal formado';
+                    break;
+                    case JSON_ERROR_UTF8:
+                        echo ' - Caracteres UTF-8 malformados, posiblemente codificados de forma incorrecta';
+                    break;
+                    default:
+                        echo ' - Error desconocido';
+                    break;
+                }
+            }
+            else
+            {
+                $placeholder = json_decode($json_data);
+                $modifiquino = true;
+            }
+            // El botón es para modificar.
         }
+        else
+        {
+            $json_data = file_get_contents("modelos/pregunta.json");
+            $placeholder = json_decode($json_data);
+            // El botón es para insertar.
+        }
+        $rc = $placeholder->pregunta->respuestaCorrecta;
+
+        var_dump($placeholder);
+
+        $errorcillos = array();
+        $errorcillos["enunciado"] = "";
+        $errorcillos["respuesta1"] = "";
+        $errorcillos["respuesta2"] = "";
+        $errorcillos["respuesta3"] = "";
+        $errorcillos["respuesta4"] = "";
+        $errorcillos["radioCorrecta"] = "";
 
         if(isset($_POST["botonEnviar"]))
         {
             var_dump($_POST);
             var_dump($_FILES);
+            
+            $validador = new Validator();
+
+            $validador->existe("enunciado");
+            $nRespuestas = 4;
+            for ($i = 1; $i <= $nRespuestas; $i++)
+            {
+                $string_respuesta = "respuesta".$i;
+                $validador->existe($string_respuesta);
+            }
+
+            $validador->marcado("radioCorrecta");
+
+            if($validador->correcto())
+            {
+                $enunciado = $_POST["enunciado"];
+                $respuestas = array();
+                for ($i = 0; $i < $nRespuestas; $i++)
+                {
+                    $respuestas[$i] = $_POST["respuesta".($i+1)];
+                }
+
+                if($_FILES["recurso"]["tmp_name"]!='')
+                {
+                    $img = "";
+                    $img = file_get_contents($_FILES["recurso"]["tmp_name"]);
+                    $img = base64_encode($img);
+                    $recurso = $img;
+                }
+                else
+                {
+                    $recurso = null;
+                }
+
+                $tematica = $_POST["opciones_tematica"];
+
+                $id = BD::cogeUltimoId("pregunta");
+                $pregunta = new Pregunta($id, $enunciado, $tematica, $recurso);
+
+                $idr = BD::cogeUltimoId("respuesta");
+
+                $respuesta1 = new Respuesta($idr+1, $respuestas[0], $pregunta);
+                $respuesta2 = new Respuesta($idr+2, $respuestas[1], $pregunta);
+                $respuesta3 = new Respuesta($idr+3, $respuestas[2], $pregunta);
+                $respuesta4 = new Respuesta($idr+4, $respuestas[3], $pregunta);
+
+                $arrayRespuestas = array(
+                    0 => $respuesta1,
+                    1 => $respuesta2,
+                    2 => $respuesta3,
+                    3 => $respuesta4
+                );
+
+                if($modifiquino == true)
+                {
+                    BD::modificaPregunta($pregunta, intval($_POST["radioCorrecta"]), $arrayRespuestas); // A ver como nos las apañamos   
+                }
+                else
+                {
+                    BD::insertaPregunta($pregunta, intval($_POST["radioCorrecta"]), $arrayRespuestas);
+                }
+            }
+            else
+            {
+                $errorcillos["enunciado"] = $validador->imprimeError("enunciado");
+                $errorcillos["respuesta1"] = $validador->imprimeError("respuesta1");
+                $errorcillos["respuesta2"] = $validador->imprimeError("respuesta2");
+                $errorcillos["respuesta3"] = $validador->imprimeError("respuesta3");
+                $errorcillos["respuesta4"] = $validador->imprimeError("respuesta4");
+                $errorcillos["radioCorrecta"] = $validador->imprimeError("radioCorrecta");
+            }
         }
     };
-    if(isset($_GET["id"]))
+    if($modifiquino == true)
     {
         Pintor::header("Editar pregunta","js/altaPregunta.js");
     }
@@ -40,6 +165,7 @@
         Pintor::header("Crear pregunta","js/altaPregunta.js");
     }
     Pintor::nav_admin();
+
 ?>
     <main>
         <style>
@@ -53,6 +179,7 @@
         </style>
         <h1>Pregunta</h1>
         <form action="" method="POST" enctype="multipart/form-data">
+            <input type="text" id="idPregunta" name="idPregunta" class="oculto" value="<?php echo $idPregunta; ?>" />
             <section>
                 <label for="opciones_tematica">Temática</label>
                 <select id="opciones_tematica" name="opciones_tematica">Temática:
@@ -61,32 +188,45 @@
                         {
                             $id = $options[$i]->id;
                             $descripcion = $options[$i]->Nombre;
-                            echo "<option value=\"$id\">$descripcion</option>";
+                            if ($id == $placeholder->pregunta->tematica)
+                            {
+                                echo "<option value=\"$id\" selected>$descripcion</option>";
+                            }
+                            else
+                            {
+                                echo "<option value=\"$id\">$descripcion</option>";
+                            }
                         }
                     ?>
                 </select>
-                <label for="enunciado">Enunciado</label><input type="text" id="enunciado" name="enunciado" />
-                <label for="recurso">Imagen/Vídeo:</label><img src="media/img/small-logo.jpg" id="imagen" /><input type="file" id="recurso" alt="Recurso de imagen o vídeo" name="recurso" />
+                <label for="enunciado">Enunciado</label><input type="text" id="enunciado" name="enunciado" value="<?php echo $placeholder->pregunta->enunciado; ?>" /><?php echo $errorcillos["enunciado"]; ?>
+                <label for="recurso">Imagen/Vídeo:</label><img src="<?php echo "data:image/jpeg;base64,".$placeholder->pregunta->recurso; ?>" id="imagen" /><input type="file" id="recurso" alt="Recurso de imagen o vídeo" name="recurso" />
             </section>
             <section>
                 <table class="invisible">
                     <tr>
-                        <td><label for="respuesta1">Opción 1</label><input type="text" value="A" name="respuesta1" /></td>
-                        <td><input type="radio" value="radio1" id="radio1" name="radioCorrecta" />Respuesta correcta</td>
+                        <td>
+                        <?php echo $errorcillos["respuesta1"]; ?><label for="respuesta1">Opción 1</label><input type="text" name="respuesta1" value="<?php echo $placeholder->respuestas[0]->enunciado; ?>" /></td>
+                        <td><input type="radio" value="1" id="radio1" name="radioCorrecta" <?php if($rc==$placeholder->respuestas[0]->id) echo "checked" ?>/>Respuesta correcta</td>
                     </tr>
                     <tr>
-                        <td><label for="respuesta2">Opción 2</label><input type="text" value="B" name="respuesta2" /></td>
-                        <td><input type="radio" value="radio2" id="radio2" name="radioCorrecta" />Respuesta correcta</td>
+                        <td>
+                        <?php echo $errorcillos["respuesta2"]; ?><label for="respuesta2">Opción 2</label><input type="text" name="respuesta2" value="<?php echo $placeholder->respuestas[1]->enunciado; ?>" /></td>
+                        <td><input type="radio" value="2" id="radio2" name="radioCorrecta" <?php if($rc==$placeholder->respuestas[1]->id) echo "checked" ?>/>Respuesta correcta</td>
                     </tr>
                     <tr>
-                        <td><label for="respuesta3">Opción 2</label><input type="text" value="B" name="respuesta3" /></td>
-                        <td><input type="radio" value="radio3" id="radio3" name="radioCorrecta" />Respuesta correcta</td>
+                        <td>
+                        <?php echo $errorcillos["respuesta3"]; ?><label for="respuesta3">Opción 2</label><input type="text" name="respuesta3" value="<?php echo $placeholder->respuestas[2]->enunciado; ?>" /></td>
+                        <td><input type="radio" value="3" id="radio3" name="radioCorrecta" <?php if($rc==$placeholder->respuestas[2]->id) echo "checked" ?>/>Respuesta correcta</td>
                     </tr>
                     <tr>
-                        <td><label for="respuesta4">Opción 2</label><input type="text" value="B" name="respuesta4" /></td>
-                        <td><input type="radio" value="radio4" id="radio4" name="radioCorrecta" />Respuesta correcta</td>
+                        <td>
+                        <?php echo $errorcillos["respuesta4"]; ?><label for="respuesta4">Opción 2</label><input type="text" name="respuesta4" value="<?php echo $placeholder->respuestas[3]->enunciado; ?>" /></td>
+                        <td><input type="radio" value="4" id="radio4" name="radioCorrecta" <?php if($rc==$placeholder->respuestas[3]->id) echo "checked" ?>/>Respuesta correcta</td>
                     </tr>
+                    <?php echo $errorcillos["radioCorrecta"]; ?>
                 </table>
+                
                 <input type="submit" id="botonEnviar" name="botonEnviar" value="Enviar" />
             </section>
         </form>

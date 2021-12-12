@@ -68,8 +68,7 @@ window.addEventListener("load",function()
                         if(confirm("¿Está seguro de querer borrar esta pregunta? (Se borrarán también las respuestas y recurso asociados a la pregunta)"))
                         {
                             let idBorra = contenido.parentElement.firstElementChild.innerHTML;
-                            // borraDato("pregunta",idBorra); // No señor, ahora hay que hacer una cosa espectacular y atómica para el borrado de la pregunta.
-                            alert("NO SE HA BORRADO "+idBorra+" PORQUE ES MU COMPLICAO Y YO NO SE TOY CHIQUITO");
+                            borraDato(idBorra);
                         }
                     }
                 }
@@ -116,6 +115,21 @@ window.addEventListener("load",function()
         {
             parent.removeChild(parent.firstChild);
         }
+    }
+
+    function borraDato(idBorra)
+    {
+        var formData = new FormData();
+        formData.append('tabla','pregunta');
+        formData.append('id',idBorra);
+        fetch("borradoFila.php",
+        {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(response => alert(response));
+        refresh(1);
     }
 
     tabla.appendChild(cabesa);
