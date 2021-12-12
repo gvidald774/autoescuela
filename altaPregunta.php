@@ -2,6 +2,8 @@
     require_once("include/cargadores/carga_entities.php");
     require_once("include/cargadores/carga_helpers.php");
 
+    // Es posible que el problema de tener que actualizar la página dos veces se arregle poniendo lo del POST por encima de lo del GET y usando variables que se apliquen en ambas partes. Pero bueno eso requeriría restructurar toda la página, y no queremos eso, ¿verdad?
+
     BD::conectar();
     Sesion::iniciar();
 
@@ -80,8 +82,6 @@
         }
         $rc = $placeholder->pregunta->respuestaCorrecta;
 
-        var_dump($placeholder);
-
         $errorcillos = array();
         $errorcillos["enunciado"] = "";
         $errorcillos["respuesta1"] = "";
@@ -91,10 +91,7 @@
         $errorcillos["radioCorrecta"] = "";
 
         if(isset($_POST["botonEnviar"]))
-        {
-            var_dump($_POST);
-            var_dump($_FILES);
-            
+        {   
             $validador = new Validator();
 
             $validador->existe("enunciado");
@@ -125,7 +122,7 @@
                 }
                 else
                 {
-                    $recurso = null;
+                    $recurso = $placeholder->pregunta->recurso;
                 }
 
                 $tematica = $_POST["opciones_tematica"];
@@ -157,14 +154,16 @@
                 {
                     $arrayRespuestas[$i] = new Respuesta(intval($idr[$i]), $respuestas[$i], $pregunta);
                 }
-
+                
                 if($modifiquino == true)
                 {
-                    BD::modificaPregunta($pregunta, intval($_POST["radioCorrecta"]), $arrayRespuestas); // A ver como nos las apañamos   
+                    BD::modificaPregunta($pregunta, intval($_POST["radioCorrecta"]), $arrayRespuestas); // A ver como nos las apañamos
+                    header("Location: ".$_SERVER['REQUEST_URI']);
                 }
                 else
                 {
                     BD::insertaPregunta($pregunta, intval($_POST["radioCorrecta"]), $arrayRespuestas);
+                    header("Location: ".$_SERVER['REQUEST_URI']);
                 }
             }
             else
