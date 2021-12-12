@@ -22,12 +22,13 @@
         if(isset($_GET["id"]))
         {
             $json_data = BD::getExamen($_GET["id"]);
+            echo $json_data; // NO LO HE HECHO BIEEEEEEN
+            // Comprobar con expresión regular que no sea {"codigoExamen":null} -> Si es null, estamos en problemas.
             if($json_data == true/* Algo que sea vacío */)
             {
                 $modifiquino = false; // Inserción, venimos de nuevas
-                $json_data = file_get_contents("modelos/jsonConfExamen.json"); // Hay que cambiar el modelo de alguna manera
+                $json_data = file_get_contents("modelos/examen.json"); // Hay que cambiar el modelo de alguna manera
                 // Aquí se insertarían las preguntas buenas, quitando las del modelo
-                // Y se vaciaría las preguntas seleccionadas, quitando las del modelo
                 $placeholder = json_decode($json_data);
                 switch(json_last_error())
                 {
@@ -58,6 +59,7 @@
             {
                 $placeholder = json_decode($json_data);
                 $modifiquino = true;
+                $idExamen = $placeholder->idExamen;
             }
 
         }
@@ -66,6 +68,7 @@
             $json_data = file_get_contents("modelos/examen.json"); // Va a ser lo mejor creo yo.
             // Hay que meterle las preguntas todas, o algo así.
             // Y el resto de datos se vienen del modelo JSON (?)
+            $idExamen = null;
         }
     }
 

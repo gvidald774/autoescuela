@@ -233,6 +233,43 @@ class BD {
         return json_encode($QandA);
     }
 
+    public static function getExamen($id)
+    {
+        $idExamen = intval($id);
+        $examenConPreguntas = new stdClass();
+        
+        $traeExamen = self::$con->prepare("SELECT * FROM examen WHERE id=:id");
+        $traeExamen->bindParam(':id',$idExamen);
+        $traeExamen->execute();
+
+        $examenTraido = $traeExamen->fetch(PDO::FETCH_OBJ);
+        $examenConPreguntas->codigoExamen = $examenTraido->id;
+        $examenConPreguntas->enunciado = $examenTraido->descripcion;
+        $examenConPreguntas->numPreguntas = $examenTraido->nPreguntas;
+        $examenConPreguntas->duracion = $examenTraido->duracion;
+
+        $getBancoPreguntas = self::$con->prepare("SELECT id,tematica,enunciado,recurso FROM pregunta WHERE id NOT IN (SELECT idPregunta FROM examen_pregunta WHERE idExamen = :id)");
+
+        $getBancoPreguntas->bindParam(':id',$idExamen);
+
+        $getBancoPreguntas->execute();
+        $bancoPreguntas = $getBancoPreguntas->fetchAll(PDO::FETCH_OBJ);
+
+        $examenConPreguntas->bancoPreguntas = $bancoPreguntas;
+
+        $getSeleccionadas = self::$con->prepare("SELECT id, tematica, enunciado, recurso FROM pregunta WHERE id IN (SELECT idPregunta FROM examen_pregunta WHERE idExamen = :id)");
+
+        $getSeleccionadas->bindParam(':id',$idExamen);
+
+        $getSeleccionadas->execute();
+        $seleccionadas = $getSeleccionadas->fetchAll(PDO::FETCH_OBJ);
+        
+        $examenConPreguntas->preguntasIncluidas = $seleccionadas;
+
+        return json_encode($examenConPreguntas);
+
+    }
+
     public static function existeTematica($desc):bool
     {
         $consulta = self::$con->prepare("SELECT nombre FROM tematica WHERE nombre=:descripcion");
