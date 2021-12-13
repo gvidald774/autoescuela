@@ -26,27 +26,10 @@
             <div id="temporizador" class="derecho">10:00:00</div>
         </section>
         <form action="" method="POST" id="examen">
-            <section id="recurso" class="izquierdo">
-                <!-- Y aquí iría la imagen -->
-                Placeholder Imagen
+            <section id="seccion_preguntas_examen">
             </section>
-            <section id="texto" class="derecho">
-                <article id="enunciado">Placeholder Enunciado</article>
-                <article id="respuestas">
-                    <input type="radio" name="respuestas" value="respuesta1" /><br />
-                    <input type="radio" name="respuestas" value="respuesta2" /><br />
-                    <input type="radio" name="respuestas" value="respuesta3" /><br />
-                    <input type="radio" name="respuestas" value="respuesta4" /><br />
-                </article>
-                <article id="botones">    
-                    <input type="button" id="botonAnterior" value="Anterior" />
-                    <input type="button" id="botonSiguiente" value="Siguiente" />
-                    <input type="submit" id="botonFinalizar" name="Finalizar" value="Finalizar" />
-                </article>
-            </section>
-            <section id="preguntas_indices" class="ninguno">
-                <p>1 2 3 4 5 6 7 8 9 10</p>
-            </section>
+            <section id="paginacion_preguntas_examen"></section>
+            <input type="submit" id="botonEnviar" name="enviar" value="Enviar" />
         </form>
 
         ';

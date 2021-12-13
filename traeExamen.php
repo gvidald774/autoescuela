@@ -7,7 +7,8 @@
 
     if(isset($_GET["id"]))
     {
-        
+        $examen = json_encode(BD::getJSON_ExamenPorRealizar($_GET["id"]));
+        echo $examen;
     }
     else
     {
