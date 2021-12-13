@@ -641,4 +641,17 @@ class BD {
             self::$con->rollBack();
         }
     }
+
+    public static function accesoExamenRealizado($idExamen, $correoAlumno)
+    {
+        // Lo primero es averiguar el id del usuario.
+        $idUsuario = self::getIdAlumno($correoAlumno);
+
+        // Lo segundo es ver si coinciden.
+        $result = false;
+        $consulta = self::$con->prepare("SELECT * FROM examen_realizado WHERE idExamen=:idExamen AND idAlumno=:idAlumno");
+        $consulta->bindParam(':idExamen',$idExamen);
+        $consulta->bindParam(':idAlumno',$idAlumno);
+
+    }
 }

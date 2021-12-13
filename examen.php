@@ -13,10 +13,24 @@
     if(isset($_GET["examen"]))
     {
         // Pues se hace un examen.
+        // Se asume que se viene ya con el examen creado y apascualizado.
+        // Pues hay que coger el examen y pintarlo con los div ocultos y tal y pascual.
     }
     else if(isset($_GET["examenRealizado"]))
     {
         // Pues se revisa un examen.
+        // Hay que comprobar que tengas acceso al examen, es decir, que si eres alumno lo hayas hecho tú.
+        $permiso = BD::accesoExamenRealizado($_GET["examenRealizado"], Sesion::leer("usuario"));
+        if($permiso)
+        {
+            Pintor::header("Examen");
+            // Se pinta todo el rollito del examen y tal y pascual.
+        }
+        else
+        {
+            echo "No tiene permiso para acceder a estos contenidos.";
+            header("Refresh: 5, URL=historicoExamenes.php");
+        }
     }
     else
     {
