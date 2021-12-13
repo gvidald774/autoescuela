@@ -7,7 +7,7 @@
     $payload = file_get_contents("php://input");
     $data = json_decode($payload);
     
-    if(!isset($data->codigoExamen))
+    if($data->codigoExamen == 0)
     {
         // Esto significa que venimos de nuevas.
         echo "Se va a insertar un examen.";
