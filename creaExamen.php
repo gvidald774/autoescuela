@@ -23,7 +23,7 @@
         {
             if(BD::existeExamen($_GET["id"]) == "true")
             {
-                $json_data = BD::getExamen($_GET["id"]);
+                $json_data = json_encode(BD::getExamen($_GET["id"]));
                 $modifiquino = true;
             }
             else

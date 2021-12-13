@@ -26,7 +26,7 @@
 
         if(isset($_GET["id"]))
         {
-            $json_data = BD::getPregunta_y_Respuestas($_GET["id"]);
+            $json_data = json_encode(BD::getPregunta_y_Respuestas($_GET["id"]));
             if($json_data == '{"pregunta":false,"respuestas":[]}')
             {
                 $modifiquino = false; // Se insertará porque venimos sin datos

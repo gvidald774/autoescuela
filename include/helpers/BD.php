@@ -230,7 +230,7 @@ class BD {
         $QandA = array();
         $QandA["pregunta"] = $pregunta;
         $QandA["respuestas"] = $arrayRespuestas;
-        return json_encode($QandA);
+        return $QandA;
     }
 
     public static function existeExamen($id)
@@ -280,7 +280,7 @@ class BD {
         
         $examenConPreguntas->preguntasIncluidas = $seleccionadas;
 
-        return json_encode($examenConPreguntas);
+        return $examenConPreguntas;
 
     }
 
@@ -395,7 +395,7 @@ class BD {
     public static function obtenCuantasPaginasExamen(int $filas, string $idUsuario = "")
     {
         $registros = array();
-        $res = self::$con->query("SELECT e_r.fecha, u.nombre, u.apellidos, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario);
+        $res = self::$con->query("SELECT e_r.id, e_r.fecha, u.nombre, u.apellidos, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario);
         $registros = $res->fetchAll();
         $total = count($registros);
         $paginas = ceil($total/$filas);
@@ -406,7 +406,7 @@ class BD {
     public static function obtenExamenesPaginados(int $pagina, int $filas, string $idUsuario = "")
     {
         $registros = array();
-        $res = self::$con->query("SELECT e_r.fecha, u.nombre, u.apellidos, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario);
+        $res = self::$con->query("SELECT e_r.id, e_r.fecha, u.nombre, u.apellidos, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario);
         $registros = $res->fetchAll();
         $total = count($registros);
         $paginas = ceil($total/$filas);
@@ -414,7 +414,7 @@ class BD {
         if($pagina<=$paginas)
         {
             $inicio = ($pagina-1)*$filas;
-            $consulta = self::$con->query("SELECT e_r.fecha, u.nombre, u.apellidos, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario."  ORDER BY e_r.fecha ASC LIMIT $inicio, $filas");
+            $consulta = self::$con->query("SELECT e_r.id, e_r.fecha, u.nombre, u.apellidos, e_r.calificacion FROM examen_realizado as e_r, usuario as u WHERE e_r.idAlumno=u.id".$idUsuario."  ORDER BY e_r.fecha ASC LIMIT $inicio, $filas");
             $consulta_registros = $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
         return $consulta_registros;
@@ -653,5 +653,81 @@ class BD {
         $consulta->bindParam(':idExamen',$idExamen);
         $consulta->bindParam(':idAlumno',$idAlumno);
 
+        $consulta->execute();
+        if($consulta->fetch(PDO::FETCH_NUM)[0])
+        {
+            $result = true;
+        }
+        return $result;
+
+    }
+
+    // Bueno, ya lo he hecho lo voy a dejar por si acaso pero no lo voy a usar.
+    public static function getExamenRealizadoCompleto($id)
+    {
+        // Tenemos que hacer varios queries.
+        // Lo primero es sacar los datos del examen.
+        $consultaExamen = self::$con->prepare("SELECT e.* FROM examen AS e, examen_realizado AS e_r WHERE e_r.idExamen = e.id AND e_r.id=:id");
+        $consultaExamen->bindParam(':id',$id);
+        $consultaExamen->execute();
+        $examen = $consultaExamen->fetch(PDO::FETCH_OBJ);
+        // A continuación sacamos los datos de las preguntas
+        $consultaPreguntas = self::$con->prepare("SELECT idPregunta FROM examen_pregunta WHERE idExamen=:id");
+        $idExamen =$examen->id;
+        $consultaPreguntas->bindParam(':id',$idExamen);
+        $consultaPreguntas->execute();
+        $idPreguntas = $consultaPreguntas->fetchAll(PDO::FETCH_NUM);
+
+        $arrayPreguntas = array();
+        for($i = 0; $i < count($idPreguntas); $i++)
+        {
+            $arrayPreguntas[] = BD::getPregunta_y_Respuestas($idPreguntas[$i]);
+        }
+        // Lo siguiente es sacar los datos del usuario que lo ha realizado.
+        $consultaUsuario = self::$con->prepare("SELECT u.* FROM usuario AS u, examen_realizado as e_r WHERE e_r.idAlumno = u.id AND e_r.idAlumno = :id");
+        $consultaUsuario->bindParam(':id',$id);
+        $consultaUsuario->execute();
+        $usuario = $consultaUsuario->fetch(PDO::FETCH_OBJ);
+
+        // Lo siguiente ya es juntarlo todo.
+        $examenRealizadoFull = array();
+        $examenRealizadoFull["examen"] = $examen;
+        $examenRealizadoFull["preguntas"] = $arrayPreguntas;
+        $examenRealizadoFull["usuario"] = $usuario;
+        
+        // Por último cogemos la parte más importante. Nota: El resto de campos son importantes para temas de indexación (?)
+        $getJSONdata = self::$con->prepare("SELECT json FROM examen_realizado WHERE id=:id");
+        $getJSONdata->bindParam(':id',$id);
+        $getJSONdata->execute();
+        $jsonData = $getJSONdata->fetch(PDO::FETCH_OBJ);
+        $examenRealizadoFull["json"] = $jsonData;
+    }
+
+    public static function getJSON_ExamenRealizado($id)
+    {
+        $getJSON = self::$con->prepare("SELECT json FROM examen_realizado WHERE id=:id");
+        $getJSON->bindParam(':id',$id);
+        $getJSON->execute();
+        $json = $getJSON->fetch(PDO::FETCH_NUM)[0];
+        return $json;
+    }
+
+    public static function getJSON_ExamenPorRealizar($idExamen)
+    {
+        $examen = BD::getExamen($idExamen);
+        $arrayPR = array();
+        for($i = 0; $i < count($examen->preguntasIncluidas); $i++)
+        {
+            $arrayPR[] = BD::getPregunta_y_Respuestas($examen->preguntasIncluidas[$i]->id);
+        }
+
+        $objeto = new stdClass();
+        $objeto->codigoExamen = $examen->codigoExamen;
+        $objeto->enunciado = $examen->enunciado;
+        $objeto->numPreguntas = $examen->numPreguntas;
+        $objeto->duracion = $examen->duracion;
+        $objeto->preguntas = $arrayPR;
+
+        return $objeto;
     }
 }

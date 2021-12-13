@@ -214,4 +214,16 @@ p {
 
 .oculto {
   display: none;
+}
+
+.izquierdo {
+  float: left;
+}
+
+.derecho {
+  float: right;
+}
+
+.ninguno {
+  clear: both;
 }/*# sourceMappingURL=main.css.map */

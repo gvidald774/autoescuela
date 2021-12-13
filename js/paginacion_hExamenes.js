@@ -68,7 +68,7 @@ window.addEventListener("load",function()
                     contenido.style = "font-size: small";
                     let enlaceRevisar = document.createElement("a");
                     let id = json[i]["id"];
-                    enlaceRevisar.href = "altaExamen.php?id="+fila.idExamen;
+                    enlaceRevisar.href = "examen.php?examenRealizado="+fila.idExamen;
                     enlaceRevisar.innerHTML = "Revisar";
                     contenido.appendChild(enlaceRevisar);
                     fila.appendChild(contenido);
