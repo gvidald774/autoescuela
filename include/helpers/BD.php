@@ -233,6 +233,20 @@ class BD {
         return json_encode($QandA);
     }
 
+    public static function existeExamen($id)
+    {
+        $idExamen = intval($id);
+        $consulta = self::$con->prepare("SELECT * FROM examen WHERE id=:id");
+        $consulta->bindParam(':id',$idExamen);
+        $consulta->execute();
+        $result = false;
+        if ($consulta->fetch(PDO::FETCH_NUM)[0])
+        {
+            $result = "true";
+        }
+        return $result;
+    }
+
     public static function getExamen($id)
     {
         $idExamen = intval($id);
@@ -248,7 +262,7 @@ class BD {
         $examenConPreguntas->numPreguntas = $examenTraido->nPreguntas;
         $examenConPreguntas->duracion = $examenTraido->duracion;
 
-        $getBancoPreguntas = self::$con->prepare("SELECT id,tematica,enunciado,recurso FROM pregunta WHERE id NOT IN (SELECT idPregunta FROM examen_pregunta WHERE idExamen = :id)");
+        $getBancoPreguntas = self::$con->prepare("SELECT p.id 'id',t.nombre 'tematica',p.enunciado 'enunciado',p.recurso 'recurso' FROM pregunta AS p, tematica AS t WHERE p.id NOT IN (SELECT idPregunta FROM examen_pregunta WHERE idExamen = :id) AND p.tematica=t.id");
 
         $getBancoPreguntas->bindParam(':id',$idExamen);
 
@@ -257,7 +271,7 @@ class BD {
 
         $examenConPreguntas->bancoPreguntas = $bancoPreguntas;
 
-        $getSeleccionadas = self::$con->prepare("SELECT id, tematica, enunciado, recurso FROM pregunta WHERE id IN (SELECT idPregunta FROM examen_pregunta WHERE idExamen = :id)");
+        $getSeleccionadas = self::$con->prepare("SELECT p.id 'id',t.nombre 'tematica',p.enunciado 'enunciado',p.recurso 'recurso' FROM pregunta AS p, tematica AS t WHERE p.id IN (SELECT idPregunta FROM examen_pregunta WHERE idExamen = :id) AND p.tematica=t.id");
 
         $getSeleccionadas->bindParam(':id',$idExamen);
 
@@ -591,25 +605,25 @@ class BD {
             self::$con->beginTransaction();
 
             // Para quitarnos de problemas, lo primero que hacemos es eliminar todas las preguntas asociadas y volverlas a insertar.
+            $id = $examen->getID();
             $quitaPreguntas = self::$con->prepare("DELETE FROM examen_pregunta WHERE idExamen = ".$id.";");
             $quitaPreguntas->execute();
 
             $insertaPreguntas = self::$con->prepare("INSERT INTO examen_pregunta VALUES (:idExamen, :idPregunta)");
 
-            $id = $examen->getID();
-            $insertaPreguntas->bindParam(':id',$id);
+            $insertaPreguntas->bindParam(':idExamen',$id);
             for($i = 0; $i < count($examen->getPreguntas()); $i++)
             {
                 $idPregunta = $examen->getPreguntas()[$i]->getID();
-                $insertaPreguntasExamen->bindParam(':idPregunta',$idPregunta);
-                $insertaPreguntasExamen->execute();
+                $insertaPreguntas->bindParam(':idPregunta',$idPregunta);
+                $insertaPreguntas->execute();
             }
 
             // Ahora se modifica el examen propiamente dicho.
-            $modificaExamenDatosGenerales = self::$con->prepare("UPDATE examen SET enunciado=:enunciado, duracion=:duracion, nPreguntas=:nPreguntas WHERE id=:id");
+            $modificaExamenDatosGenerales = self::$con->prepare("UPDATE examen SET descripcion=:enunciado, duracion=:duracion, nPreguntas=:nPreguntas WHERE id=:id");
 
             $modificaExamenDatosGenerales->bindParam(':id',$id);
-            $enunciado = $examen->getEnunciado();
+            $enunciado = $examen->getDescripcion();
             $duracion = $examen->getDuracion();
             $nPreguntas = $examen->getNPreguntas();
 

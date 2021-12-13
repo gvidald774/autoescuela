@@ -3,18 +3,33 @@ window.addEventListener("load",function()
     var preguntas = document.getElementById("bancoPreguntas");
     var seleccionadas = document.getElementById("preguntasSeleccionadas");
     var boton = document.getElementById("botonEnviar");
-    
-    fetch("traePreguntas.php")
-    .then(function(response)
+
+    var preguntasJSON = document.getElementById("bancoPreguntas_JSON").innerHTML;
+    var seleccionadasJSON = document.getElementById("seleccionadas_JSON").innerHTML;
+
+     var pregunticas = JSON.parse(preguntasJSON);
+    var seleccionadicas = JSON.parse(seleccionadasJSON);
+
+    if(seleccionadicas.length == 0)
     {
-        return response.json();
-    })
-    .then(function(json)
+        fetch("traePreguntas.php")
+        .then(function(response)
+        {
+            return response.json();
+        })
+        .then(function(json)
+        {
+            creaPreguntas(json,preguntas);
+        });
+    }
+    else
     {
-        creaPreguntas(json);
-    });
+        creaPreguntas(pregunticas, preguntas);
+        creaPreguntas(seleccionadicas, seleccionadas);
+    }
+    // else pues ya tendríamos el json y lo hacemos directamente
     
-    function creaPreguntas(json)
+    function creaPreguntas(json, adonde)
     {
         // Hay que añadirle un id único a cada div de pregunta por cierto
         for(let i = 0; i < json.length; i++)
@@ -31,7 +46,7 @@ window.addEventListener("load",function()
             div.appendChild(divTema);
             div.appendChild(divEnunciado);
             div.draggable = "true";
-            document.getElementById("bancoPreguntas").appendChild(div);
+            adonde.appendChild(div);
             dragAndDrop(div);
         }
     }
@@ -170,7 +185,7 @@ window.addEventListener("load",function()
         var formularino = document.getElementsByTagName("form")[0];
 
         var standardJSON_Object = new Object();
-        standardJSON_Object.codigoExamen = formularino["id"].value;
+        standardJSON_Object.codigoExamen = formularino["codigoExamen"].value;
         standardJSON_Object.enunciado = formularino["enunciado"].value;
         standardJSON_Object.numPreguntas = formularino["n_preg"].value;
         standardJSON_Object.duracion = formularino["duracion"].value;

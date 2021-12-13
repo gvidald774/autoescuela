@@ -7,7 +7,7 @@
     $payload = file_get_contents("php://input");
     $data = json_decode($payload);
     
-    if(!isset($data->idExamen))
+    if(!isset($data->codigoExamen))
     {
         // Esto significa que venimos de nuevas.
         echo "Se va a insertar un examen.";
@@ -26,6 +26,14 @@
     {
         // Esto significa que vamos a editar un examen.
         echo "Se va a modificar un examen.";
+        $arrayPreguntas = array();
+        for($i = 0; $i < count($data->preguntasIncluidas); $i++)
+        {
+            $preg = BD::getPreguntaSola($data->preguntasIncluidas[$i]);
+            $p = new Pregunta($preg->id, $preg->enunciado, $preg->tematica, $preg->recurso);
+            $arrayPreguntas[] = $p;
+        }
+        $examen = new Examen($data->codigoExamen, $data->enunciado, $data->duracion, $data->numPreguntas, $arrayPreguntas);
         BD::modificaExamen($examen);
     }
 
