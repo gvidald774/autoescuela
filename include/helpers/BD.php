@@ -730,4 +730,21 @@ class BD {
 
         return $objeto;
     }
+
+    public static function guardaExamenRealizado($examen, $alumno, $calificacion)
+    {
+        $idTabla = BD::cogeUltimoID("examen_realizado")+1;
+        $consulta = self::$con->prepare("INSERT INTO examen_realizado VALUES (:id, :idExamen, :idAlumno, NOW(), :calificacion, :jotason)");
+
+        $idExamen = $examen->codigoExamen;
+        $jotason = json_encode($examen);
+
+        $consulta->bindParam(':id',$idTabla);
+        $consulta->bindParam(':idExamen',$idExamen);
+        $consulta->bindParam(':idAlumno',$alumno);
+        $consulta->bindParam(':calificacion',$calificacion);
+        $consulta->bindParam(':jotason',$jotason);
+
+        $consulta->execute();
+    }
 }

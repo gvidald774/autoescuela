@@ -13,13 +13,9 @@
     if(isset($_GET["examen"]))
     {
         Pintor::header("Examen en proceso", "js/hacerExamen.js"); // Que tendrá el rollo del temporizador y tal
+        (Sesion::leer("rol")=="Admin")?Pintor::nav_admin():Pintor::nav_usuario();
 
-        $examen = BD::getJSON_ExamenPorRealizar($_GET["examen"]);
-
-        var_dump($examen);
-
-        echo
-        '
+        echo '
         <div id="idSecretoOcultoEscondido" class="oculto">'.$_GET["examen"].'</div>
         <section id="cabecera_examen">
             <h1 id="titulo_examen">Pregunta 1</h1>
@@ -31,7 +27,6 @@
             <section id="paginacion_preguntas_examen"></section>
             <input type="submit" id="botonEnviar" name="enviar" value="Enviar" />
         </form>
-
         ';
 
         // Pues se hace un examen.
@@ -41,38 +36,28 @@
     }
     else if(isset($_GET["examenRealizado"]))
     {
-        echo "ALBRICIAS";
         // Pues se revisa un examen.
         // Hay que comprobar que tengas acceso al examen, es decir, que si eres alumno lo hayas hecho tú.
         $permiso = BD::accesoExamenRealizado($_GET["examenRealizado"], Sesion::leer("usuario"));
         if($permiso == true || Sesion::leer("rol") == "Admin")
         {
-            // Pillar los datos del examen realizado.
-            $examenRealizado = json_decode(BD::getJSON_ExamenRealizado($_GET["examenRealizado"]));
-            Pintor::header("Examen", "js/revisarExamen.js");
+            Pintor::header("Revisar examen", "js/revisarExamen.js");
             (Sesion::leer("rol")=="Admin")?Pintor::nav_admin():Pintor::nav_usuario();
-                var_dump($examenRealizado);
-                echo '
-                    <main>
-                        <form>
-                        <h1>Número de la pregunta</h1>
-                        <section style="float: left" id="recursos">';
 
-                            
-                echo '
-                        </section>
-                        <section style="float: right">
-                            <article>Y aquí pondríamos el enunciado de la pregunta</article>
-                            <article>
-                                <p>Y aquí pues las cuatro respuestas</p>
-                            </article>
-                        </section>
-                        <section style="clear: both">
-                            <p>Páginas
-                        </section>
-                        </form>
-                    </main>
-                ';
+            echo '
+            <div id="idSecretoOcultoEscondido" class="oculto">'.$_GET["examenRealizado"].'</div>
+            <section id="cabecera_examen">
+                <h1 id="titulo_examen">Pregunta 1</h1>
+                <div id="temporizador" class="derecho">10:00:00</div>
+            </section>
+            <form action="" method="POST" id="examen">
+                <section id="seccion_preguntas_examen">
+                </section>
+                <section id="paginacion_preguntas_examen"></section>
+                <input type="submit" id="botonEnviar" name="enviar" value="Enviar" />
+            </form>
+            ';
+
             Pintor::footer();
         }
         else
