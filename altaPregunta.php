@@ -32,29 +32,6 @@
                 $modifiquino = false; // Se insertará porque venimos sin datos
                 $json_data = file_get_contents("modelos/pregunta.json");
                 $placeholder = json_decode($json_data);
-                switch(json_last_error()) {
-                    case JSON_ERROR_NONE:
-                        echo ' - Sin errores';
-                    break;
-                    case JSON_ERROR_DEPTH:
-                        echo ' - Excedido tamaño máximo de la pila';
-                    break;
-                    case JSON_ERROR_STATE_MISMATCH:
-                        echo ' - Desbordamiento de buffer o los modos no coinciden';
-                    break;
-                    case JSON_ERROR_CTRL_CHAR:
-                        echo ' - Encontrado carácter de control no esperado';
-                    break;
-                    case JSON_ERROR_SYNTAX:
-                        echo ' - Error de sintaxis, JSON mal formado';
-                    break;
-                    case JSON_ERROR_UTF8:
-                        echo ' - Caracteres UTF-8 malformados, posiblemente codificados de forma incorrecta';
-                    break;
-                    default:
-                        echo ' - Error desconocido';
-                    break;
-                }
                 $imgrecurso = "";
             }
             else
@@ -219,29 +196,29 @@
                         }
                     ?>
                 </select>
-                <label for="enunciado">Enunciado</label><input type="text" id="enunciado" name="enunciado" value="<?php echo $placeholder->pregunta->enunciado; ?>" /><?php echo $errorcillos["enunciado"]; ?>
+                <label for="enunciado">Enunciado</label><input type="text" id="enunciado" name="enunciado" value="<?php echo $placeholder->pregunta->enunciado; ?>" required /><?php echo $errorcillos["enunciado"]; ?>
                 <label for="recurso">Imagen/Vídeo:</label><img src="<?php echo $imgrecurso; ?>" id="imagen" /><input type="file" id="recurso" alt="Recurso de imagen o vídeo" name="recurso" />
             </section>
             <section>
                 <table class="invisible">
                     <tr>
                         <td>
-                        <?php echo $errorcillos["respuesta1"]; ?><label for="respuesta1">Opción 1</label><input type="text" name="respuesta1" value="<?php echo $placeholder->respuestas[0]->enunciado; ?>" /></td>
+                        <?php echo $errorcillos["respuesta1"]; ?><label for="respuesta1">Opción 1</label><input type="text" name="respuesta1" value="<?php echo $placeholder->respuestas[0]->enunciado; ?>" required /></td>
                         <td><input type="radio" value="1" id="radio1" name="radioCorrecta" <?php if($rc==$placeholder->respuestas[0]->id) echo "checked" ?>/>Respuesta correcta</td>
                     </tr>
                     <tr>
                         <td>
-                        <?php echo $errorcillos["respuesta2"]; ?><label for="respuesta2">Opción 2</label><input type="text" name="respuesta2" value="<?php echo $placeholder->respuestas[1]->enunciado; ?>" /></td>
+                        <?php echo $errorcillos["respuesta2"]; ?><label for="respuesta2">Opción 2</label><input type="text" name="respuesta2" value="<?php echo $placeholder->respuestas[1]->enunciado; ?>"required /></td>
                         <td><input type="radio" value="2" id="radio2" name="radioCorrecta" <?php if($rc==$placeholder->respuestas[1]->id) echo "checked" ?>/>Respuesta correcta</td>
                     </tr>
                     <tr>
                         <td>
-                        <?php echo $errorcillos["respuesta3"]; ?><label for="respuesta3">Opción 2</label><input type="text" name="respuesta3" value="<?php echo $placeholder->respuestas[2]->enunciado; ?>" /></td>
+                        <?php echo $errorcillos["respuesta3"]; ?><label for="respuesta3">Opción 3</label><input type="text" name="respuesta3" value="<?php echo $placeholder->respuestas[2]->enunciado; ?>" required /></td>
                         <td><input type="radio" value="3" id="radio3" name="radioCorrecta" <?php if($rc==$placeholder->respuestas[2]->id) echo "checked" ?>/>Respuesta correcta</td>
                     </tr>
                     <tr>
                         <td>
-                        <?php echo $errorcillos["respuesta4"]; ?><label for="respuesta4">Opción 2</label><input type="text" name="respuesta4" value="<?php echo $placeholder->respuestas[3]->enunciado; ?>" /></td>
+                        <?php echo $errorcillos["respuesta4"]; ?><label for="respuesta4">Opción 4</label><input type="text" name="respuesta4" value="<?php echo $placeholder->respuestas[3]->enunciado; ?>" required /></td>
                         <td><input type="radio" value="4" id="radio4" name="radioCorrecta" <?php if($rc==$placeholder->respuestas[3]->id) echo "checked" ?>/>Respuesta correcta</td>
                     </tr>
                     <?php echo $errorcillos["radioCorrecta"]; ?>

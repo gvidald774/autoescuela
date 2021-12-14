@@ -2,7 +2,7 @@ window.addEventListener("load",function()
 {
     var tabla = document.getElementById("tabla");
 
-    var rolOpciones = document.getElementById("idOcultoEscondido");
+    var rolOpciones = document.getElementById("idOcultoEscondido").innerHTML;
 
     var cabesa = document.createElement("thead");
     var corpus = document.createElement("tbody");
@@ -73,7 +73,7 @@ window.addEventListener("load",function()
                             }
                         }
                     }
-                    else
+                    else if(rolOpciones == "Alumno")
                     {
                         let enlaceRealizar = document.createElement("a");
                         let id = json[i]["id"];
@@ -124,7 +124,7 @@ window.addEventListener("load",function()
     function refresh(p)
     {
         removeAllChildNodes(corpus);
-        urlAEnviar = "traeExamenesPaginados.php?p?"+p+"&t=10";
+        urlAEnviar = "traeExamenesPaginados.php?p="+p+"&t=10";
         fetch(urlAEnviar)
         .then(function(response)
         {

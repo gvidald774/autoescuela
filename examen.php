@@ -52,8 +52,7 @@
             <form action="" method="POST" id="examen">
                 <section id="seccion_preguntas_examen">
                 </section>
-                <section id="paginacion_preguntas_examen"></section>
-                <input type="submit" id="botonEnviar" name="enviar" value="Enviar" />
+                <section id="paginacion_preguntas_examen" style="clear: both"></section>
             </form>
             ';
 

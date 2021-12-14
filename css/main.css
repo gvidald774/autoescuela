@@ -212,6 +212,15 @@ td, th {
   font-size: small;
 }
 
+.enunciado_pregunta {
+  font-family: "Montserrat";
+  font-size: large;
+}
+
+.pregunta_contestada {
+  background-color: aquamarine;
+}
+
 body {
   text-align: center;
   background-color: #79BCDC;

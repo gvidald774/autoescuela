@@ -72,9 +72,10 @@ window.addEventListener("load",function()
     {
         preguntica = document.createElement("article");
         preguntica.id = "pregunta_"+pregunta.pregunta.id;
+        
         recurso = document.createElement("section");
         recurso.classList.add("izquierdo");
-        recurso.innerHTML = '<img src="data:image/jpeg;base64,"'+pregunta.pregunta.recurso+' />';
+        recurso.innerHTML = '<img src="data:image/jpeg;base64,'+pregunta.pregunta.recurso+' />';
         texto = document.createElement("div");
         texto.classList.add("derecho");
 
@@ -82,6 +83,7 @@ window.addEventListener("load",function()
         listaRespuestas = desordenarVector(listaRespuestas);
 
         enunciado = document.createElement("article");
+        enunciado.classList.add("enunciado_pregunta");
         enunciado.innerHTML = pregunta.pregunta.enunciado;
         texto.appendChild(enunciado);
         respuestas = document.createElement("article");
@@ -99,6 +101,7 @@ window.addEventListener("load",function()
                 var indice = listaPreguntas.indexOf(pregunta);
                 arrayRespuestas[indice]=id;
                 console.log(arrayRespuestas);
+                seccion_enlaces.children[indice].classList.add("pregunta_contestada");
             }
             respuestaWrapper.appendChild(respuesta);
             respuestaWrapper.innerHTML += listaRespuestas[i].enunciado;

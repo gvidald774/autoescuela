@@ -43,12 +43,13 @@ window.addEventListener("load",function()
         }
         recurso = document.createElement("section");
         recurso.classList.add("izquierdo");
-        recurso.innerHTML = '<img src="data:image/jpeg; base64,"'+pregunta.pregunta.recurso+' />';
+        recurso.innerHTML = '<img src="data:image/jpeg; base64,'+pregunta.pregunta.recurso+'" />';
         texto = document.createElement("div");
         texto.classList.add("derecho");
 
         var listaRespuestas = pregunta.respuestas;
         var enunciado = document.createElement("article");
+        enunciado.classList.add("enunciado_pregunta");
         enunciado.innerHTML = pregunta.pregunta.enunciado;
         texto.appendChild(enunciado);
         respuestas = document.createElement("article");

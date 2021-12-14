@@ -649,7 +649,7 @@ class BD {
 
         // Lo segundo es ver si coinciden.
         $result = false;
-        $consulta = self::$con->prepare("SELECT * FROM examen_realizado WHERE idExamen=:idExamen AND idAlumno=:idAlumno");
+        $consulta = self::$con->prepare("SELECT * FROM examen_realizado WHERE id=:idExamen AND idAlumno=:idAlumno");
         $consulta->bindParam(':idExamen',$idExamen);
         $consulta->bindParam(':idAlumno',$idUsuario);
 
@@ -746,5 +746,14 @@ class BD {
         $consulta->bindParam(':jotason',$jotason);
 
         $consulta->execute();
+    }
+
+    public static function getCuantosExamenes($idUsuario)
+    {
+        $consulta = self::$con->prepare("SELECT COUNT(*) FROM examen_realizado WHERE idAlumno=:id");
+        $consulta->bindParam(':id',$idUsuario);
+        $consulta->execute();
+        $cantidad = $consulta->fetch(PDO::FETCH_NUM)[0];
+        return $cantidad;
     }
 }
