@@ -2,6 +2,8 @@ window.addEventListener("load",function()
 {
     var tabla = document.getElementById("tabla");
 
+    var rolOpciones = document.getElementById("idOcultoEscondido");
+
     var cabesa = document.createElement("thead");
     var corpus = document.createElement("tbody");
 
@@ -46,29 +48,43 @@ window.addEventListener("load",function()
                 {
                     let contenido = document.createElement("td");
                     contenido.style = "font-size: small";
-                    let enlaceEditar = document.createElement("a");
-                    let id = json[i]["id"];
-                    enlaceEditar.href = "creaExamen.php?id="+id;
-                    enlaceEditar.innerHTML = "Editar";
-                    let enlaceDesactivar = document.createElement("a");
-                    enlaceDesactivar.innerHTML = " Desactivar";
-                    enlaceDesactivar.href = "#";
-                    let enlaceBorrar = document.createElement("a");
-                    enlaceBorrar.innerHTML = " Borrar";
-                    enlaceBorrar.href = "#";
-                    contenido.appendChild(enlaceEditar);
-                    contenido.appendChild(enlaceDesactivar);
-                    contenido.appendChild(enlaceBorrar);
-                    fila.appendChild(contenido);
 
-                    enlaceBorrar.onclick = function()
+                    if(rolOpciones == "Admin")
                     {
-                        if(confirm("¿Está seguro de querer borrar este examen?"))
+                        let enlaceEditar = document.createElement("a");
+                        let id = json[i]["id"];
+                        enlaceEditar.href = "creaExamen.php?id="+id;
+                        enlaceEditar.innerHTML = "Editar";
+                        let enlaceDesactivar = document.createElement("a");
+                        enlaceDesactivar.innerHTML = " Desactivar";
+                        enlaceDesactivar.href = "#";
+                        let enlaceBorrar = document.createElement("a");
+                        enlaceBorrar.innerHTML = " Borrar";
+                        enlaceBorrar.href = "#";
+                        contenido.appendChild(enlaceEditar);
+                        contenido.appendChild(enlaceDesactivar);
+                        contenido.appendChild(enlaceBorrar);
+                        enlaceBorrar.onclick = function()
                         {
-                            let idBorra = contenido.parentElement.firstElementChild.innerHTML;
-                            borraDato(idBorra);
+                            if(confirm("¿Está seguro de querer borrar este examen?"))
+                            {
+                                let idBorra = contenido.parentElement.firstElementChild.innerHTML;
+                                borraDato(idBorra);
+                            }
                         }
                     }
+                    else
+                    {
+                        let enlaceRealizar = document.createElement("a");
+                        let id = json[i]["id"];
+                        enlaceRealizar.href = "examen.php?examen="+id;
+                        enlaceRealizar.innerHTML = "Realizar";
+                        contenido.appendChild(enlaceRealizar);
+                    }
+                    
+                    fila.appendChild(contenido);
+
+                    
                 }
                 else
                 {

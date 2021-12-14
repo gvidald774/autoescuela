@@ -191,6 +191,26 @@ td, th {
   padding: 10px 20px;
 }
 
+.enlace_correcta {
+  background-color: green;
+}
+
+.enlace_incorrecta {
+  background-color: red;
+}
+
+.textoCorrecta {
+  margin-left: 20px;
+  color: green;
+  font-size: small;
+}
+
+.textoIncorrecta {
+  margin-left: 20px;
+  color: red;
+  font-size: small;
+}
+
 body {
   text-align: center;
   background-color: #79BCDC;

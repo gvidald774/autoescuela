@@ -1,11 +1,30 @@
 window.addEventListener("load",function()
 {
     // Hay que meterle también todo el rollo de la paginación, div oculto div visible para las preguntas, etcétera.
-    var formularino = document.getElementById("examen");
     var idExamen = document.getElementById("idSecretoOcultoEscondido").innerHTML;
     var seccion_preguntas = document.getElementById("seccion_preguntas_examen");
     var seccion_enlaces = document.getElementById("paginacion_preguntas_examen");
     var titulo = document.getElementById("titulo_examen");
+    var temporizador = document.getElementById("temporizador");
+
+    function startTimer(duracion, adonde)
+    {
+        var timer = duracion, minutes, seconds;
+        setInterval(function()
+        {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        adonde.textContent = minutes + ":" + seconds;
+
+        if(--timer < 0) {
+            terminarExamen();
+        }
+        }, 1000);
+    }
 
     var arrayRespuestas = [];
 
@@ -52,6 +71,7 @@ window.addEventListener("load",function()
         preguntica.id = "pregunta_"+pregunta.pregunta.id;
         recurso = document.createElement("section");
         recurso.classList.add("izquierdo");
+        recurso.innerHTML = '<img src="data:image/jpeg;base64,"'+pregunta.pregunta.recurso+' />';
         texto = document.createElement("div");
         texto.classList.add("derecho");
 
@@ -113,12 +133,14 @@ window.addEventListener("load",function()
     boton.onclick = function(ev)
     {
         ev.preventDefault();
-
         // Comprobar que todas las preguntas están contestadas. ¿Cómo hacemos eso? Aaaann... haber estudiao
         let preguntasContestadas = false;
         if(arrayRespuestas.length == objetoRespuesta.preguntas.length)
         {
-            preguntasContestadas = true;
+            if(confirm("¿Está seguro de querer enviar el examen?"))
+            {
+                preguntasContestadas = true;
+            }
         }
         else if(arrayRespuestas.length < objetoRespuesta.preguntas.length)
         {
@@ -130,32 +152,35 @@ window.addEventListener("load",function()
 
         if(preguntasContestadas == true)
         {
-            objetoRespuesta.preguntas = listaPreguntas;
-            for(let i = 0; i < objetoRespuesta.preguntas.length; i++)
-            {
-                objetoRespuesta.preguntas[i].respuestaMarcada = arrayRespuestas[i];
-            }
-            var argonauta = JSON.stringify(objetoRespuesta);
-
-            // Y ahora hay que hacer un fetch para mandar al argonauta
-
-            fetch("mandaExamen.php",
-            {
-                method: 'POST',
-                body: argonauta
-            })
-            .then(function(response)
-            {
-                return response.text();
-            })
-            .then(function(response)
-            {
-                console.log(response);
-            });
-            // Estaría bien un booleano que te dijera se si se ha insertao propiamente propio con propiedad apropiada
-
+            terminarExamen();
         }
-        
+    }
+
+    function terminarExamen()
+    {
+        objetoRespuesta.preguntas = listaPreguntas;
+        for(let i = 0; i < objetoRespuesta.preguntas.length; i++)
+        {
+            objetoRespuesta.preguntas[i].respuestaMarcada = arrayRespuestas[i];
+        }
+        var argonauta = JSON.stringify(objetoRespuesta);
+
+        // Y ahora hay que hacer un fetch para mandar al argonauta
+
+        fetch("mandaExamen.php",
+        {
+            method: 'POST',
+            body: argonauta
+        })
+        .then(function(response)
+        {
+            return response.text();
+        })
+        .then(function(response)
+        {
+            console.log(response);
+        });
+        window.location.replace("localhost/examenTerminado.php");
     }
 
     function ocultaTodo()
