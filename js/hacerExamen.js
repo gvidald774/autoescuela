@@ -48,6 +48,9 @@ window.addEventListener("load",function()
         }
         seccion_preguntas.children[0].classList.remove("oculto");
         dibujaEnlacesPregunta(listaPreguntas);
+
+        var duracion = objetoRespuesta.duracion;
+        startTimer(duracion*60, temporizador);
     });
 
     function desordenarVector(listaPreguntas)
@@ -180,7 +183,7 @@ window.addEventListener("load",function()
         {
             console.log(response);
         });
-        window.location.replace("localhost/examenTerminado.php");
+        window.location.replace("examenTerminado.php");
     }
 
     function ocultaTodo()

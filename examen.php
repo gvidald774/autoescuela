@@ -19,7 +19,7 @@
         <div id="idSecretoOcultoEscondido" class="oculto">'.$_GET["examen"].'</div>
         <section id="cabecera_examen">
             <h1 id="titulo_examen">Pregunta 1</h1>
-            <div id="temporizador" class="derecho">10:00:00</div>
+            <div id="temporizador" class="derecho"></div>
         </section>
         <form action="" method="POST" id="examen">
             <section id="seccion_preguntas_examen">
@@ -42,7 +42,7 @@
         if($permiso == true || Sesion::leer("rol") == "Admin")
         {
             Pintor::header("Revisar examen", "js/revisarExamen.js");
-            (Sesion::leer("rol")=="Admin")?Pintor::nav_admin():Pintor::nav_usuario();
+            (Sesion::leer("rol")=="Admin")?Pintor::nav_admin():Pintor::nav_alumno();
 
             echo '
             <div id="idSecretoOcultoEscondido" class="oculto">'.$_GET["examenRealizado"].'</div>

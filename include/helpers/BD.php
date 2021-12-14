@@ -651,7 +651,7 @@ class BD {
         $result = false;
         $consulta = self::$con->prepare("SELECT * FROM examen_realizado WHERE idExamen=:idExamen AND idAlumno=:idAlumno");
         $consulta->bindParam(':idExamen',$idExamen);
-        $consulta->bindParam(':idAlumno',$idAlumno);
+        $consulta->bindParam(':idAlumno',$idUsuario);
 
         $consulta->execute();
         if($consulta->fetch(PDO::FETCH_NUM)[0])

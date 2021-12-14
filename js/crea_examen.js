@@ -212,31 +212,36 @@ window.addEventListener("load",function()
             preguntasIncluidas.push(stringID.split("_")[1]);
         }
 
-        standardJSON_Object.preguntasIncluidas = preguntasIncluidas;
-
-        var cadena_json = JSON.stringify(standardJSON_Object);
-
-        console.log(cadena_json);
-
-        // Y ahora hacemos un fetch para crear el examen propiamente dicho (?)
-        fetch("enviaExamen.php",
+        if(standardJSON_Object.numPreguntas == preguntasIncluidas.length)
         {
-            method: 'post',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
+            standardJSON_Object.preguntasIncluidas = preguntasIncluidas;
 
-            body: cadena_json
+            var cadena_json = JSON.stringify(standardJSON_Object);
 
-        })
-        .then((response) =>
+            // Y ahora hacemos un fetch para crear el examen propiamente dicho (?)
+            fetch("enviaExamen.php",
+            {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+
+                body: cadena_json
+
+            })
+            .then((response) =>
+            {
+                return response.text();
+            })
+            .then(response => 
+            {
+                console.log(response);
+            });
+        }
+        else
         {
-            return response.text();
-        })
-        .then(response => 
-        {
-            console.log(response);
-        });
+            alert("ERROR: El número de preguntas no coincide con las preguntas incluidas.");
+        }
     }
 });

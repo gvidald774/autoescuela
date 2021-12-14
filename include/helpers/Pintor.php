@@ -14,7 +14,10 @@ class Pintor {
             <script src=\"".$ruta_js."\"></script>
         </head>
         <body>
-        <header>placeholder</header>";
+        <header>
+        <div class='izquierdo'>Autoescuela Las Fuentezuelas</div>
+        <div class='derecho'><a href='logoff.php'>Logoff</a></div>
+        </header>";
     }
 
     public static function nav_admin()
