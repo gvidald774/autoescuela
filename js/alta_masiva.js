@@ -55,4 +55,6 @@ window.addEventListener("load",function()
         boton.disabled = false;
     }
 
+    // Debería añadir el botón para subir un archivo o algo así.
+
 })

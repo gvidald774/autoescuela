@@ -1,6 +1,5 @@
 window.addEventListener("load",function()
 {
-    // Hay que meterle también todo el rollo de la paginación, div oculto div visible para las preguntas, etcétera.
     var idExamen = document.getElementById("idSecretoOcultoEscondido").innerHTML;
     var seccion_preguntas = document.getElementById("seccion_preguntas_examen");
     var seccion_enlaces = document.getElementById("paginacion_preguntas_examen");
@@ -28,7 +27,6 @@ window.addEventListener("load",function()
 
     var arrayRespuestas = [];
 
-    // Aquí tengo que hacer un fetch
     fetch("traeExamen.php?id="+idExamen)
     .then(function(response)
     {
@@ -73,16 +71,16 @@ window.addEventListener("load",function()
         preguntica = document.createElement("article");
         preguntica.id = "pregunta_"+pregunta.pregunta.id;
         
-        recurso = document.createElement("section");
+        var recurso = document.createElement("section");
         recurso.classList.add("izquierdo");
-        recurso.innerHTML = '<img src="data:image/jpeg;base64,'+pregunta.pregunta.recurso+' />';
+        recurso.innerHTML = '<img src="data:image/jpeg;base64,'+pregunta.pregunta.recurso+'" />';
         texto = document.createElement("div");
         texto.classList.add("derecho");
 
         listaRespuestas = pregunta.respuestas;
         listaRespuestas = desordenarVector(listaRespuestas);
 
-        enunciado = document.createElement("article");
+        var enunciado = document.createElement("article");
         enunciado.classList.add("enunciado_pregunta");
         enunciado.innerHTML = pregunta.pregunta.enunciado;
         texto.appendChild(enunciado);

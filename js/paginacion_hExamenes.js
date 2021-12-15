@@ -19,11 +19,24 @@ window.addEventListener("load",function()
     })
     .then(function(json)
     {
+        if(permisos == "Alumno")
+        {
+            escribeDatos(json);
+        }
         escribeCabeceras(json);
         escribeExamenes(json);
         escribePaginas(json);
     });
-    
+
+    function escribeDatos(json)
+    {
+        var sitioDatos = document.getElementById("sitioDatos");
+        var datos = json["datos"];
+        sitioDatos.innerHTML = "Media de calificaciones: "+json["datos"]["avg"]+"<br />"
+                             + "Máxima calificación: "+json["datos"]["max"]+"<br />"
+                             + "Número de calificaciones: "+json["datos"]["count"]+"<br />";
+    }
+
     function escribeCabeceras(json)
     {
         let cabecera = document.createElement("tr");

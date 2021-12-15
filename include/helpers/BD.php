@@ -756,4 +756,13 @@ class BD {
         $cantidad = $consulta->fetch(PDO::FETCH_NUM)[0];
         return $cantidad;
     }
+
+    public static function obtenStatsExamen($idUsuario)
+    {
+        $consulta = self::$con->prepare("SELECT AVG(calificacion) 'avg', MAX(calificacion) 'max', COUNT(calificacion) 'count' FROM examen_realizado WHERE idAlumno=:id");
+        $consulta->bindParam(':id',$idUsuario);
+        $consulta->execute();
+        $datos = $consulta->fetch(PDO::FETCH_OBJ);
+        return $datos;
+    }
 }

@@ -112,7 +112,7 @@ window.addEventListener("load",function()
     function refresh(p)
     {
         removeAllChildNodes(corpus);
-        urlAEnviar = "traeExamenesPaginados.php?p="+p+"&t=10";
+        urlAEnviar = "traeUsuariosPaginados.php?p="+p+"&t=10";
         fetch(urlAEnviar)
         .then(function(response)
         {
@@ -135,7 +135,7 @@ window.addEventListener("load",function()
             body: formData
         })
         .then(response => response.text())
-        .then(response => alert(reponse));
+        .then(response => alert(response));
         refresh(1);
     }
 

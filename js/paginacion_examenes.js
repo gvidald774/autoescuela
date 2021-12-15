@@ -132,7 +132,7 @@ window.addEventListener("load",function()
         })
         .then(function(json)
         {
-            escribePreguntas(json);
+            escribeExamenes(json);
         });
     }
 

@@ -41,7 +41,7 @@ window.addEventListener("load",function()
         {
             preguntica.classList.add("preguntaIncorrecta");
         }
-        recurso = document.createElement("section");
+        var recurso = document.createElement("section");
         recurso.classList.add("izquierdo");
         recurso.innerHTML = '<img src="data:image/jpeg; base64,'+pregunta.pregunta.recurso+'" />';
         texto = document.createElement("div");
