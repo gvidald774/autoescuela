@@ -3,6 +3,7 @@
     require_once("include/cargadores/carga_helpers.php");
 
     BD::conectar();
+    Sesion::iniciar();
 
     $mensaje = "<div>El código introducido no existe o ha caducado. Por favor, comuníquese con la persona que le ha dado el alta para que le proporcione un nuevo enlace o compruebe que el que ha introducido es correcto.</div>";
 
@@ -56,7 +57,9 @@
                     $usuario_a_insertar = new Usuario(++$ultimoId,$email,$nombre,$apellidos,$contraseña,$f_nac,2,$localidad);
 
                     BD::insertaUsuario($usuario_a_insertar);
-                    // header blablabla
+                    Sesion::escribir("usuario",$email);
+                    Sesion::escribir("rol","Alumno");
+                    header("Location: usuarioCreado.php");
                 }
                 else
                 {
@@ -79,7 +82,7 @@
                 <div><label for="password2">Repita contraseña:</label><input type="password" name="password2" required /></div>
                 <div><label for="fecha">Fecha de nacimiento:</label><input type="date" name="f_nac" required /><div id="error_fecha">'.$errorcillos["f_nac"].'</div></div>
                 <div><label for="localidad">Localidad:</label><input type="text" name="localidad" required /><div id="error_localidad">'.$errorcillos["localidad"].'</div></div>
-                <div><input type="submit" name="Enviar" value="Sign up" /></div>
+                <div><input type="submit" name="Enviar" id="boton_nuevoUsuario" value="Sign up" /></div>
             </form>
             ';
             Pintor::footer();

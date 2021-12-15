@@ -90,6 +90,7 @@ class BD {
         $consulta->bindParam(':fechaNacimiento',$fechaNacimiento);
         $consulta->bindParam(':rol',$rol);
         $consulta->bindParam(':foto',$foto);
+        $consulta->bindParam('localidad',$localidad);
 
         $consulta->execute();
     }

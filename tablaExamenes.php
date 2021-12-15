@@ -12,7 +12,7 @@
     else
     {
         Pintor::header("Tabla exámenes",["js/paginacion_examenes.js"]);
-        Pintor::nav_admin();
+        (Sesion::leer("rol") == "Admin")?Pintor::nav_admin():Pintor::nav_alumno();
         echo '<div class="oculto" id="idOcultoEscondido">'.Sesion::leer("rol").'</div>';
         if(Sesion::leer("rol")=="Admin") {echo "<a href=\"creaExamen.php\"><button>Crear examen</button></a>";}
             echo "<table id=\"tabla\">

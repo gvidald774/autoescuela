@@ -1,7 +1,7 @@
 <?php
 
 class Pintor {
-    public static function header($title, $ruta_js = "", $css = "css/main.css")
+    public static function header($title, $ruta_js = [], $css = "css/main.css")
     {
         echo "<!DOCTYPE html>
         <html lang=\"en\">

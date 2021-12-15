@@ -11,7 +11,7 @@
     }
     else if(Sesion::leer("rol") == "Admin") // Cambiar a "Profesor".
     {
-        Pintor::header("Histórico de exámenes","js/paginacion_hExamenes.js");
+        Pintor::header("Histórico de exámenes",["js/paginacion_hExamenes.js"]);
         Pintor::nav_admin();
         echo "<div class=\"oculto\" id=\"permisos\">Admin</div>
             <table id=\"tabla\">
