@@ -21,7 +21,7 @@
     }
     else if(Sesion::leer("rol") == "Alumno")
     {
-        Pintor::header("Histórico de exámenes","js/paginacion_hExamenes.js");
+        Pintor::header("Histórico de exámenes",["js/paginacion_hExamenes.js"]);
         Pintor::nav_alumno();
         echo "<div class=\"oculto\" id=\"permisos\">Alumno</div>
             <div class=\"derecho\" id=\"sitioDatos\"></div>

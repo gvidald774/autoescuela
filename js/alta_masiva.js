@@ -1,7 +1,7 @@
 window.addEventListener("load",function()
 {
     var areaTexto = document.getElementById("csv");
-    var areaError = document.getElementById("error");
+    var areaError = document.getElementById("error_altaMasiva");
     var boton = document.getElementById("botonAltaMasiva");
     var botonArchivo = document.getElementById("archivoTexto");
 
@@ -12,6 +12,7 @@ window.addEventListener("load",function()
         reader.onload = function(progressEvent)
         {
             areaTexto.value = this.result;
+            enableButton();
             compruebaCorreo(areaTexto);
         };
         reader.readAsText(archivo);
@@ -44,21 +45,7 @@ window.addEventListener("load",function()
             {
                 disableButton();
             }
-        }
-        
-    }
-
-    function esCorreoIndividual(texto)
-    {
-        let regexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-
-        let resultado = false;
-        if(regexp.test(texto))
-        {
-            resultado = true;
-        }
-        
-        return resultado;
+        }   
     }
 
     function disableButton()
@@ -72,7 +59,5 @@ window.addEventListener("load",function()
         areaError.innerHTML = "";
         boton.disabled = false;
     }
-
-    // Debería añadir el botón para subir un archivo o algo así. -> parecido a lo de la imagen, pero que el contenido del archivo vaya al textarea.
 
 })

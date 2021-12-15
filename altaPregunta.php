@@ -156,11 +156,11 @@
     };
     if($modifiquino == true)
     {
-        Pintor::header("Editar pregunta","js/altaPregunta.js");
+        Pintor::header("Editar pregunta",["js/altaPregunta.js"]);
     }
     else
     {
-        Pintor::header("Crear pregunta","js/altaPregunta.js");
+        Pintor::header("Crear pregunta",["js/altaPregunta.js"]);
     }
     Pintor::nav_admin();
 

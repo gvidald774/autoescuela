@@ -51,11 +51,11 @@
 
     if(isset($_GET["id"])) // A ver no lo sé
     {
-        Pintor::header("Editar examen","js/crea_examen.js");
+        Pintor::header("Editar examen",["js/crea_examen.js"]);
     }
     else
     {
-        Pintor::header("Crear examen","js/crea_examen.js");
+        Pintor::header("Crear examen",["js/crea_examen.js"]);
     }
     Pintor::nav_admin();
 

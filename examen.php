@@ -12,7 +12,7 @@
 
     if(isset($_GET["examen"]))
     {
-        Pintor::header("Examen en proceso", "js/hacerExamen.js"); // Que tendrá el rollo del temporizador y tal
+        Pintor::header("Examen en proceso", "[js/hacerExamen.js]"); // Que tendrá el rollo del temporizador y tal
         (Sesion::leer("rol")=="Admin")?Pintor::nav_admin():Pintor::nav_alumno();
 
         echo '
@@ -41,7 +41,7 @@
         $permiso = BD::accesoExamenRealizado($_GET["examenRealizado"], Sesion::leer("usuario"));
         if($permiso == true || Sesion::leer("rol") == "Admin")
         {
-            Pintor::header("Revisar examen", "js/revisarExamen.js");
+            Pintor::header("Revisar examen", ["js/revisarExamen.js"]);
             (Sesion::leer("rol")=="Admin")?Pintor::nav_admin():Pintor::nav_alumno();
 
             echo '

@@ -16,7 +16,7 @@
     }
     else
     {
-        Pintor::header("Tabla preguntas","js/paginacion_preguntas.js");
+        Pintor::header("Tabla preguntas",["js/paginacion_preguntas.js"]);
         Pintor::nav_admin();
         echo "<a href=\"creaExamen.php\"><button>Crear examen</button></a>
             <table id=\"tabla\">

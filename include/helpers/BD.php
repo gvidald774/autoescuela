@@ -70,7 +70,7 @@ class BD {
 
     public static function insertaUsuario($usuario)
     {
-        $consulta = self::$con->prepare("INSERT INTO usuario VALUES (:id, :email, :nombre, :apellidos, :pass, :fechaNacimiento, :rol, :foto)");
+        $consulta = self::$con->prepare("INSERT INTO usuario VALUES (:id, :email, :nombre, :apellidos, :pass, :fechaNacimiento, :rol, :foto, :localidad)");
 
         $id = $usuario->getID();
         $email = $usuario->getEmail();
@@ -80,6 +80,7 @@ class BD {
         $fechaNacimiento = $usuario->getFechaNacimiento();
         $rol = $usuario->getRol();
         $foto = $usuario->getFoto();
+        $localidad = $usuario->getLocalidad();
 
         $consulta->bindParam(':id',$id);
         $consulta->bindParam(':email',$email);
@@ -188,6 +189,16 @@ class BD {
         if ($consulta->fetch(PDO::FETCH_NUM)[0])
         {
             $result = true;
+        }
+        else
+        {
+            $consulta = self::$con->prepare("SELECT usuario FROM altas_pendientes WHERE usuario=:usuario");
+            $consulta->bindParam(':usuario',$correo);
+            $consulta->execute();
+            if($consulta->fetch(PDO::FETCH_NUM)[0])
+            {
+                $result = true;
+            }
         }
         return $result;
     }
@@ -431,22 +442,34 @@ class BD {
 
     public static function nuevaPendienteActivacion($correo, $token)
     {
-        $consulta = self::$con->prepare("INSERT INTO altas_pendientes VALUES (':correo', ':token', ':fecha'");
-
-        $consulta->bindParam(':correo',$correo);
-        $consulta->bindParam(':token',$token);
         $fecha = date("Y-m-d H:m:s", strtotime('+24 hours'));
-        $consulta->bindParam(':fecha',$fecha);
-
         if(!BD::existeCorreo($correo))
         {
+            $consulta = self::$con->prepare("INSERT INTO altas_pendientes VALUES (:token, :correo, :fecha)");
+
+            $consulta->bindParam(':token',$token);
+            $consulta->bindParam(':correo',$correo);
+            $consulta->bindParam(':fecha',$fecha);
+
             $consulta->execute();
+            return true;
+        }
+        else
+        {
+            $consulta = self::$con->prepare("UPDATE altas_pendientes SET token=:token, fecha=:fecha WHERE usuario=:correo");
+
+            $consulta->bindParam(':token',$token);
+            $consulta->bindParam(':fecha',$fecha);
+            $consulta->bindParam(':correo',$correo);
+            
+            $consulta->execute();
+            return true;
         }
     }
 
     public static function existeAltaPendiente($token)
     {
-        $consulta = self::$con->prepare("SELECT token FROM altas_pendientes WHERE token=$token");
+        $consulta = self::$con->prepare("SELECT token FROM altas_pendientes WHERE token='".$token."'");
         $consulta->execute();
         $result = false;
         if ($consulta->fetch(PDO::FETCH_NUM)[0])
@@ -764,5 +787,14 @@ class BD {
         $consulta->execute();
         $datos = $consulta->fetch(PDO::FETCH_OBJ);
         return $datos;
+    }
+
+    public static function getCorreoFromToken($token)
+    {
+        $consulta = self::$con->prepare("SELECT usuario FROM altas_pendientes WHERE token=:token");
+        $consulta->bindParam(':token',$token);
+        $consulta->execute();
+        $correo = $consulta->fetch(PDO::FETCH_NUM)[0];
+        return $correo;
     }
 }

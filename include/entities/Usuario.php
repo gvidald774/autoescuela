@@ -9,8 +9,9 @@ class Usuario {
     protected $fechaNacimiento;
     protected $rol;
     protected $foto;
+    protected $localidad;
 
-    function __construct($i,$e,$n,$a,$p,$fn,$r,$fo = "")
+    function __construct($i,$e,$n,$a,$p,$fn,$r,$l,$fo = "")
     {
         $this->id = $i;
         $this->email = $e;
@@ -19,6 +20,7 @@ class Usuario {
         $this->pass = $p;
         $this->fechaNacimiento = $fn;
         $this->rol = $r;
+        $this->localidad = $l;
         $this->foto = $fo;
     }
 
@@ -62,6 +64,11 @@ class Usuario {
         return $this->foto;
     }
 
+    public function getLocalidad()
+    {
+        return $this->localidad;
+    }
+
     public function setID($i)
     {
         $this->id = $i;
@@ -100,5 +107,10 @@ class Usuario {
     public function setFoto($f)
     {
         $this->foto = $f;
+    }
+
+    public function setLocalidad($l)
+    {
+        $this->localidad = $l;
     }
 }

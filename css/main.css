@@ -63,6 +63,7 @@ form {
   margin: auto;
   border: 1px solid gray;
   padding: 5%;
+  min-width: 50%;
 }
 form input[type=text], form input[type=password] {
   border: 1p dotted #999;
@@ -89,6 +90,12 @@ form label {
   font-family: "Montserrat";
   display: table-cell;
   margin-top: 10px;
+}
+form textarea {
+  min-width: 200px;
+  min-height: 100px;
+  height: 100%;
+  width: 100%;
 }
 
 header {

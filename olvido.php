@@ -1,6 +1,7 @@
 <?php
     use PHPMailer\PHPMailer\PHPMailer;
     require "vendor/autoload.php";
+    require "credenciales.php";
 
     require_once("include/cargadores/carga_entities.php");
     require_once("include/cargadores/carga_helpers.php");
@@ -36,9 +37,9 @@
                 $mail->Host       = "smtp.gmail.com";    
                 $mail->Port       = 587;                 
                 // introducir usuario de google
-                $mail->Username   = "schobzax@gmail.com"; 
+                $mail->Username   = Credenciales::$usuario;
                 // introducir clave
-                $mail->Password   = "Thunder_Busters!";       
+                $mail->Password   = Credenciales::$pasword;
                 $mail->SetFrom('administrador@autoescuela.es', 'Autoescuela Las Fuentezuelas');
                 // asunto
                 $mail->Subject    = "Recuperar contraseña";
@@ -79,17 +80,8 @@
         }
     }
 
+    Pintor::header("Olvido de contraseña");
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olvido de contraseña</title>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-<body>
     <form action="" method="POST">
         <p>Si has olvidado tu contraseña, pon tu correo aquí y si tenemos un usuario con ese correo, te llegará un enlace para cambiar tu contraseña.</p>
         <input type="text" id="olvido-form-email" name="email-olvidado" required />

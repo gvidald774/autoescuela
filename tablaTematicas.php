@@ -16,7 +16,7 @@
     }
     else
     {
-        Pintor::header("Tabla temáticas","js/paginacion_tematicas.js");
+        Pintor::header("Tabla temáticas",["js/paginacion_tematicas.js"]);
         Pintor::nav_admin();
         echo "
             <a href=\"altaTematica.php\"><button>Alta</button></a>

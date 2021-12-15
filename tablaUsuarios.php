@@ -16,7 +16,7 @@
     }
     else
     {
-        Pintor::header("Tabla usuarios","js/paginacion_usuarios.js");
+        Pintor::header("Tabla usuarios",["js/paginacion_usuarios.js"]);
         Pintor::nav_admin();
         echo "
             <a href=\"alta_usuario.php\"><button>Alta</button></a>

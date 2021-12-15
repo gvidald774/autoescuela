@@ -1,6 +1,6 @@
 <?php
 
 class Credenciales {
-    static $usuario = "";
-    static $password = "";
+    public static $usuario = "schobzax@gmail.com";
+    public static $password = "W0rld of Pain";
 }
