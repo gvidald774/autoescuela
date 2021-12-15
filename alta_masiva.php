@@ -3,6 +3,7 @@
     require "vendor/autoload.php";
     require_once("include/cargadores/carga_entities.php");
     require_once("include/cargadores/carga_helpers.php");
+    require_once("credenciales.php");
 
     function mandaCorreoActivacion($correo, $token)
     {
@@ -15,8 +16,8 @@
         $mail->Host = "smtp.gmail.com";
         $mail->Port = 587;
 
-        $mail->Username = "schobzax@gmail.com"; // Cambiar por autoescuelafuentezuelas o algo así
-        $mail->Password = "W0rld of Pain";
+        $mail->Username = Credenciales::$usuario;
+        $mail->Password = Credenciales::$password;
         $mail->SetFrom('administrador@autoescuela.es', 'Autoescuela Las Fuentezuelas');
         $mail->Subject = "Correo de activación - Autoescuela Las Fuentezuelas";
         $enlace = "localhost/proyectos/autoescuela/nuevoUsuario.php?token=".$token;
@@ -44,9 +45,10 @@
         echo "<main>
                   <h1>Alta masiva de usuarios</h1>
                    <p>Por favor, introduzca los correos que desea dar de alta, uno por línea.</p>
-                   <form action=\"\" method=\"POST\">
+                   <form action=\"\" method=\"POST\" enctype=\"multipart/form-data\">
                        <textarea id=\"csv\" name=\"csv\"></textarea>
                        <div id=\"error\">$correoEnvio</div>
+                       <input type=\"file\" id=\"archivoTexto\" />
                        <input type=\"submit\" id=\"botonAltaMasiva\" name=\"botonAltaMasiva\" value=\"Enviar\" />
                     </form>
                 </main>";

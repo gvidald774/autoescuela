@@ -15,8 +15,9 @@ class Pintor {
         </head>
         <body>
         <header>
-        <div class='izquierdo'>Autoescuela Las Fuentezuelas</div>
-        <div class='derecho'><a href='logoff.php'>Logoff</a></div>
+            <div class='izquierdo imagen'></div>
+            <div class='centrado'>Autoescuela Las Fuentezuelas</div>
+            <div class='derecho'><a href='logoff.php'>Logoff</a></div>
         </header>";
     }
 

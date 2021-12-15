@@ -3,6 +3,19 @@ window.addEventListener("load",function()
     var areaTexto = document.getElementById("csv");
     var areaError = document.getElementById("error");
     var boton = document.getElementById("botonAltaMasiva");
+    var botonArchivo = document.getElementById("archivoTexto");
+
+    botonArchivo.onchange = function()
+    {
+        archivo = this.files[0];
+        var reader = new FileReader();
+        reader.onload = function(progressEvent)
+        {
+            areaTexto.value = this.result;
+            compruebaCorreo(areaTexto);
+        };
+        reader.readAsText(archivo);
+    }
 
     areaTexto.onkeyup = function()
     {
@@ -10,6 +23,11 @@ window.addEventListener("load",function()
         compruebaCorreo(areaTexto);
     }
     areaTexto.onpaste = function()
+    {
+        enableButton();
+        compruebaCorreo(areaTexto);
+    }
+    areaTexto.onchange = function()
     {
         enableButton();
         compruebaCorreo(areaTexto);
@@ -55,6 +73,6 @@ window.addEventListener("load",function()
         boton.disabled = false;
     }
 
-    // Debería añadir el botón para subir un archivo o algo así.
+    // Debería añadir el botón para subir un archivo o algo así. -> parecido a lo de la imagen, pero que el contenido del archivo vaya al textarea.
 
 })

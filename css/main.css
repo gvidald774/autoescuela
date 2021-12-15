@@ -108,10 +108,14 @@ header img {
   padding: 0;
   float: left;
 }
-header div {
-  float: right;
-  background-image: url("../../media/img/big_logo.webp");
-  height: 100%;
+header div.imagen {
+  background-image: url("../../media/img/small-logo.jpg");
+  background-size: 100px;
+  min-height: 100px;
+  min-width: 100px;
+}
+header div.izquierdo {
+  float: left;
 }
 
 nav {
@@ -170,6 +174,7 @@ table {
   font-family: "Montserrat";
   border-spacing: 0;
   border-collapse: collapse;
+  width: 100%;
 }
 
 table tr:hover {

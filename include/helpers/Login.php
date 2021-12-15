@@ -1,6 +1,6 @@
 <?php
-    require_once($_SERVER['DOCUMENT_ROOT']."/proyectos/autoescuela/include/cargadores/carga_entities.php");
-    require_once($_SERVER['DOCUMENT_ROOT']."/proyectos/autoescuela/include/cargadores/carga_helpers.php");
+    require_once($_SERVER['DOCUMENT_ROOT']."/include/cargadores/carga_entities.php");
+    require_once($_SERVER['DOCUMENT_ROOT']."/include/cargadores/carga_helpers.php");
 
 BD::conectar();
 

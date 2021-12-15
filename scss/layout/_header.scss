@@ -14,10 +14,14 @@ header {
         padding: 0;
         float: left;
     }
-    div {
-        float: right;
-        background-image: url("../../media/img/big_logo.webp"); // Nada señor, esto no funciona
-        height: 100%;
+    div.imagen {
+        background-image: url("../../media/img/small-logo.jpg"); // Nada señor, esto no funciona
+        background-size: 100px;
+        min-height: 100px;
+        min-width: 100px;
         // Esto tengo que mirarlo a ver. No sé cómo hacerlo medio enjaretao --
+    }
+    div.izquierdo {
+        float: left;
     }
 }
