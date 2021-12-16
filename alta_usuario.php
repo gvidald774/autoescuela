@@ -47,8 +47,7 @@
                 $email = $_POST["email"];
                 $nombre = $_POST["nombre"];
                 $apellidos = $_POST["apellidos"];
-                $contraseña = $_POST["password1"];
-                $contraseña = $_POST["password2"];
+                $contraseña = md5($_POST["password1"]);
                 $f_nac = $_POST["f_nac"];
                 $rol = $_POST["rol"];
 
@@ -95,5 +94,4 @@
         </div>
         <div><input type="submit" name="Enviar" value="Sign up" /></div>
     </form>
-    <a href="logoff.php">Logoff</a>
 <?php Pintor::footer(); ?>

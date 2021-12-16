@@ -49,7 +49,7 @@
                 {
                     $nombre = $_POST["nombre"];
                     $apellidos = $_POST["apellidos"];
-                    $contraseña = $_POST["password1"];
+                    $contraseña = md5($_POST["password1"]);
                     $f_nac = $_POST["f_nac"];
                     $localidad = $_POST["localidad"];
 

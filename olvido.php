@@ -47,7 +47,7 @@
                 $valor = rand(0,500000);
                 $fecha = date(DATE_RFC2822);
                 $token = md5($valor.$fecha);
-                $enlace = $_SERVER['DOCUMENT_ROOT'].'/proyectos/autoescuela/nuevoUsuario.php?token='.$token;
+                $enlace ='www.autoescuela.com/modificarPass.php?token='.$token;
 
                 // Esto no es, pero bueno
                 BD::nuevaPendienteActivacion($token);

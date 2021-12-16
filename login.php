@@ -23,7 +23,7 @@
         if($validador->correcto())
         {
 
-            if(Login::identificar($usuario, $pass_encrypt)) // Aquí habría que mirarlo del rol para ver lo que carga de una manera u otra.
+            if(Login::identificar($usuario, $pass_encrypt))
             {
                 $rol = Login::getRol($usuario);
                 Sesion::escribir("usuario",$usuario);
