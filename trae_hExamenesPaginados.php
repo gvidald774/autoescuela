@@ -15,8 +15,8 @@ if($_GET['r']=="'Admin'")
 else if($_GET['r']=="'Alumno'")
 {
     $idAlumno = BD::getIdAlumno(Sesion::leer("usuario"));
-    $npag = BD::obtenCuantasPaginasExamen($_GET['t']," AND u.id = $idAlumno");
-    $lista = BD::obtenExamenesPaginados($_GET['p'],$_GET['t']," AND u.id = $idAlumno");
+    $npag = BD::obtenCuantasPaginasExamen($_GET['t']," AND u.id = ".$idAlumno);
+    $lista = BD::obtenExamenesPaginados($_GET['p'],$_GET['t']," AND u.id = ".$idAlumno);
     $datos = BD::obtenStatsExamen($idAlumno);
     $lista["npag"] = $npag;
     $lista["datos"] = $datos;

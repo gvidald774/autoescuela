@@ -39,7 +39,7 @@
                 // introducir usuario de google
                 $mail->Username   = Credenciales::$usuario;
                 // introducir clave
-                $mail->Password   = Credenciales::$pasword;
+                $mail->Password   = Credenciales::$password;
                 $mail->SetFrom('administrador@autoescuela.es', 'Autoescuela Las Fuentezuelas');
                 // asunto
                 $mail->Subject    = "Recuperar contraseña";

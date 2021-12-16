@@ -19,6 +19,11 @@ window.addEventListener("load",function()
 
         adonde.textContent = minutes + ":" + seconds;
 
+        if(timer < 300)
+        {
+            adonde.style="color: red";
+        }
+
         if(--timer < 0) {
             terminarExamen();
         }
@@ -73,7 +78,15 @@ window.addEventListener("load",function()
         
         var recurso = document.createElement("section");
         recurso.classList.add("izquierdo");
-        recurso.innerHTML = '<img src="data:image/jpeg;base64,'+pregunta.pregunta.recurso+'" />';
+        if (pregunta.pregunta.type == "video/mp4")
+        {
+            recurso.innerHTML = '<img src=data:video/mp4;base64,'+pregunta.pregunta.recurso+'" />';
+            recurso.innerHTML = '<video controls><source src="data:video/mp4;base64,'+pregunta.pregunta.recurso+'" ></video>';
+        }
+        else {
+            recurso.innerHTML = '<img src="data:image/jpeg;base64,'+pregunta.pregunta.recurso+'" />';
+        }
+
         texto = document.createElement("div");
         texto.classList.add("derecho");
 
@@ -107,10 +120,31 @@ window.addEventListener("load",function()
             respuestas.appendChild(respuestaWrapper);
             respuestas.appendChild(saltolinea);
         }
-        texto.appendChild(respuestas);
+        var borrado = document.createElement("input");
+        borrado.setAttribute("type","button");
+        borrado.setAttribute("value","Borrar respuesta");
+        borrado.setAttribute("id","botonBorrar");
+        borrado.onclick = function(ev)
+        {
+            ev.preventDefault();
+            
+            radios = this.parentElement.getElementsByTagName("input");
+            for(let i = 0; i < radios.length; i++)
+            {
+                radios[i].checked = false;
+            }
 
+            var indice = listaPreguntas.indexOf(pregunta);
+            delete arrayRespuestas[indice];
+            console.log(arrayRespuestas);
+            seccion_enlaces.children[indice].classList.remove("pregunta_contestada");
+
+        }
+        texto.appendChild(respuestas);
+        
         preguntica.appendChild(recurso);
         preguntica.appendChild(texto);
+        preguntica.appendChild(borrado);
         seccion_preguntas.appendChild(preguntica);
 
         preguntica.classList.add("oculto");

@@ -193,31 +193,35 @@ window.addEventListener("load",function()
 
     formularino["n_preg"].onblur = function()
     {
-        enableButton();
+        enableButton(boton);
         if(!positivo(formularino["n_preg"].value))
         {
             document.getElementById("error_npreg").innerHTML = "El nº de preguntas ha de ser mayor que 0."
-            disableButton();
+            disableButton(boton);
         }
     }
 
     formularino["horas"].onblur = function()
     {
-        enableButton();
-        if(!positivo(formularino["hora"].value+1))
+        enableButton(boton);
+        document.getElementById("error_duracion").innerHTML = "";
+        var duracionTotal = parseInt(formularino["horas"].value*60)+parseInt(formularino["minutos"].value);
+        if(!positivo(duracionTotal))
         {
-            document.getElementById("duracion").innerHTML = "La duración ha de ser superior a 0.";
-            disableButton();
+            document.getElementById("error_duracion").innerHTML = "La duración ha de ser superior a 0.";
+            disableButton(boton);
         }
     }
 
     formularino["minutos"].onblur = function()
     {
-        enableButton();
-        if(!positivo(formularino["minutos"].value))
+        enableButton(boton);
+        document.getElementById("error_duracion").innerHTML = "";
+        var duracionTotal = parseInt(formularino["horas"].value*60)+parseInt(formularino["minutos"].value);
+        if(!positivo(duracionTotal))
         {
-            document.getElementById("error_npreg").innerHTML = "La duración ha de ser superior a 0.";
-            disableButton();
+            document.getElementById("error_duracion").innerHTML = "La duración ha de ser superior a 0.";
+            disableButton(boton);
         }
     }
 
@@ -235,13 +239,13 @@ window.addEventListener("load",function()
         ev.preventDefault();
         // Y aquí es donde empezamos a jugar. Tenemos que hacer los arrays teniendo en cuenta el modelo de examen y tal y pascual.
         // Ah y también la capacidad de leer lo que se viene si es un JSON o algo.
-        var duracion = formularino["horas"].value*60 + formularino["minutos"];
+        var duracion = parseInt(formularino["horas"].value)*60 + parseInt(formularino["minutos"].value);
 
         var standardJSON_Object = new Object();
         standardJSON_Object.codigoExamen = formularino["codigoExamen"].value;
         standardJSON_Object.enunciado = formularino["enunciado"].value;
-        standardJSON_Object.numPreguntas = formularino["n_preg"].value;
-        standardJSON_Object.duracion = duracion;
+        standardJSON_Object.numPreguntas = parseInt(formularino["n_preg"].value);
+        standardJSON_Object.duracion = parseInt(duracion);
 
         var preguntas_sin_incluir = [];
         for(let i = 0; i < bancoPreguntas.children.length; i++)
@@ -290,6 +294,7 @@ window.addEventListener("load",function()
             .then(response => 
             {
                 console.log(response);
+                window.location.href = "examenInsertado.php";
             });
         }
         else

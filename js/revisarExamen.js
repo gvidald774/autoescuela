@@ -43,7 +43,13 @@ window.addEventListener("load",function()
         }
         var recurso = document.createElement("section");
         recurso.classList.add("izquierdo");
-        recurso.innerHTML = '<img src="data:image/jpeg; base64,'+pregunta.pregunta.recurso+'" />';
+        if (pregunta.pregunta.type == "video/mp4")
+        {
+            recurso.innerHTML = '<img src=data:video/mp4;base64,'+pregunta.pregunta.recurso+'" />';
+        }
+        else {
+            recurso.innerHTML = '<img src="data:image/jpeg;base64,'+pregunta.pregunta.recurso+'" />';
+        }
         texto = document.createElement("div");
         texto.classList.add("derecho");
 

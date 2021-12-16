@@ -69,7 +69,7 @@ window.addEventListener("load",function()
         {
             arrayoMcQueen = ["fecha", "calificacion", "opciones"];
         }
-        for (let i = 0; i < Object.keys(json).length-1; i++)
+        for (let i = 0; i < Object.keys(json).length-2; i++)
         {
             let fila = document.createElement("tr");
             fila.idExamen = json[i]["id"];
