@@ -1,0 +1,76 @@
+/* Sobre exámenes */
+
+section {
+    border-bottom: 1px gray solid;
+    margin-bottom: 10px;
+}
+
+
+input[type="text"] {
+    font-size: 100%;
+}
+
+#bancoPreguntas {
+    float: left;
+    box-shadow: 5px 5px 5px black;
+}
+#preguntasSeleccionadas {
+    float: right;
+    box-shadow: -5px 5px 5px black;
+}
+#preguntasSeleccionadas, #bancoPreguntas {
+    margin: 10px;
+    overflow: auto;
+    background-color: palegoldenrod;
+    display: block;
+    position: relative;
+    width: 40%;
+    min-height: 600px;
+    max-height: 600px;
+}
+
+div.pregunta {
+    position: relative;
+    border: 1px solid;
+    border-radius: 5px 2px;
+    background-color: maroon;
+    overflow: auto;
+    margin: 10px;
+    box-shadow: 5px 5px 5px black;
+    min-height: 50px;
+    max-height: 500px;
+}
+div.pregunta-enunciado {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: black;
+    font-size: medium;
+    font-family: sans-serif;
+    display: block;
+    overflow: none;
+    font-family: 'Montserrat';
+}
+div.pregunta-tema {
+    color: gray;
+    font-size: small;
+    text-align: right;
+    display: block;
+    font-family: 'Fjalla One';
+    margin-top: 5px;
+    margin-right: 5px;
+}
+div.marcado {
+    border: 3px solid blue;
+}
+
+.acierto {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+.sin_marcar {
+    color: goldenrod;
+}

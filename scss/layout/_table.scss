@@ -6,18 +6,23 @@ table {
     font-family: 'Montserrat';
     border-spacing: 0;
     border-collapse: collapse;
-    width: 100%;
-}
+    width: 90%;
 
-table tr:hover {
-    background-color: gray;
-}
-
-table tr td:hover {
-    background-color: lightgray;
+    tr {
+        &:hover {
+            background-color: gray;
+        }
+        td:hover {
+            background-color: lightgray;
+        }
+    }
 }
 
 td,th {
     margin: 0;
     padding: 10px 20px;
+}
+
+th {
+    font-weight: bolder;
 }

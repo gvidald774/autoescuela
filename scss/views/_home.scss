@@ -4,18 +4,16 @@ body {
 }
 
 img {
-    border: 3px double $bordercolor;
-    border-radius: 20px;
+    @include borde(double);
     margin: 5% 10% 1%;
     max-width: 40%;
     min-width: 10%;
 }
 
 input {
-    &[type="text"], &[type="password"], &[type="submit"] {
+
+    &#form_login_usuario, &#form_login_pass {
         font-size: 133%;
-        padding: 1%;
-        font-family: 'Montserrat';
     }
 
     &[type="checkbox"] {

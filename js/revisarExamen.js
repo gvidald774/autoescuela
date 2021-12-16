@@ -42,6 +42,7 @@ window.addEventListener("load",function()
             preguntica.classList.add("preguntaIncorrecta");
         }
         var recurso = document.createElement("section");
+        recurso.id = "recurso_pregunta_examen";
         recurso.classList.add("izquierdo");
         if (pregunta.pregunta.type == "video/mp4")
         {
@@ -79,16 +80,16 @@ window.addEventListener("load",function()
             {
                 if(preguntica.classList.contains("preguntaCorrecta"))
                 {
-                    respuestaWrapper.innerHTML += "<span class='textoCorrecta'>Respuesta correcta</span>";
+                    respuestaWrapper.innerHTML += "<span class='acierto'>Respuesta correcta</span>";
                 }
                 else if(preguntica.classList.contains("preguntaIncorrecta"))
                 {
-                    respuestaWrapper.innerHTML += "<span class='textoIncorrecta'>Respuesta incorrecta</span>";
+                    respuestaWrapper.innerHTML += "<span class='error'>Respuesta incorrecta</span>";
                 }
             }
             else if(pregunta.pregunta.respuestaCorrecta == pregunta.respuestas[i].id)
             {
-                respuestaWrapper.innerHTML += "<span class='textoCorrecta'>Respuesta correcta</span>";
+                respuestaWrapper.innerHTML += "<span class='acierto'>Respuesta correcta</span>";
             }
 
             saltolinea = document.createElement("br");

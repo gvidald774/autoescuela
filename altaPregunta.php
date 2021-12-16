@@ -175,15 +175,6 @@
 
 ?>
     <main>
-        <style>
-            table { width: 100%; }
-            .invisible {
-                border-color: green;
-            }
-            img {
-                max-height: 400px;
-            }
-        </style>
         <h1>Pregunta</h1>
         <form action="" method="POST" enctype="multipart/form-data">
             <section>

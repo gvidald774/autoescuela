@@ -1,0 +1,6 @@
+/* Mixins */
+
+@mixin borde($estilo) {
+    border: $bordercolor 3px $estilo;
+    border-radius: 20px;
+}

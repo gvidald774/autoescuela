@@ -19,10 +19,8 @@
 @import "views/user/random_exam";
 @import "views/home";
 
-// Esto no es así.
-
-p {
-    font-family: 'Montserrat';
+* {
+    box-sizing: border-box;
 }
 
 .oculto {

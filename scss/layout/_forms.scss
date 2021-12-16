@@ -3,10 +3,17 @@ form {
     margin: auto;
     border: 1px solid gray;
     padding: 5%;
-    min-width: 50%;
+    min-width: 70%;
+
+    input {
+        margin-bottom: 10px;
+    }
+
     input[type="text"], input[type="password"] {
-        border: 1p dotted #999;
+        border: 2p dotted #666;
         border-radius: 0;
+        padding: 1%;
+        font-family: 'Montserrat';
         transition: background-color 0.2s ease-in-out;
         &:hover {
             background-color: lightgreen;
@@ -16,29 +23,26 @@ form {
         }
     }
     
-    input[type="checkbox"] {
+    input[type="checkbox"], input[type="radio"] {
         clear: both;
     }
 
-    button, input, select, textarea {
+    textarea {
         font-family: monospace;
         font-size: 100%;
         margin: 10px;
         box-sizing: border-box;
         display: table-cell;
+        min-width: 200px;
+        min-height: 100px;
+        height: 100%;
+        width: 100%;
     }
 
     label {
         font-family: 'Montserrat';
         display: table-cell;
         margin-top: 10px;
-    }
-
-    textarea {
-        min-width: 200px;
-        min-height: 100px;
-        height: 100%;
-        width: 100%;
     }
 
 }

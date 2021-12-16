@@ -41,9 +41,9 @@ Pintor::header("Examen terminado");
 <main>
     <div>Examen realizado con éxito.</div>
     <div>Estadísticas:</div>
-    <div style="color: green">Preguntas acertadas:<?php echo $correctas." (".(($correctas*100)/($valores->numPreguntas))."%)"; ?></div>
-    <div style="color: red">Preguntas falladas:<?php echo $incorrectas." (".(($incorrectas*100)/($valores->numPreguntas))."%)"; ?></div>
-    <div style="color: goldenrod">Preguntas sin contestar:<?php echo $sinMarcar." (".(($sinMarcar*100)/($valores->numPreguntas))."%)"; ?></div>
+    <div class="acierto" >Preguntas acertadas:<?php echo $correctas." (".(($correctas*100)/($valores->numPreguntas))."%)"; ?></div>
+    <div class="error" >Preguntas falladas:<?php echo $incorrectas." (".(($incorrectas*100)/($valores->numPreguntas))."%)"; ?></div>
+    <div class="sin_contestar" >Preguntas sin contestar:<?php echo $sinMarcar." (".(($sinMarcar*100)/($valores->numPreguntas))."%)"; ?></div>
     <div>Total:</div>
 
     <a href="historicoExamenes.php">Volver</a>

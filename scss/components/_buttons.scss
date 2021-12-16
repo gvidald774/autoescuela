@@ -1,14 +1,16 @@
-$button-height: 5%;
-$button-width: 10%;
+/* Botones */
 
-button, input[type="button"], input[type="submit"] {
-    padding: $button-height $button-width;
-    padding: 2% 5%;
-    background-color: #008000;
-    color: #111;
-    transition: opacity 0.1s ease-in-out;
+button, input[type="button"],input[type="submit"]
+{
+    font-family: 'Fjalla One';
+    padding: 10px;
+    background-color: $color_fondo_boton;
+    color: $color_letra_boton;
+    border-radius: 10px;
+    transition: background-color 0.1s ease-in-out;
     &:hover {
-        opacity: 0.8;
+        transition: background-color 0.5s ease-in-out;
+        background-color: $color_fondo_boton_hover;
+        color: $color_letra_boton_hover;
     }
-    font-size: small;
 }

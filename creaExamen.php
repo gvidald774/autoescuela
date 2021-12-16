@@ -68,62 +68,11 @@
     $minutos = floor($placeholder->duracion%60);
 
 ?>
-    <style>
-        input[type="text"] {
-            font-size: 100%;
-        }
-        #bancoPreguntas {
-            float: left;
-        }
-        #preguntasSeleccionadas {
-            float: right;
-        }
-        #preguntasSeleccionadas, #bancoPreguntas {
-            margin: 10px;
-            overflow: auto;
-            background-color: palegoldenrod;
-            box-shadow: 5px 5px 5px black;
-            display: block;
-            position: relative;
-            width: 40%;
-            min-height: 600px;
-            max-height: 600px;
-        }
-        div.pregunta {
-            position: relative;
-            border: 1px solid;
-            background-color: maroon;
-            overflow: auto;
-            margin: 10px;
-            box-shadow: 5px 5px 5px black;
-            min-height: 50px;
-            max-height: 500px;
-        }
-        div.pregunta-enunciado {
-            color: black;
-            font-size: medium;
-            font-family: sans-serif;
-            display: block;
-            overflow: auto;
-        }
-        div.pregunta-tema {
-            color: gray;
-            font-size: small;
-            text-align: right;
-            display: block;
-        }
-        div.marcado {
-            border: 3px solid blue;
-        }
-        div.oculto {
-            display: none;
-        }
-    </style>
     <h1>Formulario de examen</h1>
     <main>
         <form action="" method="POST">
             <section>
-                <div><input type="text" style="display:none" id="codigoExamen" name="codigoExamen" <?php echo "value=\"".$idExamen."\"" ?> /></div>
+                <div><input type="text" class="oculto" id="codigoExamen" name="codigoExamen" <?php echo "value=\"".$idExamen."\"" ?> /></div>
                 <div><label for="enunciado">Enunciado: </label><input type="text" id="enunciado" name="enunciado" <?php echo "value=\"".$placeholder->enunciado."\"" ?> required /></div>
                 <div><label for="n_preg">Nº preguntas: </label><input type="number" id="n_preg" name="n_preg" <?php echo "value=\"".$placeholder->numPreguntas."\"" ?> required /><div id="error_npreg"></div>
                 <div>
@@ -134,17 +83,17 @@
             </section>
             <section>
                 <article>
-                    <input type="text" id="filtroBancoPreguntas" /><input type="button" value="filtrar" id="botonFiltroBancoPreguntas" />
-                    <input type="text" id="filtroPreguntasSeleccionadas" /><input type="button" value="Filtrar" id="botonFiltroPreguntasSeleccionadas" />
+                    <div class="izquierdo"><input type="text" id="filtroBancoPreguntas" /><input type="button" value="Filtrar" id="botonFiltroBancoPreguntas" /></div>
+                    <div class="derecho"><input type="text" id="filtroPreguntasSeleccionadas" /><input type="button" value="Filtrar" id="botonFiltroPreguntasSeleccionadas" /></div>
                 </article>
-                <article>
+                <article class="ninguno">
                     <div id="bancoPreguntas_JSON" class="oculto"><?php echo $preguntasJSON ?></div>
                     <div id="bancoPreguntas"></div>
                     <div id="seleccionadas_JSON" class="oculto"><?php echo $seleccionadasJSON ?></div>
                     <div id="preguntasSeleccionadas"></div>
                 </article>
-                <article style="clear:both">
-                    <input style="clear:both" type="submit" id="botonEnviar" name="botonEnviar" value="Enviar" />
+                <article class="ninguno">
+                    <input class="ninguno" type="submit" id="botonEnviar" name="botonEnviar" value="Enviar" />
                 </article>
             </section>
         </form>

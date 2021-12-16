@@ -1,9 +1,42 @@
+@charset "UTF-8";
+/* Herramientas de reset CSS */
 @import url("https://fonts.googleapis.com/css2?family=Fjalla+One&family=Montserrat&display=swap");
 * {
   margin: 0;
   padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 
+/* Compatibilidad con navegadores antiguos */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Tipografías */
 @font-face {
   font-family: "Fjalla One", sans-serif;
   src: url("https://fonts.googleapis.com/css2?family=Fjalla+One");
@@ -12,16 +45,22 @@
   font-family: "Montserrat", sans-serif;
   src: url("https://fonts.googleapis.com/css2?family=Montserrat");
 }
+/* Mixins */
+/* Variables */
+/* Colores */
+/* Botones */
 button, input[type=button], input[type=submit] {
-  padding: 5% 10%;
-  padding: 2% 5%;
-  background-color: #008000;
-  color: #111;
-  transition: opacity 0.1s ease-in-out;
-  font-size: small;
+  font-family: "Fjalla One";
+  padding: 10px;
+  background-color: green;
+  color: orange;
+  border-radius: 10px;
+  transition: background-color 0.1s ease-in-out;
 }
 button:hover, input[type=button]:hover, input[type=submit]:hover {
-  opacity: 0.8;
+  transition: background-color 0.5s ease-in-out;
+  background-color: darkgreen;
+  color: darkorange;
 }
 
 footer {
@@ -63,11 +102,16 @@ form {
   margin: auto;
   border: 1px solid gray;
   padding: 5%;
-  min-width: 50%;
+  min-width: 70%;
+}
+form input {
+  margin-bottom: 10px;
 }
 form input[type=text], form input[type=password] {
-  border: 1p dotted #999;
+  border: 2p dotted #666;
   border-radius: 0;
+  padding: 1%;
+  font-family: "Montserrat";
   transition: background-color 0.2s ease-in-out;
 }
 form input[type=text]:hover, form input[type=password]:hover {
@@ -76,30 +120,28 @@ form input[type=text]:hover, form input[type=password]:hover {
 form input[type=text]:active, form input[type=password]:active {
   border-radius: 0;
 }
-form input[type=checkbox] {
+form input[type=checkbox], form input[type=radio] {
   clear: both;
 }
-form button, form input, form select, form textarea {
+form textarea {
   font-family: monospace;
   font-size: 100%;
   margin: 10px;
   box-sizing: border-box;
   display: table-cell;
+  min-width: 200px;
+  min-height: 100px;
+  height: 100%;
+  width: 100%;
 }
 form label {
   font-family: "Montserrat";
   display: table-cell;
   margin-top: 10px;
 }
-form textarea {
-  min-width: 200px;
-  min-height: 100px;
-  height: 100%;
-  width: 100%;
-}
 
 header {
-  font-family: cursive;
+  font-family: "Fjalla One";
   position: relative;
   left: 0;
   top: 0;
@@ -114,6 +156,9 @@ header img {
   margin: 0;
   padding: 0;
   float: left;
+}
+header div {
+  top: 50%;
 }
 header div.imagen {
   background-image: url("../../media/img/small-logo.jpg");
@@ -138,18 +183,28 @@ nav ul {
 nav li {
   float: left;
 }
-nav li a, nav .dropbtn {
+nav li a {
   display: inline-block;
   color: white;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
-nav li a:hover, nav .dropdown:hover .dropbtn {
+nav li a:hover {
   background-color: red;
 }
-nav li.dropdown {
+nav li .dropdown {
   display: inline-block;
+}
+nav li .dropdown:hover .dropbtn {
+  background-color: red;
+}
+nav .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
 nav .dropdown-content {
   display: none;
@@ -167,7 +222,7 @@ nav .dropdown-content a {
   text-align: left;
 }
 nav .dropdown-content a:hover {
-  background-color: #f1f1f1;
+  background-color: #c1c1c1;
 }
 nav .dropdown:hover .dropdown-content {
   display: block;
@@ -181,13 +236,11 @@ table {
   font-family: "Montserrat";
   border-spacing: 0;
   border-collapse: collapse;
-  width: 100%;
+  width: 90%;
 }
-
 table tr:hover {
   background-color: gray;
 }
-
 table tr td:hover {
   background-color: lightgray;
 }
@@ -195,6 +248,98 @@ table tr td:hover {
 td, th {
   margin: 0;
   padding: 10px 20px;
+}
+
+th {
+  font-weight: bolder;
+}
+
+/* Cuestiones de preguntas */
+#caja_recurso, #recurso_pregunta_examen {
+  min-width: 256px;
+  min-height: 144px;
+  max-width: 600px;
+  max-height: 480px;
+}
+
+/* Sobre exámenes */
+section {
+  border-bottom: 1px gray solid;
+  margin-bottom: 10px;
+}
+
+input[type=text] {
+  font-size: 100%;
+}
+
+#bancoPreguntas {
+  float: left;
+  box-shadow: 5px 5px 5px black;
+}
+
+#preguntasSeleccionadas {
+  float: right;
+  box-shadow: -5px 5px 5px black;
+}
+
+#preguntasSeleccionadas, #bancoPreguntas {
+  margin: 10px;
+  overflow: auto;
+  background-color: palegoldenrod;
+  display: block;
+  position: relative;
+  width: 40%;
+  min-height: 600px;
+  max-height: 600px;
+}
+
+div.pregunta {
+  position: relative;
+  border: 1px solid;
+  border-radius: 5px 2px;
+  background-color: maroon;
+  overflow: auto;
+  margin: 10px;
+  box-shadow: 5px 5px 5px black;
+  min-height: 50px;
+  max-height: 500px;
+}
+
+div.pregunta-enunciado {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: black;
+  font-size: medium;
+  font-family: sans-serif;
+  display: block;
+  overflow: none;
+  font-family: "Montserrat";
+}
+
+div.pregunta-tema {
+  color: gray;
+  font-size: small;
+  text-align: right;
+  display: block;
+  font-family: "Fjalla One";
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+div.marcado {
+  border: 3px solid blue;
+}
+
+.acierto {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+.sin_marcar {
+  color: goldenrod;
 }
 
 .enlace_pregunta {
@@ -243,25 +388,23 @@ body {
 }
 
 img {
-  border: 3px double #9B2705;
+  border: #9B2705 3px double;
   border-radius: 20px;
   margin: 5% 10% 1%;
   max-width: 40%;
   min-width: 10%;
 }
 
-input[type=text], input[type=password], input[type=submit] {
+input#form_login_usuario, input#form_login_pass {
   font-size: 133%;
-  padding: 1%;
-  font-family: "Montserrat";
 }
 input[type=checkbox] {
   transform: scale(1.33);
   padding: 10px;
 }
 
-p {
-  font-family: "Montserrat";
+* {
+  box-sizing: border-box;
 }
 
 .oculto {

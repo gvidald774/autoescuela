@@ -20,6 +20,7 @@ window.addEventListener("load",function()
         {
             caja_recurso.innerHTML = "";
             preview = document.createElement("img");
+            preview.class = "imagen_pregunta";
             preview.src = fuenteArchivo;
             caja_recurso.appendChild(preview);
         }

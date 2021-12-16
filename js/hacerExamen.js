@@ -77,6 +77,7 @@ window.addEventListener("load",function()
         preguntica.id = "pregunta_"+pregunta.pregunta.id;
         
         var recurso = document.createElement("section");
+        recurso.id = "recurso_pregunta_examen";
         recurso.classList.add("izquierdo");
         if (pregunta.pregunta.type == "video/mp4")
         {

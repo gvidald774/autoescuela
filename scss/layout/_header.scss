@@ -1,5 +1,5 @@
 header {
-    font-family: cursive;
+    font-family: 'Fjalla One';
     position: relative;
     left: 0;
     top: 0;
@@ -13,6 +13,9 @@ header {
         margin: 0;
         padding: 0;
         float: left;
+    }
+    div {
+        top: 50%;
     }
     div.imagen {
         background-image: url("../../media/img/small-logo.jpg"); // Nada señor, esto no funciona
