@@ -7,8 +7,10 @@ window.addEventListener("load",function()
     var preguntasJSON = document.getElementById("bancoPreguntas_JSON").innerHTML;
     var seleccionadasJSON = document.getElementById("seleccionadas_JSON").innerHTML;
 
-     var pregunticas = JSON.parse(preguntasJSON);
+    var pregunticas = JSON.parse(preguntasJSON);
     var seleccionadicas = JSON.parse(seleccionadasJSON);
+
+    var formularino = document.getElementsByTagName("form")[0];
 
     if(seleccionadicas.length == 0)
     {
@@ -27,6 +29,7 @@ window.addEventListener("load",function()
         creaPreguntas(pregunticas, preguntas);
         creaPreguntas(seleccionadicas, seleccionadas);
     }
+
     // else pues ya tendríamos el json y lo hacemos directamente
     
     function creaPreguntas(json, adonde)
@@ -155,12 +158,17 @@ window.addEventListener("load",function()
         ev.preventDefault();
         const id=ev.dataTransfer.getData("text");
         this.appendChild(document.getElementById(id));
-        const marcados = preguntas.getElementsByTagName("marcado");
+        const marcados = preguntas.getElementsByClassName("marcado");
         for (let j = marcados.length-1; j >= 0; j--)
         {
             seleccionadas.appendChild(marcados[j]);
         }
         ev.stopPropagation();
+        seleccionadas.sort(function(a, b) {
+            var compA = a.getAttribute('id').toUpperCase();
+            var compB = b.getAttribute('id').toUpperCase();
+            return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+        });
     }
 
     preguntas.ondrop = function(ev)
@@ -174,6 +182,52 @@ window.addEventListener("load",function()
             preguntas.appendChild(marcados[j]);
         }
         ev.stopPropagation();
+        preguntas.sort(function(a, b) {
+            var compA = a.getAttribute('id').toUpperCase();
+            var compB = b.getAttribute('id').toUpperCase();
+            return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+        });
+    }
+
+    // Validaciones
+
+    formularino["n_preg"].onblur = function()
+    {
+        enableButton();
+        if(!positivo(formularino["n_preg"].value))
+        {
+            document.getElementById("error_npreg").innerHTML = "El nº de preguntas ha de ser mayor que 0."
+            disableButton();
+        }
+    }
+
+    formularino["horas"].onblur = function()
+    {
+        enableButton();
+        if(!positivo(formularino["hora"].value+1))
+        {
+            document.getElementById("duracion").innerHTML = "La duración ha de ser superior a 0.";
+            disableButton();
+        }
+    }
+
+    formularino["minutos"].onblur = function()
+    {
+        enableButton();
+        if(!positivo(formularino["minutos"].value))
+        {
+            document.getElementById("error_npreg").innerHTML = "La duración ha de ser superior a 0.";
+            disableButton();
+        }
+    }
+
+    formularino["minutos"].onchange = function()
+    {
+        if(formularino["minutos"].value >= 60)
+        {
+            formularino["minutos"].value = 0;
+            formularino["horas"].value++;
+        }
     }
 
     boton.onclick = function(ev)
@@ -181,14 +235,13 @@ window.addEventListener("load",function()
         ev.preventDefault();
         // Y aquí es donde empezamos a jugar. Tenemos que hacer los arrays teniendo en cuenta el modelo de examen y tal y pascual.
         // Ah y también la capacidad de leer lo que se viene si es un JSON o algo.
-
-        var formularino = document.getElementsByTagName("form")[0];
+        var duracion = formularino["horas"].value*60 + formularino["minutos"];
 
         var standardJSON_Object = new Object();
         standardJSON_Object.codigoExamen = formularino["codigoExamen"].value;
         standardJSON_Object.enunciado = formularino["enunciado"].value;
         standardJSON_Object.numPreguntas = formularino["n_preg"].value;
-        standardJSON_Object.duracion = formularino["duracion"].value;
+        standardJSON_Object.duracion = duracion;
 
         var preguntas_sin_incluir = [];
         for(let i = 0; i < bancoPreguntas.children.length; i++)

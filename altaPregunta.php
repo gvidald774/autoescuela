@@ -32,7 +32,7 @@
                 $modifiquino = false; // Se insertará porque venimos sin datos
                 $json_data = file_get_contents("modelos/pregunta.json");
                 $placeholder = json_decode($json_data);
-                $imgrecurso = "";
+                $recursoCaja = "";
             }
             else
             {
@@ -40,11 +40,18 @@
                 $modifiquino = true;
                 if($placeholder->pregunta->recurso != null)
                 {
-                    $imgrecurso = "data:image/jpeg;base64,".$placeholder->pregunta->recurso;
+                    if($placeholder->pregunta->type == "video/mp4" )
+                    {
+                        $recursoCaja = "data:video/mp4;base64,".$placeholder->pregunta->recurso;
+                    }
+                    else if($placeholder->pregunta->type = "image/jpeg")
+                    {
+                        $recursoCaja = "data:image/jpeg;base64,".$placeholder->pregunta->recurso;
+                    }
                 }
                 else
                 {
-                    $imgrecurso = "";
+                    $recursoCaja = "";
                 }
                 
             }
@@ -55,7 +62,7 @@
             $json_data = file_get_contents("modelos/pregunta.json");
             $placeholder = json_decode($json_data);
             // El botón es para insertar.
-            $imgrecurso = "";
+            $recursoCaja = "";
         }
         $rc = $placeholder->pregunta->respuestaCorrecta;
 
@@ -96,10 +103,12 @@
                     $img = file_get_contents($_FILES["recurso"]["tmp_name"]);
                     $img = base64_encode($img);
                     $recurso = $img;
+                    $tipo = $_FILES["recurso"]["type"];
                 }
                 else
                 {
                     $recurso = $placeholder->pregunta->recurso;
+                    $tipo = $placeholder->pregunta->tipo;
                 }
 
                 $tematica = $_POST["opciones_tematica"];
@@ -124,7 +133,7 @@
                     }
                 }
 
-                $pregunta = new Pregunta($id, $enunciado, $tematica, $recurso);
+                $pregunta = new Pregunta($id, $enunciado, $tematica, $recurso, $tipo);
 
                 $arrayRespuestas = array();
                 for ($i = 0; $i < $nRespuestas; $i++)
@@ -197,7 +206,26 @@
                     ?>
                 </select>
                 <label for="enunciado">Enunciado</label><input type="text" id="enunciado" name="enunciado" value="<?php echo $placeholder->pregunta->enunciado; ?>" required /><?php echo $errorcillos["enunciado"]; ?>
-                <label for="recurso">Imagen/Vídeo:</label><img src="<?php echo $imgrecurso; ?>" id="imagen" /><input type="file" id="recurso" alt="Recurso de imagen o vídeo" name="recurso" />
+                <label for="recurso">Imagen/Vídeo:</label>
+                <div id="caja_recurso">
+                <?php
+                    if($placeholder->pregunta->type == "video/mp4")
+                    {
+                        echo "<video id='recursoCaja' controls>
+                                <source src=".$recursoCaja.">
+                            </video>"
+                            ;
+                    }
+                    else if($recursoCaja=="")
+                    {
+                    }
+                    else
+                    {
+                        echo "<img id='recursoCaja' src=".$recursoCaja."/>";
+                    }
+                ?>
+                </div>
+                <input type="file" id="recurso" name="recurso" />
             </section>
             <section>
                 <table class="invisible">

@@ -2,6 +2,8 @@
     require_once("include/cargadores/carga_entities.php");
     require_once("include/cargadores/carga_helpers.php");
 
+    // Fallo tremebundo: bancoPreguntas no se actualiza en examen existente.
+
     BD::conectar();
     Sesion::iniciar();
 
@@ -51,16 +53,19 @@
 
     if(isset($_GET["id"])) // A ver no lo sé
     {
-        Pintor::header("Editar examen",["js/crea_examen.js"]);
+        Pintor::header("Editar examen",["js/validator.js", "js/crea_examen.js"]);
     }
     else
     {
-        Pintor::header("Crear examen",["js/crea_examen.js"]);
+        Pintor::header("Crear examen",["js/validator.js", "js/crea_examen.js"]);
     }
     Pintor::nav_admin();
 
     $preguntasJSON = json_encode($placeholder->bancoPreguntas);
     $seleccionadasJSON = json_encode($placeholder->preguntasIncluidas);
+
+    $horas = floor($placeholder->duracion/60);
+    $minutos = floor($placeholder->duracion%60);
 
 ?>
     <style>
@@ -118,10 +123,14 @@
     <main>
         <form action="" method="POST">
             <section>
-                <input type="text" style="display:none" id="codigoExamen" name="codigoExamen" <?php echo "value=\"".$idExamen."\"" ?> />
-                <label for="enunciado">Enunciado: </label><input type="text" id="enunciado" name="enunciado" <?php echo "value=\"".$placeholder->enunciado."\"" ?> />
-                <label for="n_preg">Nº preguntas: </label><input type="number" id="n_preg" name="n_preg" <?php echo "value=\"".$placeholder->numPreguntas."\"" ?> />
-                <label for="duracion">Duración: </label><input type="number" id="duracion" name="duracion" <?php echo "value=\"".$placeholder->duracion."\"" ?> />
+                <div><input type="text" style="display:none" id="codigoExamen" name="codigoExamen" <?php echo "value=\"".$idExamen."\"" ?> /></div>
+                <div><label for="enunciado">Enunciado: </label><input type="text" id="enunciado" name="enunciado" <?php echo "value=\"".$placeholder->enunciado."\"" ?> required /></div>
+                <div><label for="n_preg">Nº preguntas: </label><input type="number" id="n_preg" name="n_preg" <?php echo "value=\"".$placeholder->numPreguntas."\"" ?> required /><div id="error_npreg"></div>
+                <div>
+                    <label>Duración: </label>
+                    <input type="number" id="horas" name="horas" <?php echo "value=\"".$horas."\"" ?> />:<input type="number" id="minutos" name="minutos" <?php echo "value=\"".$minutos."\"" ?> />
+                    <div id="error_duracion"></div>
+                </div>
             </section>
             <section>
                 <article>

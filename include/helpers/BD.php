@@ -487,17 +487,19 @@ class BD {
         try {
             self::$con->beginTransaction();
 
-            $insertaPregunta = self::$con->prepare("INSERT INTO pregunta (id, enunciado, recurso, tematica) VALUES (:id, :enunciado, :recurso, :tematica);");
+            $insertaPregunta = self::$con->prepare("INSERT INTO pregunta (id, enunciado, recurso, tematica, type) VALUES (:id, :enunciado, :recurso, :tematica, :tipo);");
             
             $idPregunta = $pregunta->getId();
             $enunciado = $pregunta->getEnunciado();
             $recurso = $pregunta->getRecurso();
             $tematica = intval($pregunta->getTematica());
+            $tipo = $pregunta->getTipo();
 
             $insertaPregunta->bindParam(':id',$idPregunta);
             $insertaPregunta->bindParam(':enunciado',$enunciado);
             $insertaPregunta->bindParam(':recurso',$recurso);
             $insertaPregunta->bindParam(':tematica',$tematica);
+            $insertaPregunta->bindParam(':tipo',$tipo);
 
             $insertaPregunta->execute();
 

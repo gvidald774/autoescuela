@@ -38,3 +38,23 @@ function coincidenDosTextos(texto1, texto2)
     }
     return coinciden;
 }
+
+function positivo(numero)
+{
+    resultado = false;
+    if(numero > 0)
+    {
+        resultado = true;
+    }
+    return resultado;
+}
+
+function enableButton(boton)
+{
+    boton.disabled = false;
+}
+
+function disableButton(boton)
+{
+    boton.disabled = true;
+}

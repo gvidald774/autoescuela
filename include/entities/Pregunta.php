@@ -6,13 +6,15 @@ class Pregunta implements JSONSerializable {
     protected $respuestaCorrecta;
     protected $recurso;
     protected $tematica;
+    protected $tipo;
 
-    function __construct(int $i, string $e, string $t, string $re = null)
+    function __construct(int $i, string $e, string $te, string $re = null, string $ti = null)
     {
         $this->id = $i;
         $this->enunciado = $e;
         $this->recurso = $re;
-        $this->tematica = $t;
+        $this->tematica = $te;
+        $this->tipo = $ti;
     }
 
     public function getID()
@@ -40,6 +42,11 @@ class Pregunta implements JSONSerializable {
         return $this->tematica;
     }
 
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
     public function setID($i)
     {
         $this->id = $i;
@@ -64,6 +71,10 @@ class Pregunta implements JSONSerializable {
     {
         $this->tematica = $t;
     }
+    public function setTipo($t)
+    {
+        $this->tipo = $t;
+    }
 
     public function jsonSerialize()
     {
@@ -73,6 +84,7 @@ class Pregunta implements JSONSerializable {
             'enunciado' => $this->enunciado,
             'respuestaCorrecta' => $this->respuestaCorrecta->getID(),
             'recurso' => $this->recurso,
+            'tipo' => $this->tipo,
             'tematica' => $this->tematica
         ];
     }
