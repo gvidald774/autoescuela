@@ -785,7 +785,7 @@ class BD {
 
     public static function obtenStatsExamen($idUsuario)
     {
-        $consulta = self::$con->prepare("SELECT AVG(calificacion) 'avg', MAX(calificacion) 'max', COUNT(calificacion) 'count' FROM examen_realizado WHERE idAlumno=:id");
+        $consulta = self::$con->prepare("SELECT TRUNCATE(AVG(calificacion),2) 'avg', MAX(calificacion) 'max', COUNT(calificacion) 'count' FROM examen_realizado WHERE idAlumno=:id");
         $consulta->bindParam(':id',$idUsuario);
         $consulta->execute();
         $datos = $consulta->fetch(PDO::FETCH_OBJ);

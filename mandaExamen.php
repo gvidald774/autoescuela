@@ -30,4 +30,6 @@
 
     BD::guardaExamenRealizado($data, $idUsuario, $calificacion);
 
+    echo BD::cogeUltimoId("examen_realizado");
+
 ?>

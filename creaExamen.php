@@ -128,7 +128,7 @@
                 <div><label for="n_preg">Nº preguntas: </label><input type="number" id="n_preg" name="n_preg" <?php echo "value=\"".$placeholder->numPreguntas."\"" ?> required /><div id="error_npreg"></div>
                 <div>
                     <label>Duración: </label>
-                    <input type="number" id="horas" name="horas" <?php echo "value=\"".$horas."\"" ?> />:<input type="number" id="minutos" name="minutos" <?php echo "value=\"".$minutos."\"" ?> />
+                    <input type="number" id="horas" name="horas" <?php echo "value=\"".$horas."\"" ?> />horas <input type="number" id="minutos" name="minutos" <?php echo "value=\"".$minutos."\"" ?> />minutos
                     <div id="error_duracion"></div>
                 </div>
             </section>

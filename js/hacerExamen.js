@@ -216,7 +216,7 @@ window.addEventListener("load",function()
         })
         .then(function(response)
         {
-            console.log(response);
+            window.location.replace("examenTerminado.php?id="+response);
         });
         window.location.replace("examenTerminado.php");
     }
