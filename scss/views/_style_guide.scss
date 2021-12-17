@@ -1,0 +1,56 @@
+.muestra_color {
+    border-radius: 0;
+    border: 1px solid black;
+
+    float: right;
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+
+    #color_fondo {
+        background: $bgcolor;
+    }
+    #color_borde {
+        background: $bordercolor;
+    }
+    #color_fondo_boton {
+        background: $color_fondo_boton;
+    }
+    #color_letra_boton {
+        background: $color_letra_boton;
+    }
+    #color_fondo_boton_hover {
+        background: $color_fondo_boton_hover;
+    }
+    #color_fondo_letra_hover {
+        background: $color_letra_boton_hover;
+    }
+    #color_header {
+        background: $color_header;
+    }
+    #color_footer {
+        background: $color_footer;
+    }
+    #color_tabla_fila {
+        background: $color_tabla_fila;
+    }
+    #color_tabla_celda {
+        background: $color_tabla_celda;
+    }
+    #color_radio_hover {
+        background: $color_radio_hover;
+    }
+    #color_radio_clic {
+        background: $color_radio_clic;
+    }
+}
+
+.muestra_tipo {
+    #normal {
+        font-family: 'Montserrat';
+    }
+    #especial {
+        font-family: 'Fjalla One';
+    }
+}

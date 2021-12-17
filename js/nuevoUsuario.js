@@ -43,7 +43,4 @@ window.addEventListener("load",function()
             document.getElementById("error_fecha").innerHTML = "";
         }
     }
-
-
-}) // VALIDAR FECHA EN PHP TAMBIÉN
-// Y YA PUES AÑADIR LA COSA AL SITIO
+})

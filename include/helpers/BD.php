@@ -800,4 +800,25 @@ class BD {
         $correo = $consulta->fetch(PDO::FETCH_NUM)[0];
         return $correo;
     }
+
+    public static function getUsuarioFromCorreo($correo)
+    {
+        $consulta = self::$con->prepare("SELECT * FROM usuario WHERE correo=:correo");
+        $consulta->bindParam(':token',$token);
+        $consulta->execute();
+        $usuario = $consulta->fetch(PDO::FETCH_OBJ);
+        return $usuario;
+    }
+
+    public static function editaUsuario($usuario)
+    {
+        $consulta = self::$con->prepare("UPDATE usuario SET nombre=:nombre, apellidos=:apellidos, pass=:pass, fechaNacimiento=:fecha, foto=:foto, localidad=:localidad");
+
+        $nombre = $usuario->getNombre();
+        $apellidos = $usuario->getApellidos();
+        $pass = $usuario->getPass();
+        $fecha = $usuario->getFechaNacimiento();
+        $foto = $usuario->getFoto();
+        $localidad = $usuario->getLocalidad();
+    }
 }

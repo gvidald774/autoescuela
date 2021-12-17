@@ -62,6 +62,16 @@ button:hover, input[type=button]:hover, input[type=submit]:hover {
   color: #CCF7C1;
 }
 
+ul {
+  list-style-type: circle;
+  text-align: justify;
+  font-family: "Montserrat";
+  margin-bottom: 1em;
+}
+ul li {
+  margin-top: 0.5em;
+}
+
 html, body {
   height: 100%;
 }
@@ -476,6 +486,59 @@ div.marcado {
   font-size: 300%;
 }
 
+.muestra_color {
+  border-radius: 0;
+  border: 1px solid black;
+  float: right;
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.muestra_color #color_fondo {
+  background: #F7EDE2;
+}
+.muestra_color #color_borde {
+  background: #0B2027;
+}
+.muestra_color #color_fondo_boton {
+  background: #0B2027;
+}
+.muestra_color #color_letra_boton {
+  background: #F7EDE2;
+}
+.muestra_color #color_fondo_boton_hover {
+  background: #103446;
+}
+.muestra_color #color_fondo_letra_hover {
+  background: #CCF7C1;
+}
+.muestra_color #color_header {
+  background: #94778B;
+}
+.muestra_color #color_footer {
+  background: #94778B;
+}
+.muestra_color #color_tabla_fila {
+  background: #94778B;
+}
+.muestra_color #color_tabla_celda {
+  background: #CCF7C1;
+}
+.muestra_color #color_radio_hover {
+  background: #F18F01;
+}
+.muestra_color #color_radio_clic {
+  background: #FF570A;
+}
+
+.muestra_tipo #normal {
+  font-family: "Montserrat";
+}
+.muestra_tipo #especial {
+  font-family: "Fjalla One";
+}
+
 body {
   text-align: center;
   background-color: #F7EDE2;
@@ -520,34 +583,61 @@ input[type=checkbox] {
 h1 {
   font-size: 260%;
   font-family: "Montserrat";
+  margin-bottom: 2%;
+  margin-top: 3%;
+  margin-left: 1%;
 }
 
 h2 {
   font-size: 220%;
   font-family: "Montserrat";
+  margin-bottom: 2%;
+  margin-top: 3%;
+  margin-left: 1%;
 }
 
 h3 {
   font-size: 180%;
   font-family: "Montserrat";
+  margin-bottom: 2%;
+  margin-top: 3%;
+  margin-left: 1%;
 }
 
 h4 {
   font-size: 140%;
   font-family: "Montserrat";
+  margin-bottom: 2%;
+  margin-top: 3%;
+  margin-left: 1%;
 }
 
 h5 {
   font-size: 100%;
   font-family: "Montserrat";
+  margin-bottom: 2%;
+  margin-top: 3%;
+  margin-left: 1%;
 }
 
 h6 {
   font-size: 60%;
   font-family: "Montserrat";
+  margin-bottom: 2%;
+  margin-top: 3%;
+  margin-left: 1%;
 }
 
 p {
   text-align: justify;
   font-family: "Montserrat";
+  margin: 2% 1%;
+}
+
+.mapa_sitio, .guia_estilos {
+  text-align: justify;
+}
+.mapa_sitio section, .guia_estilos section {
+  margin: 5% 10% 10% 10%;
+  border-bottom: none;
 }/*# sourceMappingURL=main.css.map */

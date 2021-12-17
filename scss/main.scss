@@ -4,6 +4,7 @@
 @import "utilities/mixins";
 @import "utilities/variables";
 @import "components/buttons";
+@import "components/lists";
 @import "layout/footer";
 @import "layout/forms";
 @import "layout/header";
@@ -17,6 +18,7 @@
 @import "views/user/history";
 @import "views/user/profile";
 @import "views/user/random_exam";
+@import "views/style_guide";
 @import "views/home";
 
 * {
@@ -43,10 +45,22 @@
     h#{$i} {
         font-size: (300% - 40*$i);
         font-family: 'Montserrat';
+        margin-bottom: 2%;
+        margin-top: 3%;
+        margin-left: 1%;
     }
 }
 
 p {
     text-align: justify;
     font-family: 'Montserrat';
+    margin: 2% 1%;
+}
+
+.mapa_sitio, .guia_estilos {
+    text-align: justify;
+    section {
+        margin: 5% 10% 10% 10%;
+        border-bottom: none;
+    }
 }
