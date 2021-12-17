@@ -241,6 +241,16 @@ header div.derecho {
   right: 1%;
 }
 
+@media screen and (max-width: 800px) {
+  header div.centrado {
+    font-size: 200%;
+  }
+}
+@media screen and (max-width: 600px) {
+  header div.centrado {
+    font-size: 150%;
+  }
+}
 nav {
   font-family: "Fjalla One";
   margin-bottom: 20px;

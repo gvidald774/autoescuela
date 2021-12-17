@@ -803,8 +803,8 @@ class BD {
 
     public static function getUsuarioFromCorreo($correo)
     {
-        $consulta = self::$con->prepare("SELECT * FROM usuario WHERE correo=:correo");
-        $consulta->bindParam(':token',$token);
+        $consulta = self::$con->prepare("SELECT * FROM usuario WHERE email=:correo");
+        $consulta->bindParam(':correo',$correo);
         $consulta->execute();
         $usuario = $consulta->fetch(PDO::FETCH_OBJ);
         return $usuario;
@@ -812,13 +812,24 @@ class BD {
 
     public static function editaUsuario($usuario)
     {
-        $consulta = self::$con->prepare("UPDATE usuario SET nombre=:nombre, apellidos=:apellidos, pass=:pass, fechaNacimiento=:fecha, foto=:foto, localidad=:localidad");
+        $consulta = self::$con->prepare("UPDATE usuario SET nombre=:nombre, apellidos=:apellidos, pass=:pass, fechaNacimiento=:fecha, foto=:foto, localidad=:localidad WHERE id=:id");
 
+        $id = $usuario->getID();
         $nombre = $usuario->getNombre();
         $apellidos = $usuario->getApellidos();
         $pass = $usuario->getPass();
         $fecha = $usuario->getFechaNacimiento();
         $foto = $usuario->getFoto();
         $localidad = $usuario->getLocalidad();
+
+        $consulta->bindParam(':id',$id);
+        $consulta->bindParam(':nombre', $nombre);
+        $consulta->bindParam(':apellidos', $apellidos);
+        $consulta->bindParam(':pass', $pass);
+        $consulta->bindParam(':fecha', $fecha);
+        $consulta->bindParam(':foto', $foto);
+        $consulta->bindParam(':localidad', $localidad);
+
+        $consulta->execute();
     }
 }

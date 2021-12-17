@@ -21,7 +21,7 @@ class Pintor {
         <header>
             <div class='izquierdo imagen'></div>
             <div class='centrado'>Autoescuela Las Fuentezuelas</div>
-            <div class='derecho'><a href='logoff.php'>Logoff</a></div>
+            <div class='derecho'><a href='logoff.php'>Logoff</a><br /><a href='datosUsuario.php'>Editar datos</a></div>
         </header>";
     }
 

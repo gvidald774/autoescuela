@@ -46,6 +46,7 @@ Pintor::header("Examen terminado");
     <div class="sin_contestar" >Preguntas sin contestar:<?php echo $sinMarcar." (".(($sinMarcar*100)/($valores->numPreguntas))."%)"; ?></div>
     <div>Total:</div>
 
+    <a href="#">Imprimir</a>
     <a href="historicoExamenes.php">Volver</a>
 </main>
 <?php
