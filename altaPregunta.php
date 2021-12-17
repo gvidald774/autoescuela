@@ -203,7 +203,7 @@
                     if($placeholder->pregunta->type == "video/mp4")
                     {
                         echo "<video id='recursoCaja' controls>
-                                <source src=".$recursoCaja.">
+                                <source src='".$recursoCaja."' >
                             </video>"
                             ;
                     }
@@ -212,7 +212,7 @@
                     }
                     else
                     {
-                        echo "<img id='recursoCaja' src=".$recursoCaja."/>";
+                        echo "<img id='recursoCaja' src='".$recursoCaja."' />";
                     }
                 ?>
                 </div>

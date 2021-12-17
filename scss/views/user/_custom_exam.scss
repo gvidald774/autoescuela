@@ -1,4 +1,26 @@
+.texto_examen {
+    left: 50%;
+}
+
+.enunciado_pregunta {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    font-family: 'Montserrat';
+    font-size: large;
+}
+
+#paginacion_preguntas_examen {
+    clear: both;
+}
+
+.examen_imagen {
+    overflow: hidden;
+    min-height: 100px;
+    margin-top: 35px;
+}
+
 .enlace_pregunta {
+    clear: both;
     display: inline-block;
     border: 1px solid gray;
     background-color: palegoldenrod;
@@ -14,20 +36,17 @@
 }
 
 .textoCorrecta {
+    float: right;
     margin-left: 20px;
     color: green;
     font-size: small;
 }
 
 .textoIncorrecta {
+    float: right;
     margin-left: 20px;
     color: red;
     font-size: small;
-}
-
-.enunciado_pregunta {
-    font-family: 'Montserrat';
-    font-size: large;
 }
 
 .pregunta_contestada {

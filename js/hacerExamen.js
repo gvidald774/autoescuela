@@ -76,20 +76,26 @@ window.addEventListener("load",function()
         preguntica = document.createElement("article");
         preguntica.id = "pregunta_"+pregunta.pregunta.id;
         
-        var recurso = document.createElement("section");
-        recurso.id = "recurso_pregunta_examen";
-        recurso.classList.add("izquierdo");
-        if (pregunta.pregunta.type == "video/mp4")
+        if(pregunta.pregunta.recurso != null)
         {
-            recurso.innerHTML = '<img src=data:video/mp4;base64,'+pregunta.pregunta.recurso+'" />';
-            recurso.innerHTML = '<video controls><source src="data:video/mp4;base64,'+pregunta.pregunta.recurso+'" ></video>';
-        }
-        else {
-            recurso.innerHTML = '<img src="data:image/jpeg;base64,'+pregunta.pregunta.recurso+'" />';
+            var recurso = document.createElement("section");
+            recurso.id = "recurso_pregunta_examen";
+            recurso.classList.add("izquierdo");
+            recurso.classList.add("examen_imagen");
+            if (pregunta.pregunta.type == "video/mp4")
+            {
+                recurso.innerHTML = '<video controls><source src="data:video/mp4;base64,'+pregunta.pregunta.recurso+'" ></video>';
+            }
+            else {
+                recurso.innerHTML = '<img src="data:image/jpeg;base64,'+pregunta.pregunta.recurso+'" />';
+            }
+
+            preguntica.appendChild(recurso);
         }
 
         texto = document.createElement("div");
-        texto.classList.add("derecho");
+        texto.classList.add("izquierdo");
+        texto.classList.add("texto_examen");
 
         listaRespuestas = pregunta.respuestas;
         listaRespuestas = desordenarVector(listaRespuestas);
@@ -124,6 +130,7 @@ window.addEventListener("load",function()
         var borrado = document.createElement("input");
         borrado.setAttribute("type","button");
         borrado.setAttribute("value","Borrar respuesta");
+        borrado.classList.add("ninguno");
         borrado.setAttribute("id","botonBorrar");
         borrado.onclick = function(ev)
         {
@@ -143,9 +150,9 @@ window.addEventListener("load",function()
         }
         texto.appendChild(respuestas);
         
-        preguntica.appendChild(recurso);
+        texto.appendChild(borrado);
         preguntica.appendChild(texto);
-        preguntica.appendChild(borrado);
+        
         seccion_preguntas.appendChild(preguntica);
 
         preguntica.classList.add("oculto");

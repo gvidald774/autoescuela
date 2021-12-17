@@ -154,6 +154,42 @@ form label {
   display: table-cell;
   margin-top: 10px;
 }
+form input[type=checkbox] {
+  margin-right: 15px;
+}
+form input[type=radio] {
+  margin-right: 15px;
+}
+form input[type=radio]:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #d1d3d1;
+  content: "";
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid #0B2027;
+  transition: background-color 0.2s ease-in-out;
+}
+form input[type=radio]:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #FF570A;
+  content: "";
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid #103446;
+}
+form input[type=radio]:hover:after:enabled {
+  background-color: #F18F01;
+}
 
 header {
   font-family: "Fjalla One";
@@ -293,7 +329,11 @@ th {
 #caja_recurso, #recurso_pregunta_examen {
   min-width: 256px;
   min-height: 144px;
-  max-width: 600px;
+}
+#caja_recurso img, #caja_recurso video, #recurso_pregunta_examen img, #recurso_pregunta_examen video {
+  min-width: 256px;
+  min-height: 144px;
+  max-width: 50%;
   max-height: 480px;
 }
 
@@ -377,7 +417,29 @@ div.marcado {
   color: goldenrod;
 }
 
+.texto_examen {
+  left: 50%;
+}
+
+.enunciado_pregunta {
+  margin-bottom: 30px;
+  margin-top: 30px;
+  font-family: "Montserrat";
+  font-size: large;
+}
+
+#paginacion_preguntas_examen {
+  clear: both;
+}
+
+.examen_imagen {
+  overflow: hidden;
+  min-height: 100px;
+  margin-top: 35px;
+}
+
 .enlace_pregunta {
+  clear: both;
   display: inline-block;
   border: 1px solid gray;
   background-color: palegoldenrod;
@@ -393,20 +455,17 @@ div.marcado {
 }
 
 .textoCorrecta {
+  float: right;
   margin-left: 20px;
   color: green;
   font-size: small;
 }
 
 .textoIncorrecta {
+  float: right;
   margin-left: 20px;
   color: red;
   font-size: small;
-}
-
-.enunciado_pregunta {
-  font-family: "Montserrat";
-  font-size: large;
 }
 
 .pregunta_contestada {

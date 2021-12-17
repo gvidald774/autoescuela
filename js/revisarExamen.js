@@ -41,18 +41,24 @@ window.addEventListener("load",function()
         {
             preguntica.classList.add("preguntaIncorrecta");
         }
-        var recurso = document.createElement("section");
-        recurso.id = "recurso_pregunta_examen";
-        recurso.classList.add("izquierdo");
-        if (pregunta.pregunta.type == "video/mp4")
+        if(pregunta.pregunta.recurso != null)
         {
-            recurso.innerHTML = '<img src=data:video/mp4;base64,'+pregunta.pregunta.recurso+'" />';
+            var recurso = document.createElement("section");
+            recurso.id = "recurso_pregunta_examen";
+            recurso.classList.add("izquierdo");
+            if (pregunta.pregunta.type == "video/mp4")
+            {
+                recurso.innerHTML = '<video controls><source src="data:video/mp4;base64,'+pregunta.pregunta.recurso+'" ></video>';
+            }
+            else {
+                recurso.innerHTML = '<img src="data:image/jpeg;base64,'+pregunta.pregunta.recurso+'" />';
+            }
+
+            preguntica.appendChild(recurso);
         }
-        else {
-            recurso.innerHTML = '<img src="data:image/jpeg;base64,'+pregunta.pregunta.recurso+'" />';
-        }
+
         texto = document.createElement("div");
-        texto.classList.add("derecho");
+        texto.classList.add("izquierdo");
 
         var listaRespuestas = pregunta.respuestas;
         var enunciado = document.createElement("article");
@@ -80,16 +86,16 @@ window.addEventListener("load",function()
             {
                 if(preguntica.classList.contains("preguntaCorrecta"))
                 {
-                    respuestaWrapper.innerHTML += "<span class='acierto'>Respuesta correcta</span>";
+                    respuestaWrapper.innerHTML += "<span class='textoCorrecta '>Respuesta correcta</span>";
                 }
                 else if(preguntica.classList.contains("preguntaIncorrecta"))
                 {
-                    respuestaWrapper.innerHTML += "<span class='error'>Respuesta incorrecta</span>";
+                    respuestaWrapper.innerHTML += "<span class='textoIncorrecta'>Respuesta incorrecta</span>";
                 }
             }
             else if(pregunta.pregunta.respuestaCorrecta == pregunta.respuestas[i].id)
             {
-                respuestaWrapper.innerHTML += "<span class='acierto'>Respuesta correcta</span>";
+                respuestaWrapper.innerHTML += "<span class='textoCorrecta'>Respuesta correcta</span>";
             }
 
             saltolinea = document.createElement("br");
@@ -98,7 +104,6 @@ window.addEventListener("load",function()
         }
         texto.appendChild(respuestas);
 
-        preguntica.appendChild(recurso);
         preguntica.appendChild(texto);
         seccion_preguntas.appendChild(preguntica);
 
