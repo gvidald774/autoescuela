@@ -39,7 +39,7 @@
 Pintor::header("Examen terminado");
 ?>
 <main>
-    <div>Examen realizado con éxito.</div>
+    <div class="mensaje_acierto">Examen realizado con éxito.</div>
     <div>Estadísticas:</div>
     <div class="acierto" >Preguntas acertadas:<?php echo $correctas." (".(($correctas*100)/($valores->numPreguntas))."%)"; ?></div>
     <div class="error" >Preguntas falladas:<?php echo $incorrectas." (".(($incorrectas*100)/($valores->numPreguntas))."%)"; ?></div>

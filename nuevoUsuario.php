@@ -64,13 +64,12 @@
                 else
                 {
                     // Se puede buclear esto?
-                    $errorcillos["nombre"] = $validador->imprimeError("nombre");
-                    $errorcillos["apellidos"] = $validador->imprimeError("apellidos");
-                    $errorcillos["password1"] = $validador->imprimeError("password1");
-                    $errorcillos["f_nac"] = $validador->imprimeError("f_nac");
+                    $errorcillos["nombre"] = "<div class='mensaje_error'>".$validador->imprimeError("nombre")."</div>";
+                    $errorcillos["apellidos"] = "<div class='mensaje_error'>".$validador->imprimeError("apellidos")."</div>";
+                    $errorcillos["password1"] = "<div class='mensaje_error'>".$validador->imprimeError("password1")."</div>";
+                    $errorcillos["f_nac"] = "<div class='mensaje_error'>".$validador->imprimeError("f_nac")."</div>";
 
                 }
-                var_dump($errorcillos);
             }
             Pintor::header("Nuevo usuario",["js/validator.js","js/nuevoUsuario.js"]);
             echo '

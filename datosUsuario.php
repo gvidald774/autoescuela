@@ -44,7 +44,11 @@
 
             BD::editaUsuario($usuario_a_insertar);
             header("Location: ".$_SERVER['REQUEST_URI']);
-            echo "Usuario modificado con éxito.";
+            echo "<div class='mensaje_acierto'>Usuario modificado con éxito.</div>";
+        }
+        else
+        {
+            // Validación adicional.
         }
     }
 

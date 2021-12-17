@@ -50,4 +50,12 @@ footer {
         text-align: center;
     }
 
+    ul {
+        list-style-type: none;
+        text-align: right;
+        li:hover {
+            font-weight: bolder;
+        }
+    }
+
 }

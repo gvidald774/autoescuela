@@ -38,12 +38,12 @@
             }
             else
             {
-                $resultado = "Credenciales inválidas.";
+                $resultado = "<div class='mensaje_error'>Credenciales inválidas.</div>";
             }
         }
         else
         {
-            $resultado = "Credenciales inválidas.";
+            $resultado = "<div class='mensaje_error'>Credenciales inválidas.</div>";
         }
     }
 
@@ -75,7 +75,7 @@
     <main>
         <img src="media/img/big_logo.webp" />
         <form action="" method="POST">
-            <div id="mensaje-error"><?php echo $resultado; ?></div>
+            <?php echo $resultado; ?>
             <div><label for="usuario">Usuario: </label><input type="text" id="form_login_usuario" name="usuario" value="<?php echo "$pintaUsuarioCookie" ?>" required /></div>
             <div><label for="password">Contraseña: </label><input type="password" id="form_login_pass" name="password" value="<?php echo "$pintaPassCookie" ?>" required /></div>
             <div><label><input type="checkbox" id="form_login_checkbox" name="recuerdame" />Recuérdame</label></div>

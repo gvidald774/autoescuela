@@ -11,8 +11,8 @@
     BD::conectar();
 
     $mensajes = array();
-    $mensajes["correcto"] = "Le hemos enviado una solicitud para recuperar su contraseña al correo introducido. Si no aparece, compruebe su carpeta de spam o espere unos minutos e inténtelo de nuevo.";
-    $mensajes["noexiste"] = "El correo introducido no existe en nuestro sistema. Compruebe si se ha equivocado al introducirlo o pruebe con otro.";
+    $mensajes["correcto"] = "<div class='mensaje_acierto'>Le hemos enviado una solicitud para recuperar su contraseña al correo introducido. Si no aparece, compruebe su carpeta de spam o espere unos minutos e inténtelo de nuevo.</div>";
+    $mensajes["noexiste"] = "<div class='mensaje_error'>El correo introducido no existe en nuestro sistema. Compruebe si se ha equivocado al introducirlo o pruebe con otro.</div>";
 
     $resultado = "";
 

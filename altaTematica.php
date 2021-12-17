@@ -23,7 +23,7 @@
                 $result = BD::cambiaTematica($id, $descNueva);
                 if($result == "true")
                 {
-                    $result = "Valor cambiado con éxito.";
+                    $result = "<div class='mensaje_acierto'>Valor cambiado con éxito.</div>";
                     header("Location: ".$_SERVER['REQUEST_URI']);
                 }
             }
@@ -31,12 +31,12 @@
             {
                 if(BD::existeTematica($descNueva))
                 {
-                    $result = "Valor ya existente.";
+                    $result = "<div class='mensaje_error'>Valor ya existente.</div>";
                 }
                 else
                 {
                     BD::insertaTematica($descNueva);
-                    $result = "Valor insertado con éxito.";
+                    $result = "<div class=='mensaje_acierto'>Valor insertado con éxito.</div>";
                     header("Location: ".$_SERVER['REQUEST_URI']);
                 }
             }
@@ -55,7 +55,7 @@
         $result = BD::cambiaTematica($id,$descNueva);
         if($result == true)
         {
-            $result = "Valor cambiado con éxito.";
+            $result = "<div class='mensaje_acierto'>Valor cambiado con éxito.</div>";
         }
         unset($_GET["desc"]);
         $_GET["desc"] = $descNueva;
@@ -68,12 +68,12 @@
             $descNueva = $_POST["nombre"];
             if(BD::existeTematica($descNueva))
             {
-                $result = "Valor ya existente.";
+                $result = "<div class='mensaje_error'>Valor ya existente.</div>";
             }
             else
             {
                 BD::insertaTematica($descNueva);
-                $result = "Valor insertado con éxito.";
+                $result = "<div class='mensaje_acierto'>Valor insertado con éxito.</div>";
             }
         }    
     }

@@ -50,7 +50,7 @@ window.addEventListener("load",function()
 
     function disableButton()
     {
-        areaError.innerHTML = "Algunos de los datos introducidos no son correctos. Por favor, compruebe la entrada.";
+        areaError.innerHTML = "<div class='mensaje_error'>Algunos de los datos introducidos no son correctos. Por favor, compruebe la entrada.</div>";
         boton.disabled = true;
     }
 

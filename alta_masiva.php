@@ -76,7 +76,7 @@
     }
     else if(Sesion::leer("rol")!="Admin") // Cambiar por profesor
     {
-        echo "No tiene permiso para acceder a estos contenidos.";
+        echo "<div class='mensaje_error'>No tiene permiso para acceder a estos contenidos.</div>";
         header("Refresh: 5, URL=login.php");
     }
     else

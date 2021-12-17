@@ -13,7 +13,7 @@
     }
     else if(Sesion::leer("rol") != "Admin") // Cambiar a "Profesor".
     {
-        echo "No tiene permiso para acceder a estos contenidos.";
+        echo "<div; class='mensaje_error'>No tiene permiso para acceder a estos contenidos.</div>";
         header("Refresh: 5, URL=login.php"); // Cambiar porque te lleve a otra página.
     }
     else
@@ -154,12 +154,12 @@
             }
             else
             {
-                $errorcillos["enunciado"] = $validador->imprimeError("enunciado");
-                $errorcillos["respuesta1"] = $validador->imprimeError("respuesta1");
-                $errorcillos["respuesta2"] = $validador->imprimeError("respuesta2");
-                $errorcillos["respuesta3"] = $validador->imprimeError("respuesta3");
-                $errorcillos["respuesta4"] = $validador->imprimeError("respuesta4");
-                $errorcillos["radioCorrecta"] = $validador->imprimeError("radioCorrecta");
+                $errorcillos["enunciado"] = "<div class='mensaje_error'>".$validador->imprimeError("enunciado")."</div>";
+                $errorcillos["respuesta1"] = "<div class='mensaje_error'>".$validador->imprimeError("respuesta1")."</div>";
+                $errorcillos["respuesta2"] = "<div class='mensaje_error'>".$validador->imprimeError("respuesta2")."</div>";
+                $errorcillos["respuesta3"] = "<div class='mensaje_error'>".$validador->imprimeError("respuesta3")."</div>";
+                $errorcillos["respuesta4"] = "<div class='mensaje_error'>".$validador->imprimeError("respuesta4")."</div>";
+                $errorcillos["radioCorrecta"] = "<div class='mensaje_error'>".$validador->imprimeError("radioCorrecta")."</div>";
             }
         }
     };

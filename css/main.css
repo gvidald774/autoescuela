@@ -55,7 +55,10 @@ button, input[type=button], input[type=submit] {
   background-color: #0B2027;
   color: #F7EDE2;
   border-radius: 10px;
-  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+  transition: background-color 0.5s ease-in-out;
+  transition: color 0.5s ease-in-out;
+  -webkit-transition: color 0.5s ease-in-out;
+  -moz-transition: color 0.5s ease-in-out;
 }
 button:hover, input[type=button]:hover, input[type=submit]:hover {
   background-color: #103446;
@@ -120,6 +123,13 @@ footer section.footer-right {
 footer section.footer-center {
   text-align: center;
 }
+footer ul {
+  list-style-type: none;
+  text-align: right;
+}
+footer ul li:hover {
+  font-weight: bolder;
+}
 
 form {
   display: table;
@@ -135,6 +145,8 @@ form input, form select {
   padding: 1%;
   font-family: "Montserrat";
   transition: background-color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  -moz-transition: background-color 0.2s ease-in-out;
 }
 form input:hover, form select:hover {
   background-color: lightgreen;
@@ -180,6 +192,8 @@ form input[type=radio]:after {
   visibility: visible;
   border: 2px solid #0B2027;
   transition: background-color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  -moz-transition: background-color 0.2s ease-in-out;
 }
 form input[type=radio]:checked:after {
   width: 15px;
@@ -319,12 +333,16 @@ table {
 }
 table tr {
   transition: background-color 0.3s ease-in-out;
+  -webkit-transition: background-color 0.3s ease-in-out;
+  -moz-transition: background-color 0.3s ease-in-out;
 }
 table tr:hover {
   background-color: #94778B;
 }
 table tr td {
   transition: background-color 0.3s ease-in-out;
+  -webkit-transition: background-color 0.3s ease-in-out;
+  -moz-transition: background-color 0.3s ease-in-out;
 }
 table tr td:hover {
   background-color: #CCF7C1;
@@ -585,6 +603,24 @@ input[type=checkbox] {
 
 .ninguno {
   clear: both;
+}
+
+.mensaje_error {
+  padding: 2%;
+  border: 2px dotted red;
+  color: red;
+}
+.mensaje_error:hover {
+  opacity: 0.8;
+}
+
+.mensaje_acierto {
+  padding: 2%;
+  border: 2px dotted green;
+  color: green;
+}
+.mensaje_acierto:hover {
+  opacity: 0.8;
 }
 
 h1 {

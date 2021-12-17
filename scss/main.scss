@@ -41,6 +41,24 @@
     clear: both;
 }
 
+.mensaje_error {
+    padding: 2%;
+    border: 2px dotted red;
+    color: red;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.mensaje_acierto {
+    padding: 2%;
+    border: 2px dotted green;
+    color: green;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
 @for $i from 1 through 6 {
     h#{$i} {
         font-size: (300% - 40*$i);

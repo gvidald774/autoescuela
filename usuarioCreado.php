@@ -5,7 +5,7 @@
     Sesion::iniciar();
 
 Pintor::header("Usuario creado");
-echo '<main><div>Usuario creado con éxito.</div></main>';
+echo '<main><div class="mensaje_acierto">Usuario creado con éxito.</div></main>';
 Pintor::footer();
 
 header("Refresh: 3, url='tablaExamenes.php'");

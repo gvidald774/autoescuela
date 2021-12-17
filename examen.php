@@ -60,12 +60,12 @@
         }
         else
         {
-            echo "No tiene permiso para acceder a estos contenidos.";
+            echo "<div class='mensaje_error'>No tiene permiso para acceder a estos contenidos.</div>";
             header("Refresh: 5, URL=historicoExamenes.php");
         }
     }
     else
     {
-        echo "No tiene permiso para acceder a estos contenidos."; // Hale.
-        header("Refresh: 5, URL=login.php"); // Cambiar porque te lleve a otra página.
+        echo "<div class='mensaje_error'>No tiene permiso para acceder a estos contenidos.</div>"; // Hale.
+        header("Refresh: 5, URL=historicoExamenes.php"); // Cambiar porque te lleve a otra página.
     }

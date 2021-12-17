@@ -196,7 +196,7 @@ window.addEventListener("load",function()
         enableButton(boton);
         if(!positivo(formularino["n_preg"].value))
         {
-            document.getElementById("error_npreg").innerHTML = "El nº de preguntas ha de ser mayor que 0."
+            document.getElementById("error_npreg").innerHTML = "<div class='mensaje_error'>El nº de preguntas ha de ser mayor que 0.</div>"
             disableButton(boton);
         }
     }
@@ -208,7 +208,7 @@ window.addEventListener("load",function()
         var duracionTotal = parseInt(formularino["horas"].value*60)+parseInt(formularino["minutos"].value);
         if(!positivo(duracionTotal))
         {
-            document.getElementById("error_duracion").innerHTML = "La duración ha de ser superior a 0.";
+            document.getElementById("error_duracion").innerHTML = "<div class='mensaje_error'>La duración ha de ser superior a 0.</div>";
             disableButton(boton);
         }
     }
@@ -220,7 +220,7 @@ window.addEventListener("load",function()
         var duracionTotal = parseInt(formularino["horas"].value*60)+parseInt(formularino["minutos"].value);
         if(!positivo(duracionTotal))
         {
-            document.getElementById("error_duracion").innerHTML = "La duración ha de ser superior a 0.";
+            document.getElementById("error_duracion").innerHTML = "div class='mensaje_error'>La duración ha de ser superior a 0.</div>";
             disableButton(boton);
         }
     }

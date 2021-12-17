@@ -8,5 +8,5 @@
 @mixin transicion($property, $length, $easein) {
     transition: $property $length $easein;
     -webkit-transition: $property $length $easein;
-    -moz-transition: $properyt $length $easein;
+    -moz-transition: $property $length $easein;
 }
