@@ -76,22 +76,28 @@ class Pintor {
         echo "<footer>
             <section class=\"footer-left\">
                 <div>
-                    <div><a href=#>Guía de estilo</a></div>
-                    <div><a href=#>Mapa web del sitio</a></div>
+                    <div><a href='guia_estilo.php'>Guía de estilo</a></div>
+                    <div><a href='mapa_sitio.php'>Mapa web del sitio</a></div>
                 </div>
             </section>
             <section class=\"footer-right\">
                 <div>Contacto: 
                     <div>Teléfono: 953111222</div>
                     <div>email: info@examinator.es</div>
-                    <div>Redes sociales</div>
+                    <div>Redes sociales
+                        <ul>
+                            <li><a href='https://twitter.com'>Twitter</a></li>
+                            <li><a href='https://facebook.com'>Facebook</a></li>
+                            <li><a href='https://instagram.com'>Instagram</a></li>
+                        </ul>
+                    </div>
                 </div>
             </section>
             <section class=\"footer-center\">
                 <div>Enlaces relacionados:
-                <div><a href=#>DGT</a></div>
-                <div><a href=#>Solicitud oficial de examen</a></div>
-                <div><a href=#>Normativa de examen</a></div>
+                <div><a href='https://www.dgt.es'>DGT</a></div>
+                <div><a href='https://sede.dgt.gob.es/es/permisos-de-conducir/obtencion-renovacion-duplicados-permiso/permiso-conducir/index.shtml'>Solicitud oficial de examen</a></div>
+                <div><a href='https://www.dgt.es/nuestros-servicios/permisos-de-conducir/obtener-un-nuevo-permiso-de-conducir/requisitos-preparacion-y-presentacion-a-examen'/>Normativa de examen</a></div>
                 </div>
             </section>
         </footer>

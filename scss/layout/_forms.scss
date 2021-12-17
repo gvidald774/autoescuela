@@ -1,16 +1,13 @@
 form {
     display: table;
     margin: auto;
-    border: 1px solid gray;
+    border: 1px solid $color_fondo_boton;
     padding: 5%;
     min-width: 70%;
 
-    input {
+    input, select {
         margin-bottom: 10px;
-    }
-
-    input[type="text"], input[type="password"] {
-        border: 2p dotted #666;
+        border: 2px solid $color_fondo_boton;
         border-radius: 0;
         padding: 1%;
         font-family: 'Montserrat';

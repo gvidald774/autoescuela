@@ -27,4 +27,16 @@ header {
     div.izquierdo {
         float: left;
     }
+
+    div.centrado {
+        position: absolute;
+        left: 33%;
+        font-size: 250%;
+    }
+
+    div.derecho {
+        position: absolute;
+        top: 10%;
+        right: 1%;
+    }
 }

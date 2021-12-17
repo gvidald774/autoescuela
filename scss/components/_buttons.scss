@@ -7,9 +7,8 @@ button, input[type="button"],input[type="submit"]
     background-color: $color_fondo_boton;
     color: $color_letra_boton;
     border-radius: 10px;
-    transition: background-color 0.1s ease-in-out;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
     &:hover {
-        transition: background-color 0.5s ease-in-out;
         background-color: $color_fondo_boton_hover;
         color: $color_letra_boton_hover;
     }

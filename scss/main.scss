@@ -38,3 +38,15 @@
 .ninguno {
     clear: both;
 }
+
+@for $i from 1 through 6 {
+    h#{$i} {
+        font-size: (300% - 40*$i);
+        font-family: 'Montserrat';
+    }
+}
+
+p {
+    text-align: justify;
+    font-family: 'Montserrat';
+}
