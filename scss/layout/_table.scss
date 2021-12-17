@@ -9,12 +9,12 @@ table {
     width: 90%;
 
     tr {
-        transition: background-color 0.3s ease-in-out;
+        @include transicion (background-color, 0.3s, ease-in-out);
         &:hover {
             background-color: $color_tabla_fila;
         }
         td {
-            transition: background-color 0.3s ease-in-out;
+            @include transicion (background-color, 0.3s, ease-in-out);
             &:hover {
                 background-color: $color_tabla_celda;
             }

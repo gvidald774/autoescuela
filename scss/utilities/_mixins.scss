@@ -4,3 +4,9 @@
     border: $bordercolor 3px $estilo;
     border-radius: 20px;
 }
+
+@mixin transicion($property, $length, $easein) {
+    transition: $property $length $easein;
+    -webkit-transition: $property $length $easein;
+    -moz-transition: $properyt $length $easein;
+}

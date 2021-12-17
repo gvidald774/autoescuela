@@ -11,7 +11,7 @@ form {
         border-radius: 0;
         padding: 1%;
         font-family: 'Montserrat';
-        transition: background-color 0.2s ease-in-out;
+        @include transicion (background-color, 0.2s, ease-in-out);
         &:hover {
             background-color: lightgreen;
         }
@@ -61,7 +61,7 @@ form {
             display: inline-block;
             visibility: visible;
             border: 2px solid $color_fondo_boton;
-            transition: background-color 0.2s ease-in-out;
+            @include transicion (background-color, 0.2s, ease-in-out);
         }
 
         &:checked:after {
