@@ -48,7 +48,7 @@
         }
         else
         {
-            // Validación adicional.
+            // Validación adicional en PHP.
         }
     }
 

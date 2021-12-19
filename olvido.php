@@ -50,7 +50,7 @@
                 $enlace ='www.autoescuela.com/modificarPass.php?token='.$token;
 
                 // Esto no es, pero bueno
-                BD::nuevaPendienteActivacion($token);
+                // BD::nuevaPendienteActivacion($token);
                 // cuerpo
                 // datos del cuerpo
                 $mail->AddEmbeddedImage("media/img/small-logo.jpg", "mifoto", "descarga.jpg");
