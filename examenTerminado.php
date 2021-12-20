@@ -5,7 +5,9 @@
     BD::conectar();
     Sesion::iniciar();
 
-    $valoresJSON = BD::getJSON_examenRealizado($_GET["id"]);
+    $id_examen_realizado = $_GET["id"];
+
+    $valoresJSON = BD::getJSON_examenRealizado($id_examen_realizado);
 
     $valores = json_decode($valoresJSON);
 
@@ -13,7 +15,7 @@
     $correctas = 0;
     $incorrectas = 0;
 
-    $permiso = BD::accesoExamenRealizado($_GET["id"], Sesion::leer("usuario"));
+    $permiso = BD::accesoExamenRealizado($id_examen_realizado, Sesion::leer("usuario"));
     if($permiso == true || Sesion::leer("rol") == "Admin")
     {
         for ($i = 0; $i < $valores->numPreguntas; $i++)
@@ -46,7 +48,7 @@ Pintor::header("Examen terminado");
     <div class="sin_contestar" >Preguntas sin contestar:<?php echo $sinMarcar." (".(($sinMarcar*100)/($valores->numPreguntas))."%)"; ?></div>
     <div>Total:</div>
 
-    <a href="#">Imprimir</a>
+    <a href="imprimirExamen.php?id=<?php echo $id_examen_realizado; ?>" >Imprimir</a>
     <a href="historicoExamenes.php">Volver</a>
 </main>
 <?php
